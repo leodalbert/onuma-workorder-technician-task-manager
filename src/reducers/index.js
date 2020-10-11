@@ -1,3 +1,6 @@
 import { combineReducers } from 'redux';
+import workOrderReducer from './workOrderReducer';
 
-export default combineReducers({});
+export default combineReducers({
+  workOrder: workOrderReducer,
+});
