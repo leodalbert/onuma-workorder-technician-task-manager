@@ -1,37 +1,25 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getTechs } from './actions/tech';
 
 //  Material Ui
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './styles/theme';
 import './App.css';
 
 import Routes from './components/routing/Routes';
 
-// Material Ui Color Scheme
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      // Light Grey
-      main: '#f3f3f4',
-      light: '#ffffff',
-      dark: '#c0c0c1',
-    },
-    secondary: {
-      // Light Green
-      main: '#d3e6df',
-      light: '#ffffff',
-      dark: '#a2b4ad',
-    },
-    info: {
-      // Maroon
-      main: '#ba3320',
-      light: '#f3654a',
-      dark: '#830000',
-    },
-  },
-});
+const App = ({ reqError, getTechs }) => {
+  // alert on backend error
+  useEffect(() => {
+    reqError.msg && alert(reqError.msg + ' - status: ' + reqError.status);
+  }, [reqError]);
+  useEffect(() => {
+    getTechs();
+  }, [getTechs]);
 
-const App = () => {
   return (
     <Fragment>
       <ThemeProvider theme={theme}>
@@ -43,4 +31,13 @@ const App = () => {
   );
 };
 
-export default App;
+App.propTypes = {
+  reqError: PropTypes.object.isRequired,
+  getTechs: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  reqError: state.workOrder.error,
+});
+
+export default connect(mapStateToProps, { getTechs })(App);

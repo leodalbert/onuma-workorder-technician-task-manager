@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Table,
   TableBody,
@@ -13,33 +13,10 @@ import {
 
 import SummaryHead from './SummaryHead';
 import { getComparator, stableSort } from './SummaryFilters';
+import { summaryTableStyles } from '../../styles/GridStyles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2),
-  },
-  table: {
-    minWidth: 750,
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
-}));
-
-const SummaryTable = ({ workOrders }) => {
-  const classes = useStyles();
+const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
+  const classes = summaryTableStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('request_number');
   const [page, setPage] = useState(0);
@@ -58,6 +35,11 @@ const SummaryTable = ({ workOrders }) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleRowSelect = (id) => {
+    setLoading();
+    history.push(`workorder/${id}/${techEmail}`);
   };
 
   const emptyRows =
@@ -87,7 +69,7 @@ const SummaryTable = ({ workOrders }) => {
                 return (
                   <TableRow
                     hover
-                    onClick={() => console.log(row.request_number)}
+                    onClick={() => handleRowSelect(row.id)}
                     tabIndex={-1}
                     key={row.request_number}
                   >
@@ -95,8 +77,13 @@ const SummaryTable = ({ workOrders }) => {
                       {dayjs(row.request_date).format('MM/DD/YYYY')}
                     </TableCell>
                     <TableCell align='left'>{row.status}</TableCell>
-                    <TableCell align='left'>
-                      {row.request_description}
+                    <TableCell
+                      className={
+                        row.assigned_priority === 1 ? classes.urgent : ''
+                      }
+                      align='left'
+                    >
+                      {row.request_description.split('\r\n')[0]}
                     </TableCell>
                     <TableCell align='left'>{row.request_number}</TableCell>
                     <TableCell align='left'>{row.building}</TableCell>
@@ -127,6 +114,9 @@ const SummaryTable = ({ workOrders }) => {
 
 SummaryTable.propTypes = {
   workOrders: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
+  setLoading: PropTypes.func.isRequired,
+  techEmail: PropTypes.string.isRequired,
 };
 
-export default SummaryTable;
+export default withRouter(SummaryTable);

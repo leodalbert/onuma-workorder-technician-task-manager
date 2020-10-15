@@ -1,54 +1,49 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import { Hidden } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Hidden, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
+import { headerStyles } from '../../styles/HeaderStyles';
 
 import logo from './onumalogo_noshad.jpg';
+import { getCurrentTech } from '../../actions/tech';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    flexGrow: 1,
-  },
-  toolbar: {
-    justifyContent: 'space-between',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  logo: {
-    maxHeight: '70%',
-    maxWidth: 65,
-  },
-  title: {
-    textAlign: 'left',
-  },
-  btn: {
-    marginLeft: '140px',
-  },
-}));
-
-export default function ButtonAppBar() {
-  const classes = useStyles();
-
+const Header = ({ email, name }) => {
+  const classes = headerStyles();
   return (
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar classes={{ root: classes.toolbar }}>
-          <Typography variant='h6' className={classes.title}>
-            Work Order Manager
+          <Typography
+            style={{ textDecoration: 'inherit' }}
+            component={Link}
+            to={`/${email && email}`}
+            variant='h6'
+            className={classes.title}
+          >
+            Assignments {name && `- ${name}`}
           </Typography>
 
           <img src={logo} alt='logo' className={classes.logo} />
           <Hidden xsDown>
             <Button color='inherit' className={classes.btn}>
-              Bugs
+              Get in touch
             </Button>
           </Hidden>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
+
+Header.propTypes = {
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  email: state.tech.email,
+  name: state.tech.name,
+});
+
+export default connect(mapStateToProps, { getCurrentTech })(Header);

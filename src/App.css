@@ -9,3 +9,7 @@
   border: none;
   outline: none;
 }
+
+.MuiAccordionSummary-root.Mui-expanded {
+  min-height: 48px !important;
+}
