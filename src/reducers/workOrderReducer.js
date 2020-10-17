@@ -9,6 +9,7 @@ import {
 const initialState = {
   workOrders: [],
   current: null,
+  spaceId: '',
   loading: true,
   error: {},
 };
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         current: payload,
+        spaceId: payload.space.id,
         loading: false,
       };
     case SET_LOADING:

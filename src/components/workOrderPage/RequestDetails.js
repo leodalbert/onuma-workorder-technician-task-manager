@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Paper, Grid, TextField, Button } from '@material-ui/core';
+import { Paper, Grid, TextField, Button, Divider } from '@material-ui/core';
 
 import RequestDetailGrid from './RequestDetailGrid';
+import Components from '../components/Components';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
 
-const RequestDetails = ({ workOrder }) => {
+const RequestDetails = ({ workOrder, components }) => {
   const classes = requestDetailsGridStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
-
-  //   setComment('test');
 
   return (
     <div className={classes.root}>
@@ -54,12 +53,19 @@ const RequestDetails = ({ workOrder }) => {
           </Button>
         </Grid>
       </Grid>
+      <Divider />
+      <Grid item container direction='column' xs={12} lg={7}>
+        <Grid item container spacing={3}>
+          <Components components={components} />
+        </Grid>
+      </Grid>
     </div>
   );
 };
 
 RequestDetails.propTypes = {
   workOrder: PropTypes.object.isRequired,
+  components: PropTypes.array.isRequired,
 };
 
 export default RequestDetails;

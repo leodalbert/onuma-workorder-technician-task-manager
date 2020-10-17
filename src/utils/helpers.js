@@ -23,3 +23,100 @@ export const insertBreak = (arr) => {
     return result;
   }, []);
 };
+
+// function to generate list of fields for component modal
+
+export const componentDialogFieldGen = (component) => {
+  const {
+    id,
+    name,
+    instance_name,
+    instance_description,
+    barcode,
+    serial_number,
+    installation_date,
+    warranty_start_date,
+    space_name,
+    space_number,
+    floor_name,
+    floor_number,
+    category,
+    type_name,
+    type_description,
+    labour_warranty_duration,
+    labour_warranty_guarantor,
+    parts_warranty_guarantor,
+    parts_warranty_duration,
+    warranty_duration_unit,
+    manufacturer,
+    model_number,
+  } = component;
+  // build fields array
+  let FIELDS = [];
+  type_name && FIELDS.push({ lable: 'Component:', detail: type_name });
+  instance_name &&
+    FIELDS.push({ lable: 'Unique mark:', detail: instance_name });
+  category && FIELDS.push({ lable: 'Category:', detail: category });
+  (space_name || space_number) &&
+    FIELDS.push({
+      lable: 'Location:',
+      detail:
+        (space_number && space_number) +
+        (space_number && space_name && ' - ') +
+        (space_name && space_name) +
+        (floor_name && '\n') +
+        (floor_name && floor_name),
+    });
+
+  if (instance_description && !type_description) {
+    FIELDS.push({
+      lable: 'Component description:',
+      detail: instance_description,
+    });
+  }
+  if (type_description && !instance_description) {
+    FIELDS.push({ lable: 'Component description:', detail: type_description });
+  }
+  if (type_description && instance_description) {
+    FIELDS.push({
+      lable: 'Component description:',
+      detail: `${type_description} \n ${instance_description}`,
+    });
+  }
+  manufacturer && FIELDS.push({ lable: 'Manufacturer:', detail: manufacturer });
+  model_number && FIELDS.push({ lable: 'Model number:', detail: model_number });
+  serial_number &&
+    FIELDS.push({ lable: 'Serial number:', detail: serial_number });
+  barcode && FIELDS.push({ lable: 'Barcode:', detail: barcode });
+  warranty_start_date &&
+    FIELDS.push({ lable: 'Warranty start date:', detail: warranty_start_date });
+  parts_warranty_duration &&
+    FIELDS.push({
+      lable: 'Parts warranty duration:',
+      detail: `${parts_warranty_duration} ${
+        warranty_duration_unit && warranty_duration_unit
+      }`,
+    });
+  labour_warranty_duration &&
+    FIELDS.push({
+      lable: 'Labor warranty duration:',
+      detail: `${labour_warranty_duration} ${
+        warranty_duration_unit && warranty_duration_unit
+      }`,
+    });
+  parts_warranty_guarantor &&
+    FIELDS.push({
+      lable: 'Parts warranty guarantor:',
+      detail: parts_warranty_guarantor,
+    });
+  labour_warranty_guarantor &&
+    FIELDS.push({
+      lable: 'Labor warranty guarantor:',
+      detail: labour_warranty_guarantor,
+    });
+
+  installation_date &&
+    FIELDS.push({ lable: 'Installation Date', detail: installation_date });
+
+  return FIELDS;
+};

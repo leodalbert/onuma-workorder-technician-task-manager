@@ -4,6 +4,7 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -21,12 +22,33 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
     },
     color: theme.palette.text.primary,
   },
+  selectLable: {
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: theme.spacing(1),
+    },
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: theme.spacing(2),
+    },
+  },
   detail: {
     [theme.breakpoints.down('xs')]: {
       padding: '6px',
     },
     padding: theme.spacing(1),
     textAlign: 'left',
+    color: theme.palette.text.primary,
+  },
+  buttonGroup: {
+    // [theme.breakpoints.down('xs')]: {
+    //   padding: '6px',
+    // },
+    marginLeft: theme.spacing(2),
+    marginBottom: 15,
     color: theme.palette.text.primary,
   },
   redDetail: {
@@ -65,11 +87,12 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   commentButton: {
     paddingTop: '30px',
     [theme.breakpoints.up('sm')]: {
-      padding: '30px 0px 0px 15%',
+      padding: '30px 0px 25px 15%',
       textAlign: 'left',
     },
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
+      paddingBottom: '15px',
     },
   },
   helperText: {
@@ -94,11 +117,26 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
       },
     },
   },
+  formControl: {
+    marginLeft: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      minWidth: 280,
+    },
+    [theme.breakpoints.up('lg')]: {
+      minWidth: 350,
+    },
+  },
+  marginTop: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export const workOrderStyles = makeStyles((theme) => ({
   root: {
     margin: '20px 10%',
+    [theme.breakpoints.down('xs')]: {
+      margin: 0,
+    },
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),

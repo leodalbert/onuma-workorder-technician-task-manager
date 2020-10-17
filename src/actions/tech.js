@@ -6,7 +6,7 @@ export const getTechs = () => async (dispatch) => {
   try {
     //   TODO - handle studio number
     const res = await axios.get(
-      `https://api.onuma.com/26/items/technician?fields=id, first_name, last_name, email`
+      `/26/api/items/technician?fields=id, first_name, last_name, email`
     );
     dispatch({ type: GET_TECHS, payload: res.data.data });
   } catch (err) {
@@ -25,7 +25,7 @@ export const getCurrentTech = (techEmail) => async (dispatch) => {
   try {
     //   TODO - handle studio number
     const res = await axios.get(
-      `https://api.onuma.com/26/items/technician?fields=*,*.*&filter[email]=${techEmail}`
+      `/26/api/items/technician?fields=*,*.*&filter[email]=${techEmail}`
     );
     dispatch({ type: CURRENT_TECH, payload: res.data.data[0] });
   } catch (err) {

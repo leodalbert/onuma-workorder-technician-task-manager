@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getWorkOrder } from '../../actions/workOrder';
+import { getSpaceComponents } from '../../actions/component';
 
 import RequestDetails from './RequestDetails';
 import Spinner from '../layout/Spinner';
@@ -20,12 +21,22 @@ const WorkOrder = ({
   getWorkOrder,
   match,
   getCurrentTech,
-  workOrder: { loading, current },
+  components,
+  getSpaceComponents,
+  workOrder: { loading, current, spaceId },
 }) => {
   useEffect(() => {
     getWorkOrder(match.params.id);
     getCurrentTech(match.params.techEmail);
-  }, [getWorkOrder, match.params.id, match.params.techEmail, getCurrentTech]);
+    spaceId && getSpaceComponents(spaceId);
+  }, [
+    getWorkOrder,
+    match.params.id,
+    match.params.techEmail,
+    getCurrentTech,
+    getSpaceComponents,
+    spaceId,
+  ]);
 
   const classes = workOrderStyles();
 
@@ -47,7 +58,7 @@ const WorkOrder = ({
           <Typography className={classes.heading}>Request Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestDetails workOrder={current} />
+          <RequestDetails workOrder={current} components={components} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -88,12 +99,16 @@ WorkOrder.propTypes = {
   match: PropTypes.object.isRequired,
   getWorkOrder: PropTypes.func.isRequired,
   getCurrentTech: PropTypes.func.isRequired,
+  components: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   workOrder: state.workOrder,
+  components: state.component.components,
 });
 
-export default connect(mapStateToProps, { getWorkOrder, getCurrentTech })(
-  WorkOrder
-);
+export default connect(mapStateToProps, {
+  getWorkOrder,
+  getCurrentTech,
+  getSpaceComponents,
+})(WorkOrder);
