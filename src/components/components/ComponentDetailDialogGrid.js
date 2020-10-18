@@ -8,9 +8,9 @@ const ComponentDetailDialogGrid = ({ fields }) => {
   const classes = componentDetailGridStyles();
   return (
     <Grid item container spacing={2}>
-      {_.map(fields, ({ lable, detail }) => {
+      {_.map(fields, ({ lable, detail }, index) => {
         return (
-          <Fragment key={lable}>
+          <Fragment key={index}>
             <Grid className={classes.lableGrid} item xs={4}>
               <div className={classes.lable}>{lable}</div>
             </Grid>

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 // function returns priority level string from number
 export const priority = (num) => {
@@ -50,10 +51,12 @@ export const componentDialogFieldGen = (component) => {
     warranty_duration_unit,
     manufacturer,
     model_number,
+    instance_attributes,
+    type_attributes,
   } = component;
   // build fields array
   let FIELDS = [];
-  type_name && FIELDS.push({ lable: 'Component:', detail: type_name });
+  type_name && FIELDS.push({ lable: 'Component Type:', detail: type_name });
   instance_name &&
     FIELDS.push({ lable: 'Unique mark:', detail: instance_name });
   category && FIELDS.push({ lable: 'Category:', detail: category });
@@ -118,5 +121,33 @@ export const componentDialogFieldGen = (component) => {
   installation_date &&
     FIELDS.push({ lable: 'Installation Date', detail: installation_date });
 
+  if (type_attributes) {
+    for (const [key, value] of Object.entries(type_attributes)) {
+      !_.isEmpty(value) && FIELDS.push({ lable: key, detail: value });
+    }
+  }
+
+  if (instance_attributes) {
+    for (const [key, value] of Object.entries(instance_attributes)) {
+      !_.isEmpty(value) && FIELDS.push({ lable: key, detail: value });
+    }
+  }
+
   return FIELDS;
+};
+
+// Function to filter out components that are already in work order
+export const filterComponents = (spaceComponents, workOrderComponents) => {
+  if (!_.isEmpty(spaceComponents)) {
+    let filtered = spaceComponents.reduce((acc, component) => {
+      if (
+        !workOrderComponents.find((i) => i.component === component.component.id)
+      ) {
+        acc.push(component);
+      }
+      return acc;
+    }, []);
+    return filtered;
+  }
+  return spaceComponents;
 };

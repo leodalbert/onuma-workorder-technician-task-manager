@@ -3,14 +3,17 @@ import { connect } from 'react-redux';
 import clsx from 'clsx';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Grid, MenuItem, Select, FormControl } from '@material-ui/core';
+import { Grid, MenuItem, Select, FormControl, Button } from '@material-ui/core';
 import ComponentDetailDialog from './ComponentDetailDialog';
 import ComponentButtons from './ComponentButtons';
 import {
   getWorkOrderComponentDetails,
   clearComponentDialog,
   fillComponentDialog,
+  addComponent,
+  removeComponent,
 } from '../../actions/component';
+import { filterComponents } from '../../utils/helpers';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
 
 const Components = ({
@@ -20,15 +23,23 @@ const Components = ({
   workOrderComponents,
   fillComponentDialog,
   clearComponentDialog,
+  addComponent,
+  removeComponent,
+  workOrderId,
 }) => {
+  const classes = requestDetailsGridStyles();
+
   useEffect(() => {
     workOrderComponentIds.map((component) =>
-      getWorkOrderComponentDetails(component.component)
+      getWorkOrderComponentDetails(component.component, component.id)
     );
   }, []);
-  const [openDetailDailog, setOpenDetailDialog] = useState(false);
+  useEffect(() => {
+    setFilteredComponents(filterComponents(components, workOrderComponentIds));
+  }, [components, workOrderComponentIds]);
 
-  const classes = requestDetailsGridStyles();
+  const [openDetailDailog, setOpenDetailDialog] = useState(false);
+  const [filteredComponents, setFilteredComponents] = useState([]);
 
   const handleOpenComponentDialog = (component) => {
     fillComponentDialog(component);
@@ -39,8 +50,8 @@ const Components = ({
     setOpenDetailDialog(false);
     clearComponentDialog();
   };
-  const handleChange = () => {
-    console.log('test');
+  const handleChange = (componentId, workOrderId) => {
+    addComponent(componentId, workOrderId);
   };
 
   return (
@@ -63,21 +74,24 @@ const Components = ({
         sm={8}
         lg={7}
       >
-        <div>
+        <Grid>
           {workOrderComponents && (
             <ComponentButtons
               handleOpenComponentDialog={handleOpenComponentDialog}
               components={workOrderComponents}
+              removeComponent={removeComponent}
               classes={classes}
             />
           )}
-        </div>
+        </Grid>
         <div className={classes.detail}>
           <FormControl className={classes.formControl}>
             <Select
               value={''}
               variant='outlined'
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e.target.value, workOrderId);
+              }}
               displayEmpty
               className={classes.selectLable}
               inputProps={{ 'aria-label': 'Without label' }}
@@ -86,7 +100,7 @@ const Components = ({
                 Add component from current space
               </MenuItem>
               {_.map(
-                components,
+                filteredComponents,
                 ({ component: { id, name, instance_name } }) => {
                   return (
                     <MenuItem key={id} value={id}>
@@ -111,6 +125,7 @@ const Components = ({
 Components.propTypes = {};
 
 const mapStateToProps = (state) => ({
+  workOrderId: state.workOrder.current.id,
   workOrderComponentIds: state.workOrder.current.components,
   workOrderComponents: state.component.workOrderComponents,
 });
@@ -119,4 +134,6 @@ export default connect(mapStateToProps, {
   getWorkOrderComponentDetails,
   clearComponentDialog,
   fillComponentDialog,
+  addComponent,
+  removeComponent,
 })(Components);

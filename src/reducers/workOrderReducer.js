@@ -4,6 +4,8 @@ import {
   ERROR,
   SET_LOADING,
   CLEAR_CURRENT,
+  ADD_COMPONENT,
+  REMOVE_COMPONENT,
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +32,24 @@ export default function (state = initialState, action) {
         current: payload,
         spaceId: payload.space.id,
         loading: false,
+      };
+    case ADD_COMPONENT:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          components: [...state.current.components, payload],
+        },
+      };
+    case REMOVE_COMPONENT:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          components: state.current.components.filter(
+            (component) => component.id !== payload
+          ),
+        },
       };
     case SET_LOADING:
       return {

@@ -4,6 +4,7 @@ import {
   GET_WORK_ORDER_COMPONENTS,
   FILL_DIALOG_COMPONENT,
   CLEAR_DIALOG_COMPONENT,
+  REMOVE_COMPONENT,
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +34,8 @@ const initialState = {
     warranty_duration_unit: '',
     manufacturer: '',
     model_number: '',
+    type_attributes: {},
+    instance_attributes: {},
   },
 };
 
@@ -56,6 +59,14 @@ export default function (state = initialState, action) {
         components: [],
         current: null,
         workOrderComponents: [],
+        dialogComponent: initialState.dialogComponent,
+      };
+    case REMOVE_COMPONENT:
+      return {
+        ...state,
+        workOrderComponents: state.workOrderComponents.filter(
+          (component) => component.instanceId !== payload
+        ),
       };
     case FILL_DIALOG_COMPONENT:
       const {
@@ -67,6 +78,7 @@ export default function (state = initialState, action) {
         serial_number,
         installation_date,
         warranty_start_date,
+        attributes: instance_attributes,
         space: [
           {
             space: {
@@ -87,6 +99,7 @@ export default function (state = initialState, action) {
           warranty_duration_unit,
           manufacturer,
           model_number,
+          attributes: type_attributes,
         },
       } = payload;
       return {
@@ -114,6 +127,8 @@ export default function (state = initialState, action) {
           warranty_duration_unit,
           manufacturer,
           model_number,
+          instance_attributes,
+          type_attributes,
         },
       };
     case CLEAR_DIALOG_COMPONENT:

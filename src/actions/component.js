@@ -6,9 +6,11 @@ import {
   ERROR,
   FILL_DIALOG_COMPONENT,
   CLEAR_DIALOG_COMPONENT,
+  ADD_COMPONENT,
+  REMOVE_COMPONENT,
 } from './types';
 
-// get all components by space
+// Get all components by space id
 export const getSpaceComponents = (spaceId) => async (dispatch) => {
   try {
     const res = await axios.get(
@@ -27,15 +29,71 @@ export const getSpaceComponents = (spaceId) => async (dispatch) => {
   }
 };
 
-// get details for work order components
-export const getWorkOrderComponentDetails = (componentId) => async (
+// Get details for work order components by component id and append instanceId
+export const getWorkOrderComponentDetails = (componentId, instanceId) => async (
   dispatch
 ) => {
   try {
     const res = await axios.get(
-      `/26/api/items/component/${componentId}?fields=id, component_type.model_number, component_type.description, component_type.name, component_type.manufacturer, component_type.parts_warranty_guarantor, component_type.parts_warranty_duration, component_type.labour_warranty_guarantor, component_type.labour_warranty_duration, component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date, space.space.name, space.id, space.space.floor.name, space.space.floor.number, space.space.number`
+      `/26/api/items/component/${componentId}?fields=id,component_type.model_number,component_type.description,component_type.name,component_type.manufacturer,component_type.parts_warranty_guarantor,component_type.parts_warranty_duration,component_type.labour_warranty_guarantor,component_type.labour_warranty_duration,component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date,space.space.name,space.id,space.space.floor.name,space.space.floor.number,space.space.number,component_type.attributes,attributes,`
     );
-    dispatch({ type: GET_WORK_ORDER_COMPONENTS, payload: res.data.data });
+    let data = res.data.data;
+    data.instanceId = instanceId;
+    dispatch({ type: GET_WORK_ORDER_COMPONENTS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Post component to work order
+export const addComponent = (componentId, workorderId) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/26/api/items/component_workorder`, {
+      component: componentId,
+      workorder: workorderId,
+    });
+
+    // object with component instance and type id
+    const componentIds = {
+      id: res.data.data.id,
+      component: res.data.data.component,
+    };
+
+    // get details and add button on component page
+    dispatch(
+      getWorkOrderComponentDetails(componentIds.component, componentIds.id)
+    );
+
+    // add component to workorder state
+    dispatch({
+      type: ADD_COMPONENT,
+      payload: componentIds,
+    });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Delete component from work order
+export const removeComponent = (componentWorkorderId) => async (dispatch) => {
+  try {
+    await axios.delete(
+      `/26/api/items/component_workorder/${componentWorkorderId}`
+    );
+
+    dispatch({ type: REMOVE_COMPONENT, payload: componentWorkorderId });
   } catch (err) {
     dispatch({
       type: ERROR,

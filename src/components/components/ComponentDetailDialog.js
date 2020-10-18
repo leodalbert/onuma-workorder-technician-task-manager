@@ -41,6 +41,17 @@ const ComponentDetailDialog = ({ open, handleClose, component }) => {
         <Grid item container direction='column' xs={12}>
           <ComponentDetailDialogGrid fields={fields} />
         </Grid>
+        <Grid item container direction='column' xs={12}>
+          <a
+            href='https://system.onuma.com/26/documents/download.load/1522'
+            target='_blank'
+          >
+            <img
+              src='https://system.onuma.com/26/documents/thumbnail.load/1522'
+              alt='thumbnail'
+            />
+          </a>
+        </Grid>
       </DialogContent>
     </Dialog>
   );

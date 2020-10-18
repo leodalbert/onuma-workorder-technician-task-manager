@@ -1,33 +1,39 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, Grid } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 
 const ComponentButtons = ({
   components,
   classes,
   handleOpenComponentDialog,
+  removeComponent,
 }) => {
   return _.map(components, (component) => {
     return (
-      <ButtonGroup
-        className={classes.buttonGroup}
-        key={component.id}
-        color='primary'
-        variant='contained'
-        aria-label='split button'
-      >
-        <Button
-          onClick={() => handleOpenComponentDialog(component)}
-          style={{ minWidth: '200px', justifyContent: 'left' }}
+      <Grid key={component.instanceId}>
+        <ButtonGroup
+          className={classes.buttonGroup}
+          color='primary'
+          variant='contained'
+          aria-label='split button'
         >
-          {component.name}
-        </Button>
-        <Button size='small'>
-          <ClearIcon fontSize='small' />
-        </Button>
-      </ButtonGroup>
+          <Button
+            onClick={() => handleOpenComponentDialog(component)}
+            style={{ minWidth: '200px', justifyContent: 'left' }}
+          >
+            {component.name}
+            {component.instance_name && ` -  ${component.instance_name}`}
+          </Button>
+          <Button
+            onClick={() => removeComponent(component.instanceId)}
+            size='small'
+          >
+            <ClearIcon fontSize='small' />
+          </Button>
+        </ButtonGroup>
+      </Grid>
     );
   });
 };
@@ -36,6 +42,7 @@ ComponentButtons.propTypes = {
   components: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   handleOpenComponentDialog: PropTypes.func.isRequired,
+  removeComponent: PropTypes.func.isRequired,
 };
 
 export default ComponentButtons;
