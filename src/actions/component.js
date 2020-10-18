@@ -8,6 +8,7 @@ import {
   CLEAR_DIALOG_COMPONENT,
   ADD_COMPONENT,
   REMOVE_COMPONENT,
+  SET_COMPONENT_LOADING,
 } from './types';
 
 // Get all components by space id
@@ -39,6 +40,7 @@ export const getWorkOrderComponentDetails = (componentId, instanceId) => async (
     );
     let data = res.data.data;
     data.instanceId = instanceId;
+    dispatch({ type: SET_COMPONENT_LOADING, payload: false });
     dispatch({ type: GET_WORK_ORDER_COMPONENTS, payload: data });
   } catch (err) {
     dispatch({
@@ -53,6 +55,7 @@ export const getWorkOrderComponentDetails = (componentId, instanceId) => async (
 
 // Post component to work order
 export const addComponent = (componentId, workorderId) => async (dispatch) => {
+  dispatch({ type: SET_COMPONENT_LOADING, payload: true });
   try {
     const res = await axios.post(`/26/api/items/component_workorder`, {
       component: componentId,
@@ -88,12 +91,11 @@ export const addComponent = (componentId, workorderId) => async (dispatch) => {
 
 // Delete component from work order
 export const removeComponent = (componentWorkorderId) => async (dispatch) => {
+  dispatch({ type: REMOVE_COMPONENT, payload: componentWorkorderId });
   try {
     await axios.delete(
       `/26/api/items/component_workorder/${componentWorkorderId}`
     );
-
-    dispatch({ type: REMOVE_COMPONENT, payload: componentWorkorderId });
   } catch (err) {
     dispatch({
       type: ERROR,

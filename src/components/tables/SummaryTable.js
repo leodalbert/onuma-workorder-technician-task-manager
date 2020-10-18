@@ -71,7 +71,7 @@ const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
                     hover
                     onClick={() => handleRowSelect(row.id)}
                     tabIndex={-1}
-                    key={row.request_number}
+                    key={row.id}
                   >
                     <TableCell component='th' id={labelId} scope='row'>
                       {dayjs(row.request_date).format('MM/DD/YYYY')}

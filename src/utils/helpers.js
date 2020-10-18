@@ -127,8 +127,8 @@ export const workOrderFieldGen = (workOrder) => {
 
 export const componentDialogFieldGen = (component) => {
   const {
-    id,
-    name,
+    // id,
+    // name,
     instance_name,
     instance_description,
     barcode,
@@ -138,7 +138,7 @@ export const componentDialogFieldGen = (component) => {
     space_name,
     space_number,
     floor_name,
-    floor_number,
+    // floor_number,
     category,
     type_name,
     type_description,

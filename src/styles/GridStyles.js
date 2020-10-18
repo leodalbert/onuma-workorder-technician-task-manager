@@ -129,6 +129,14 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   marginTop: {
     marginTop: theme.spacing(2),
   },
+  spinnerDiv: {
+    position: 'relative',
+    top: '50%',
+    left: '50%',
+  },
+  spinner: {
+    color: theme.palette.secondary.main,
+  },
 }));
 
 export const workOrderStyles = makeStyles((theme) => ({

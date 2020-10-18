@@ -5,12 +5,14 @@ import {
   FILL_DIALOG_COMPONENT,
   CLEAR_DIALOG_COMPONENT,
   REMOVE_COMPONENT,
+  SET_COMPONENT_LOADING,
 } from '../actions/types';
 
 const initialState = {
   components: [],
   current: null,
   workOrderComponents: [],
+  componentLoading: false,
   dialogComponent: {
     id: null,
     name: '',
@@ -144,6 +146,12 @@ export default function (state = initialState, action) {
           type_attributes: data.component_type.attributes || type_attributes,
         },
       };
+    case SET_COMPONENT_LOADING: {
+      return {
+        ...state,
+        componentLoading: payload,
+      };
+    }
     case CLEAR_DIALOG_COMPONENT:
       return {
         ...state,

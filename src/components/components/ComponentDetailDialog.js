@@ -13,7 +13,7 @@ import { componentDialogFieldGen } from '../../utils/helpers';
 import { componentDetailGridStyles } from '../../styles/DialogStyles';
 
 const ComponentDetailDialog = ({ open, handleClose, component }) => {
-  const { id, name, instance_name } = component;
+  const { name, instance_name } = component;
 
   //   helper function to generate dialog fields
   const fields = componentDialogFieldGen(component);
@@ -45,6 +45,7 @@ const ComponentDetailDialog = ({ open, handleClose, component }) => {
           <a
             href='https://system.onuma.com/26/documents/download.load/1522'
             target='_blank'
+            rel='noopener noreferrer'
           >
             <img
               src='https://system.onuma.com/26/documents/thumbnail.load/1522'

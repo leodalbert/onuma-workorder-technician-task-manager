@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import clsx from 'clsx';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Grid, MenuItem, Select, FormControl, Button } from '@material-ui/core';
+import { Grid, MenuItem, Select, FormControl } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ComponentDetailDialog from './ComponentDetailDialog';
 import ComponentButtons from './ComponentButtons';
 import {
@@ -26,14 +27,17 @@ const Components = ({
   addComponent,
   removeComponent,
   workOrderId,
+  loading,
 }) => {
   const classes = requestDetailsGridStyles();
-
+  // get details for every component in workorder
   useEffect(() => {
     workOrderComponentIds.map((component) =>
       getWorkOrderComponentDetails(component.component, component.id)
     );
-  }, []);
+    // eslint-disable-next-line
+  }, [getWorkOrderComponentDetails]);
+  // remove components in workorder from component select
   useEffect(() => {
     setFilteredComponents(filterComponents(components, workOrderComponentIds));
   }, [components, workOrderComponentIds]);
@@ -50,8 +54,12 @@ const Components = ({
     setOpenDetailDialog(false);
     clearComponentDialog();
   };
-  const handleChange = (componentId, workOrderId) => {
+  const handleChange = (
+    { id: componentId, name, instance_name },
+    workOrderId
+  ) => {
     addComponent(componentId, workOrderId);
+    // addComponentButton()
   };
 
   return (
@@ -83,6 +91,11 @@ const Components = ({
               classes={classes}
             />
           )}
+          {loading && (
+            <div className={classes.spinnerDiv}>
+              <CircularProgress className={classes.spinner} />
+            </div>
+          )}
         </Grid>
         <div className={classes.detail}>
           <FormControl className={classes.formControl}>
@@ -103,7 +116,7 @@ const Components = ({
                 filteredComponents,
                 ({ component: { id, name, instance_name } }) => {
                   return (
-                    <MenuItem key={id} value={id}>
+                    <MenuItem key={id} value={{ id, name, instance_name }}>
                       {name}
                       {instance_name && ` - ${instance_name}`}
                     </MenuItem>
@@ -122,12 +135,24 @@ const Components = ({
   );
 };
 
-Components.propTypes = {};
+Components.propTypes = {
+  workOrderId: PropTypes.number.isRequired,
+  workOrderComponentIds: PropTypes.array.isRequired,
+  workOrderComponents: PropTypes.array.isRequired,
+  components: PropTypes.array.isRequired,
+  getWorkOrderComponentDetails: PropTypes.func.isRequired,
+  fillComponentDialog: PropTypes.func.isRequired,
+  clearComponentDialog: PropTypes.func.isRequired,
+  addComponent: PropTypes.func.isRequired,
+  removeComponent: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   workOrderId: state.workOrder.current.id,
   workOrderComponentIds: state.workOrder.current.components,
   workOrderComponents: state.component.workOrderComponents,
+  loading: state.component.componentLoading,
 });
 
 export default connect(mapStateToProps, {
