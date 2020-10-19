@@ -14,8 +14,16 @@ const Routes = () => {
       <section>
         <HeaderWithRouter />
         <Switch>
-          <Route exact path='/:techEmail' component={Dashboard} />
-          <Route exact path='/workorder/:id/:techEmail' component={WorkOrder} />
+          <Route
+            exact
+            path={`${process.env.PUBLIC_URL}/technicians/:techEmail`}
+            component={Dashboard}
+          />
+          <Route
+            exact
+            path={`${process.env.PUBLIC_URL}/technicians/workorder/:id/:techEmail`}
+            component={WorkOrder}
+          />
           <Route component={NotFound} />
         </Switch>
       </section>

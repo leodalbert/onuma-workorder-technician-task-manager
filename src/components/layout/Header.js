@@ -17,7 +17,7 @@ const Header = ({ email, name }) => {
           <Typography
             style={{ textDecoration: 'inherit' }}
             component={Link}
-            to={`/${email && email}`}
+            to={`${process.env.PUBLIC_URL}/technicians/${email && email}`}
             variant='h6'
             className={classes.title}
           >

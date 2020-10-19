@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { inDev } from './utils/helpers';
 import { getTechs } from './actions/tech';
 
 //  Material Ui
@@ -12,10 +13,13 @@ import './App.css';
 
 import Routes from './components/routing/Routes';
 
-// Sets Bearer token in header for all requests
-axios.defaults.headers.common = {
-  Authorization: 'Bearer ' + process.env.REACT_APP_BEARER_TOKEN,
-};
+// // Sets Bearer token in header for all requests only in dev
+if (inDev()) {
+  console.log('dev');
+  axios.defaults.headers.common = {
+    Authorization: 'Bearer ' + process.env.REACT_APP_BEARER_TOKEN,
+  };
+}
 
 const App = ({ reqError, getTechs }) => {
   // alert on backend error
