@@ -6,7 +6,6 @@ import { Hidden, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
 import { headerStyles } from '../../styles/HeaderStyles';
 
 import logo from './onumalogo_noshad.jpg';
-import { getCurrentTech } from '../../actions/tech';
 
 const Header = ({ email, name }) => {
   const classes = headerStyles();
@@ -46,4 +45,4 @@ const mapStateToProps = (state) => ({
   name: state.tech.name,
 });
 
-export default connect(mapStateToProps, { getCurrentTech })(Header);
+export default connect(mapStateToProps)(Header);

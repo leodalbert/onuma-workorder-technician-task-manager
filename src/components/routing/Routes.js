@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import Dashboard from '../layout/Dashboard';
 import WorkOrder from '../workOrderPage/WorkOrder';
 import NotFound from '../layout/NotFound';
+import NotFoundHome from '../layout/NotFoundHome';
 import Header from '../layout/Header';
 
 const HeaderWithRouter = withRouter(Header);
@@ -23,6 +24,11 @@ const Routes = () => {
             exact
             path={`${process.env.PUBLIC_URL}/technicians/workorder/:id/:techEmail`}
             component={WorkOrder}
+          />
+          <Route
+            exact
+            path={`${process.env.PUBLIC_URL}/technicians`}
+            component={NotFoundHome}
           />
           <Route component={NotFound} />
         </Switch>

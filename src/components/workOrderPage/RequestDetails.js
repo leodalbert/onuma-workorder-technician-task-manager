@@ -5,6 +5,9 @@ import { Paper, Grid, TextField, Button, Divider } from '@material-ui/core';
 import RequestDetailGrid from './RequestDetailGrid';
 import Components from '../components/Components';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
+import Floorplan from './Floorplan';
+import FloorplanDev from './FloorplanDev'
+import {inDev} from '../../utils/helpers'
 
 const RequestDetails = ({ workOrder, components }) => {
   const classes = requestDetailsGridStyles();
@@ -18,10 +21,14 @@ const RequestDetails = ({ workOrder, components }) => {
             <RequestDetailGrid workOrder={workOrder} />
           </Grid>
         </Grid>
-        <Grid item container direction='column' xs={12} lg={5}>
-          <Grid item>
-            <Paper className={classes.floorPlan}>Floorplan Placeholder</Paper>
-          </Grid>
+        <Grid 
+          item 
+          container 
+          direction='column'     
+          justify="center"
+          xs={12} 
+          lg={5}>
+          <Grid item>{inDev() ? <FloorplanDev/> : <Floorplan />}</Grid>
         </Grid>
         <Grid className={classes.commentField} item xs={12}>
           <TextField
@@ -53,7 +60,7 @@ const RequestDetails = ({ workOrder, components }) => {
           </Button>
         </Grid>
       </Grid>
-      <Divider />
+      <Divider style={{marginBottom: '15px'}} />
       <Grid item container direction='column' xs={12} lg={7}>
         <Grid item container spacing={3}>
           <Components components={components} />

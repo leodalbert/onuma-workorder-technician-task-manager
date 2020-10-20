@@ -5,10 +5,10 @@ const NotFound = () => {
   return (
     <Fragment>
       <Container style={{ marginTop: 20 }}>
-        <h1 styles={{ margin: '30px' }} className='x-large text-primary'>
-          <i className='fas fa-exclamation-triangle'></i> Page Not Found
+        <h1 className='x-large text-primary'>
+          <i className='fas fa-exclamation-triangle'></i> Please use email link
+          to access your workorders!
         </h1>
-        <p className='large'>Sorry, this page does not exist</p>
       </Container>
     </Fragment>
   );
