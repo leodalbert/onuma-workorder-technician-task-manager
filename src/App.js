@@ -4,7 +4,6 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { inDev } from './utils/helpers';
-import { getTechs } from './actions/tech';
 
 //  Material Ui
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -21,14 +20,11 @@ if (inDev()) {
   };
 }
 
-const App = ({ reqError, getTechs }) => {
+const App = ({ reqError }) => {
   // alert on backend error
   useEffect(() => {
     reqError.msg && alert(reqError.msg + ' - status: ' + reqError.status);
   }, [reqError]);
-  useEffect(() => {
-    getTechs();
-  }, [getTechs]);
 
   return (
     <Fragment>
@@ -43,11 +39,10 @@ const App = ({ reqError, getTechs }) => {
 
 App.propTypes = {
   reqError: PropTypes.object.isRequired,
-  getTechs: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   reqError: state.workOrder.error,
 });
 
-export default connect(mapStateToProps, { getTechs })(App);
+export default connect(mapStateToProps)(App);

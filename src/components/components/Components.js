@@ -28,15 +28,16 @@ const Components = ({
   removeComponent,
   workOrderId,
   loading,
+  studioId
 }) => {
   const classes = requestDetailsGridStyles();
   // get details for every component in workorder
   useEffect(() => {
     workOrderComponentIds.map((component) =>
-      getWorkOrderComponentDetails(component.component, component.id)
+      getWorkOrderComponentDetails(component.component, component.id, studioId)
     );
     // eslint-disable-next-line
-  }, [getWorkOrderComponentDetails]);
+  }, [getWorkOrderComponentDetails, studioId]);
   // remove components in workorder from component select
   useEffect(() => {
     setFilteredComponents(filterComponents(components, workOrderComponentIds));
@@ -58,7 +59,7 @@ const Components = ({
     { id: componentId, name, instance_name },
     workOrderId
   ) => {
-    addComponent(componentId, workOrderId);
+    addComponent(componentId, workOrderId, studioId);
     // addComponentButton()
   };
 
@@ -89,6 +90,7 @@ const Components = ({
               components={workOrderComponents}
               removeComponent={removeComponent}
               classes={classes}
+              studioId={studioId}
             />
           )}
           {loading && (
@@ -146,6 +148,7 @@ Components.propTypes = {
   addComponent: PropTypes.func.isRequired,
   removeComponent: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  studioId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

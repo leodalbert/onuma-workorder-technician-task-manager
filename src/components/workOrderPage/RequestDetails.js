@@ -9,7 +9,7 @@ import Floorplan from './Floorplan';
 import FloorplanDev from './FloorplanDev'
 import {inDev} from '../../utils/helpers'
 
-const RequestDetails = ({ workOrder, components }) => {
+const RequestDetails = ({ workOrder, components, studioId }) => {
   const classes = requestDetailsGridStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
 
@@ -63,7 +63,7 @@ const RequestDetails = ({ workOrder, components }) => {
       <Divider style={{marginBottom: '15px'}} />
       <Grid item container direction='column' xs={12} lg={7}>
         <Grid item container spacing={3}>
-          <Components components={components} />
+          <Components components={components} studioId={studioId} />
         </Grid>
       </Grid>
     </div>

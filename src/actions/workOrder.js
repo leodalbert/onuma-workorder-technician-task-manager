@@ -9,12 +9,12 @@ import {
 } from './types';
 
 // Get all work orders by tech email
-export const getAllWorkOrders = (techEmail) => async (dispatch) => {
+export const getAllWorkOrders = (techEmail, studioId) => async (dispatch) => {
   dispatch({ type: SET_LOADING });
   try {
     //   TODO - handle studio number
     const res = await axios.get(
-      `/26/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space, status&filter[assigned_technician.email]=${techEmail}`
+      `/${studioId}/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space, status&filter[assigned_technician.email]=${techEmail}`
     );
     dispatch({ type: GET_TECHS_WORK_ORDERS, payload: res.data.data });
   } catch (err) {
@@ -29,11 +29,11 @@ export const getAllWorkOrders = (techEmail) => async (dispatch) => {
 };
 
 // Get Work order by work order Id
-export const getWorkOrder = (id) => async (dispatch) => {
+export const getWorkOrder = (id, studioId) => async (dispatch) => {
   try {
     //   TODO - handle studio number
     const res = await axios.get(
-      `/26/api/items/workorder/${id}?fields=*,*.*&fields=id,request_number,building.id, building.site, building.number, building.name, floor.name, floor.id, floor.number, space.id, space.number, space.name, submitted_by, request_email, assigned_priority, request_date, request_description, components.component, components.id, tasks, assigned_technician.id, assigned_technician.first_name, assigned_technician.last_name, assigned_technician.email, location_description, request_telephone, due_date, administrator_to_technician_comment, administrator_comment`
+      `/${studioId}/api/items/workorder/${id}?fields=*,*.*&fields=id,request_number,building.id, building.site, building.number, building.name, floor.name, floor.id, floor.number, space.id, space.number, space.name, submitted_by, request_email, assigned_priority, request_date, request_description, components.component, components.id, tasks, assigned_technician.id, assigned_technician.first_name, assigned_technician.last_name, assigned_technician.email, location_description, request_telephone, due_date, administrator_to_technician_comment, administrator_comment`
     );
     dispatch({ type: GET_WORK_ORDER, payload: res.data.data });
   } catch (err) {

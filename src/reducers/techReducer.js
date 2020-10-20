@@ -5,6 +5,7 @@ const initialState = {
   current: null,
   email: '',
   name: '',
+  studio: undefined
 };
 
 export default function (state = initialState, action) {
@@ -22,6 +23,7 @@ export default function (state = initialState, action) {
         current: payload,
         email: payload.email,
         name: payload.first_name + ' ' + payload.last_name,
+        studio: payload.studioId
       };
     default:
       return state;

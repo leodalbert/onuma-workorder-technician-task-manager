@@ -17,17 +17,17 @@ const Routes = () => {
         <Switch>
           <Route
             exact
-            path={`${process.env.PUBLIC_URL}/technicians/:techEmail`}
+            path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
             component={Dashboard}
           />
           <Route
             exact
-            path={`${process.env.PUBLIC_URL}/technicians/workorder/:id/:techEmail`}
+            path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail`}
             component={WorkOrder}
           />
           <Route
             exact
-            path={`${process.env.PUBLIC_URL}/technicians`}
+            path={`${process.env.PUBLIC_URL}/:studioId/technicians`}
             component={NotFoundHome}
           />
           <Route component={NotFound} />

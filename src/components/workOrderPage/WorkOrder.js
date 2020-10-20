@@ -15,28 +15,33 @@ import {
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getCurrentTech } from '../../actions/tech';
+import { getCurrentTech, getTechs } from '../../actions/tech';
 
 const WorkOrder = ({
   getWorkOrder,
-  match,
+  match: {params},
   getCurrentTech,
+  getTechs,
   components,
   getSpaceComponents,
   workOrder: { loading, current, spaceId },
 }) => {
   useEffect(() => {
-    getWorkOrder(match.params.id);
-    getCurrentTech(match.params.techEmail);
-    spaceId && getSpaceComponents(spaceId);
+    spaceId && getSpaceComponents(spaceId, params.studioId);
   }, [
-    getWorkOrder,
-    match.params.id,
-    match.params.techEmail,
-    getCurrentTech,
     getSpaceComponents,
     spaceId,
+    params.studioId
   ]);
+  useEffect(() => {
+    getCurrentTech(params.techEmail, params.studioId)
+  }, [getCurrentTech, params.techEmail, params.studioId])
+  useEffect(() => {
+    getWorkOrder(params.id, params.studioId)
+  }, [getWorkOrder, params.id, params.studioId])
+  useEffect(() => {
+    getTechs(params.studioId)
+  }, [getTechs, params.studioId])
 
   const classes = workOrderStyles();
 
@@ -58,7 +63,7 @@ const WorkOrder = ({
           <Typography className={classes.heading}>Request Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestDetails workOrder={current} components={components} />
+          <RequestDetails workOrder={current} components={components} studioId={Number(params.studioId)} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -100,6 +105,7 @@ WorkOrder.propTypes = {
   getWorkOrder: PropTypes.func.isRequired,
   getCurrentTech: PropTypes.func.isRequired,
   components: PropTypes.array.isRequired,
+  getTechs: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -111,4 +117,5 @@ export default connect(mapStateToProps, {
   getWorkOrder,
   getCurrentTech,
   getSpaceComponents,
+  getTechs
 })(WorkOrder);

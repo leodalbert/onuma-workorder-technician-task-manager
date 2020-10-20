@@ -18,13 +18,17 @@ const Dashboard = ({
   loading,
   workOrders,
   getCurrentTech,
-  match,
+  match: {params}
 }) => {
   useEffect(() => {
     clearCurrent();
-    getAllWorkOrders(match.params.techEmail);
-    getCurrentTech(match.params.techEmail);
-  }, [clearCurrent, getAllWorkOrders, getCurrentTech, match.params.techEmail]);
+  }, [clearCurrent]);
+  useEffect(() => {
+    getAllWorkOrders(params.techEmail, params.studioId);
+  }, [params.techEmail, params.studioId, getAllWorkOrders]);
+  useEffect(() => {
+    getCurrentTech(params.techEmail, params.studioId);
+  }, [getCurrentTech, params.techEmail, params.studioId]);
 
   return loading ? (
     <Spinner />
@@ -33,7 +37,7 @@ const Dashboard = ({
       <SummaryTable
         workOrders={workOrders}
         setLoading={setLoading}
-        techEmail={match.params.techEmail}
+        techEmail={params.techEmail}
       />
     </Container>
   );

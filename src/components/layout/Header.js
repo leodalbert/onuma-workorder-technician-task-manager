@@ -7,7 +7,7 @@ import { headerStyles } from '../../styles/HeaderStyles';
 
 import logo from './onumalogo_noshad.jpg';
 
-const Header = ({ email, name }) => {
+const Header = ({ email, name, studio}) => {
   const classes = headerStyles();
   return (
     <div className={classes.root}>
@@ -16,7 +16,7 @@ const Header = ({ email, name }) => {
           <Typography
             style={{ textDecoration: 'inherit' }}
             component={Link}
-            to={`${process.env.PUBLIC_URL}/technicians/${email && email}`}
+            to={`${process.env.PUBLIC_URL}/${studio}/technicians/${email && email}`}
             variant='h6'
             className={classes.title}
           >
@@ -43,6 +43,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => ({
   email: state.tech.email,
   name: state.tech.name,
+  studio: state.tech.studio
 });
 
 export default connect(mapStateToProps)(Header);

@@ -9,6 +9,7 @@ const ComponentButtons = ({
   classes,
   handleOpenComponentDialog,
   removeComponent,
+  studioId
 }) => {
   return _.map(components, (component) => {
     return (
@@ -27,7 +28,7 @@ const ComponentButtons = ({
             {component.instance_name && ` -  ${component.instance_name}`}
           </Button>
           <Button
-            onClick={() => removeComponent(component.instanceId)}
+            onClick={() => removeComponent(component.instanceId, studioId)}
             size='small'
           >
             <ClearIcon fontSize='small' />
