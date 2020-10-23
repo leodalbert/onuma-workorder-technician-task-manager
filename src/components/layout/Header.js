@@ -4,30 +4,34 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Hidden, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
 import { headerStyles } from '../../styles/HeaderStyles';
+import CloseIcon from '@material-ui/icons/Close';
 
 import logo from './onumalogo_noshad.jpg';
 
-const Header = ({ email, name, studio}) => {
+const Header = ({ email, name, studio, text, dialogHeader, handleClose}) => {
   const classes = headerStyles();
   return (
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar classes={{ root: classes.toolbar }}>
           <Typography
-            style={{ textDecoration: 'inherit' }}
-            component={Link}
+            style={dialogHeader? {fontSize: '16px'} : { textDecoration: 'inherit' }}
+            component={dialogHeader ? "h6" : Link}
             to={`${process.env.PUBLIC_URL}/${studio}/technicians/${email && email}`}
             variant='h6'
             className={classes.title}
           >
-            Assignments {name && `- ${name}`}
+            {text} {(!dialogHeader && name) && `- ${name}`}
           </Typography>
 
           <img src={logo} alt='logo' className={classes.logo} />
           <Hidden xsDown>
-            <Button color='inherit' className={classes.btn}>
+            { dialogHeader ? 
+              <Button onClick={handleClose} color='inherit' className={classes.btn}>Close  <CloseIcon/></Button>
+              : 
+              <Button color='inherit' className={classes.btn}>
               Get in touch
-            </Button>
+            </Button>}
           </Hidden>
         </Toolbar>
       </AppBar>
@@ -38,7 +42,15 @@ const Header = ({ email, name, studio}) => {
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  text: PropTypes.array.isRequired,
+  dialogHeader: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func,
 };
+
+Header.defaultProps = {
+  text: ['Assignments'],
+  dialogHeader: false
+}
 
 const mapStateToProps = (state) => ({
   email: state.tech.email,

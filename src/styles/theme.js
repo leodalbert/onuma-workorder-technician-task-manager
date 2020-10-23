@@ -22,6 +22,19 @@ const theme = createMuiTheme({
       dark: '#830000',
     },
   },
+  overrides: {
+    MuiSelect: {
+      select: {
+        "&:focus": {
+          backgroundColor: "$labelcolor"
+        }
+      }},
+      MuiTooltip: {
+        tooltip: {
+          fontSize: '14px'
+        }
+      }
+    }
 });
 
 export default theme;

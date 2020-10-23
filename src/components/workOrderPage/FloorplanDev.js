@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import ScriptTag from 'react-script-tag';
+import React from 'react';
 
 const Floorplan = () => {
   // useEffect(() => {
@@ -10,8 +9,12 @@ const Floorplan = () => {
   //   );
   // }, []);
   return (
-    <div style={{ height: '300px', width: '500px', border: '1px solid lightgrey' }}>
-
+    <div
+      style={{
+        height: '300px',
+        width: '500px',
+        border: '1px solid lightgrey',
+      }}>
       placeholder
     </div>
   );

@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import Dialog from '@material-ui/core/Dialog';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+import {DialogTitle,
+  DialogContent,
+  Dialog,
+  Grid,
+  IconButton,
+} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import ComponentDetailDialogGrid from './ComponentDetailDialogGrid';

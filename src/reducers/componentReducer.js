@@ -6,6 +6,9 @@ import {
   CLEAR_DIALOG_COMPONENT,
   REMOVE_COMPONENT,
   SET_COMPONENT_LOADING,
+  SEARCH_COMPONENTS,
+  SEARCH_LOADING,
+  CLEAR_SEARCH_STATE,
 } from '../actions/types';
 
 const initialState = {
@@ -13,6 +16,8 @@ const initialState = {
   current: null,
   workOrderComponents: [],
   componentLoading: false,
+  searchResults: [],
+  searchLoading: false,
   dialogComponent: {
     id: null,
     name: '',
@@ -61,6 +66,7 @@ export default function (state = initialState, action) {
         components: [],
         current: null,
         workOrderComponents: [],
+        searchResults: [],
         dialogComponent: initialState.dialogComponent,
       };
     case REMOVE_COMPONENT:
@@ -146,6 +152,25 @@ export default function (state = initialState, action) {
           type_attributes: data.component_type.attributes || type_attributes,
         },
       };
+    case SEARCH_COMPONENTS: {
+      return {
+        ...state,
+        searchResults: payload,
+        searchLoading: false,
+      };
+    }
+    case CLEAR_SEARCH_STATE: {
+      return {
+        ...state,
+        searchResults: [],
+      };
+    }
+    case SEARCH_LOADING: {
+      return {
+        ...state,
+        searchLoading: true,
+      };
+    }
     case SET_COMPONENT_LOADING: {
       return {
         ...state,

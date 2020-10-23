@@ -35,6 +35,12 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
       paddingLeft: theme.spacing(2),
     },
   },
+  searchButton: {
+    color: theme.palette.text.secondary,
+    textTransform: 'none',
+    height: '56px',
+    marginTop: theme.spacing(2),
+  },
   detail: {
     [theme.breakpoints.down('xs')]: {
       padding: '6px',
@@ -44,9 +50,6 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
   },
   buttonGroup: {
-    // [theme.breakpoints.down('xs')]: {
-    //   padding: '6px',
-    // },
     marginLeft: theme.spacing(2),
     marginBottom: 15,
     color: theme.palette.text.primary,

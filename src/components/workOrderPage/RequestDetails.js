@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Paper, Grid, TextField, Button, Divider } from '@material-ui/core';
+import { Grid, TextField, Button, Divider } from '@material-ui/core';
 
 import RequestDetailGrid from './RequestDetailGrid';
 import Components from '../components/Components';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
 import Floorplan from './Floorplan';
-import FloorplanDev from './FloorplanDev'
-import {inDev} from '../../utils/helpers'
+import FloorplanDev from './FloorplanDev';
+import { inDev } from '../../utils/helpers';
 
 const RequestDetails = ({ workOrder, components, studioId }) => {
   const classes = requestDetailsGridStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
-
+  const {
+    building: { id: buildingId, site: siteId },
+    floor: { id: floorId },
+    space: { id: spaceId },
+  } = workOrder;
   return (
     <div className={classes.root}>
       <Grid item container xs={12}>
@@ -21,14 +25,26 @@ const RequestDetails = ({ workOrder, components, studioId }) => {
             <RequestDetailGrid workOrder={workOrder} />
           </Grid>
         </Grid>
-        <Grid 
-          item 
-          container 
-          direction='column'     
-          justify="center"
-          xs={12} 
-          lg={5}>
-          <Grid item>{inDev() ? <FloorplanDev/> : <Floorplan />}</Grid>
+        <Grid item container direction='column' justify='center' xs={12} lg={5}>
+          <Grid item>
+            {inDev() ? (
+              <FloorplanDev
+                studioId={studioId}
+                siteId={siteId}
+                buildingId={buildingId}
+                floorId={floorId}
+                spaceId={spaceId}
+              />
+            ) : (
+              <Floorplan
+                studioId={studioId}
+                siteId={siteId}
+                buildingId={buildingId}
+                floorId={floorId}
+                spaceId={spaceId}
+              />
+            )}
+          </Grid>
         </Grid>
         <Grid className={classes.commentField} item xs={12}>
           <TextField
@@ -54,13 +70,12 @@ const RequestDetails = ({ workOrder, components, studioId }) => {
           <Button
             disabled={comment === workOrder.administrator_comment}
             variant='contained'
-            color='secondary'
-          >
+            color='secondary'>
             Send
           </Button>
         </Grid>
       </Grid>
-      <Divider style={{marginBottom: '15px'}} />
+      <Divider style={{ marginBottom: '15px' }} />
       <Grid item container direction='column' xs={12} lg={7}>
         <Grid item container spacing={3}>
           <Components components={components} studioId={studioId} />

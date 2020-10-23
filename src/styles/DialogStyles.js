@@ -51,3 +51,50 @@ export const componentDetailGridStyles = makeStyles((theme) => ({
     color: theme.palette.grey[500],
   },
 }));
+
+export const componentSearchGridStyles = makeStyles((theme) => ({
+  lable: {
+    padding: theme.spacing(1),
+    fontWeight: 'bolder',
+    textAlign: 'right',
+    color: theme.palette.text.primary,
+  },
+  detail: {
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.palette.text.primary,
+  },
+  textFieldGrid: {
+    margin: theme.spacing(2),
+    [theme.breakpoints.down('xs')]: {
+      padding: 0,
+      margin: 0,
+    },
+  },
+  textField: {
+    minWidth: '90%',
+    maxWidth: '90%',
+    paddingRight: 0,
+    [theme.breakpoints.down('xs')]: {
+      minWidth: '100%',
+    },
+    '& .MuiOutlinedInput-adornedEnd ': {
+      paddingRight: 0,
+    },
+    '& .MuiButton-outlinedSizeLarge ': {
+      padding: '14px 21px',
+    },
+  },
+  textFieldTitle: {
+    color: theme.palette.grey[800],
+    margin: theme.spacing(1.5),
+  },
+  spaceGrid: {
+    padding: theme.spacing(1),
+  },
+  buttonGroup: {
+    marginLeft: theme.spacing(2),
+    marginBottom: 15,
+    color: theme.palette.text.primary,
+  },
+}));

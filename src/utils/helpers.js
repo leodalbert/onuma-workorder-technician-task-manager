@@ -77,14 +77,12 @@ export const workOrderFieldGen = (workOrder) => {
             'mailto:' +
             request_email +
             `?subject=Workorder request for room ${space.number} in ${building.name}`
-          }
-        >{`${submitted_by} (${request_email})`}</a>,
+          }>{`${submitted_by} (${request_email})`}</a>,
         request_telephone && (
           <a
             key={request_telephone}
             style={{ textDecoration: 'none' }}
-            href={'tel:' + request_telephone}
-          >
+            href={'tel:' + request_telephone}>
             {request_telephone}
           </a>
         ),

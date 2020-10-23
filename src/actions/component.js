@@ -9,6 +9,9 @@ import {
   ADD_COMPONENT,
   REMOVE_COMPONENT,
   SET_COMPONENT_LOADING,
+  SEARCH_COMPONENTS,
+  SEARCH_LOADING,
+  CLEAR_SEARCH_STATE,
 } from './types';
 
 // Get all components by space id
@@ -31,9 +34,11 @@ export const getSpaceComponents = (spaceId, studioId) => async (dispatch) => {
 };
 
 // Get details for work order components by component id and append instanceId
-export const getWorkOrderComponentDetails = (componentId, instanceId, studioId) => async (
-  dispatch
-) => {
+export const getWorkOrderComponentDetails = (
+  componentId,
+  instanceId,
+  studioId
+) => async (dispatch) => {
   try {
     const res = await axios.get(
       `/${studioId}/api/items/component/${componentId}?fields=id,component_type.model_number,component_type.description,component_type.name,component_type.manufacturer,component_type.parts_warranty_guarantor,component_type.parts_warranty_duration,component_type.labour_warranty_guarantor,component_type.labour_warranty_duration,component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date,space.space.name,space.id,space.space.floor.name,space.space.floor.number,space.space.number,component_type.attributes,attributes,`
@@ -54,7 +59,9 @@ export const getWorkOrderComponentDetails = (componentId, instanceId, studioId) 
 };
 
 // Post component to work order
-export const addComponent = (componentId, workorderId, studioId) => async (dispatch) => {
+export const addComponent = (componentId, workorderId, studioId) => async (
+  dispatch
+) => {
   dispatch({ type: SET_COMPONENT_LOADING, payload: true });
   try {
     const res = await axios.post(`/${studioId}/api/items/component_workorder`, {
@@ -70,7 +77,11 @@ export const addComponent = (componentId, workorderId, studioId) => async (dispa
 
     // get details and add button on component page
     dispatch(
-      getWorkOrderComponentDetails(componentIds.component, componentIds.id, studioId)
+      getWorkOrderComponentDetails(
+        componentIds.component,
+        componentIds.id,
+        studioId
+      )
     );
 
     // add component to workorder state
@@ -90,12 +101,35 @@ export const addComponent = (componentId, workorderId, studioId) => async (dispa
 };
 
 // Delete component from work order
-export const removeComponent = (componentWorkorderId, studioId) => async (dispatch) => {
+export const removeComponent = (componentWorkorderId, studioId) => async (
+  dispatch
+) => {
   dispatch({ type: REMOVE_COMPONENT, payload: componentWorkorderId });
   try {
     await axios.delete(
       `/${studioId}/api/items/component_workorder/${componentWorkorderId}`
     );
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Get all components in bulding by search criteria
+export const searchComponents = (searchParam, buildingId, studioId) => async (
+  dispatch
+) => {
+  dispatch({ type: SEARCH_LOADING });
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/space_component?fields=id,component.name,component.id, component.barcode, component.component_type.manufacturer,component.instance_name, component.component_type.name,component.component_type.model_number,component.serial_number, component.space.space.name,component.space.space.number,component.space.space.floor.name, component.space.space.floor.number&filter[space.floor.building.id][eq]=${buildingId}&filter[component.name][contains]=${searchParam}&filter[component.component_type][contains]=${searchParam}&filter[component.component_type][logical]=or&filter[component.barcode][contains]=${searchParam}&filter[component.barcode][logical]=or&filter[component.serial_number][contains]=${searchParam}&filter[component.serial_number][logical]=or&filter[component.instance_name][contains]=${searchParam}&filter[component.instance_name][logical]=or`
+    );
+    dispatch({ type: SEARCH_COMPONENTS, payload: res.data.data });
   } catch (err) {
     dispatch({
       type: ERROR,
@@ -115,4 +149,8 @@ export const fillComponentDialog = (component) => (dispatch) => {
 // Clear Component dialog state
 export const clearComponentDialog = () => (dispatch) => {
   dispatch({ type: CLEAR_DIALOG_COMPONENT });
+};
+// Clear Component dialog state
+export const clearSearchState = () => (dispatch) => {
+  dispatch({ type: CLEAR_SEARCH_STATE });
 };
