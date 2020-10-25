@@ -1,7 +1,7 @@
 {
   "name": "work-orders",
   "version": "0.1.0",
-  "homepage": "https://system.onuma.com/static/rt/",
+  "homepage": "https://system.onuma.com/static/rt",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",

@@ -10,7 +10,9 @@ import {
 
 const initialState = {
   workOrders: [],
-  current: null,
+  current: {
+    tasks: [],
+  },
   spaceId: '',
   loading: true,
   error: {},
@@ -59,7 +61,7 @@ export default function (state = initialState, action) {
     case CLEAR_CURRENT:
       return {
         ...state,
-        current: null,
+        current: initialState.current,
       };
     case ERROR:
       return {
