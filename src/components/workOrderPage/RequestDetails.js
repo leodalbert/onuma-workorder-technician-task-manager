@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid, TextField, Button, Divider } from '@material-ui/core';
@@ -6,8 +6,8 @@ import { Grid, TextField, Button, Divider } from '@material-ui/core';
 import RequestDetailGrid from './RequestDetailGrid';
 import Components from '../components/Components';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
-import Floorplan from './Floorplan';
 import FloorplanDev from './FloorplanDev';
+import OnumaFloorplan from './OnumaFloorplan';
 import { inDev } from '../../utils/helpers';
 
 const RequestDetails = ({
@@ -16,6 +16,7 @@ const RequestDetails = ({
   studioId,
   spaceInfo: { siteId, buildingId, floorId, spaceId },
 }) => {
+  useEffect(() => {}, [floorId]);
   const classes = requestDetailsGridStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
   return (
@@ -37,7 +38,7 @@ const RequestDetails = ({
                 spaceId={spaceId}
               />
             ) : (
-              <Floorplan
+              <OnumaFloorplan
                 studioId={studioId}
                 siteId={siteId}
                 buildingId={buildingId}

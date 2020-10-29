@@ -116,6 +116,7 @@ const TaskDetails = ({
 
   const handleSave = () => {
     setOpenSaveAlert(false);
+    setOpenCostAlert(false);
     if (workOrderStatus !== status) {
       workOrderStatusChange(workOrderId, workOrderStatus, studioId);
     }
@@ -130,6 +131,7 @@ const TaskDetails = ({
       assigned_technician: id,
       workorder: workOrderId,
     });
+    setCostForm(initialCostState);
     setTimeState(initialTimeState);
     setCostTasks([]);
   };

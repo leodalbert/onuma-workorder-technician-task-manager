@@ -29,7 +29,6 @@ const initialState = {
     spaceId: '',
     spaceName: '',
   },
-  // spaceId: undefined,
   loading: true,
   error: {},
 };

@@ -14,11 +14,32 @@ import {
 export const getAllWorkOrders = (techEmail, studioId) => async (dispatch) => {
   dispatch({ type: SET_LOADING });
   try {
-    //   TODO - handle studio number
     const res = await axios.get(
       `/${studioId}/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space, status&filter[assigned_technician.email]=${techEmail}`
     );
     dispatch({ type: GET_TECHS_WORK_ORDERS, payload: res.data.data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Get floor 0 id of building
+export const getFloorId = (buildingId, studioId) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/building?filter[id]=${buildingId}&fields=floors.id`
+    );
+    console.log(res.data.data[0].floors[0].id);
+    dispatch({
+      type: SET_SPACE_INFO,
+      payload: { floorId: res.data.data[0].floors[0].id },
+    });
   } catch (err) {
     dispatch({
       type: ERROR,
@@ -36,6 +57,8 @@ export const getWorkOrder = (id, studioId) => async (dispatch) => {
     const res = await axios.get(
       `/${studioId}/api/items/workorder/${id}?fields=*,*.*&fields=id,status,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.id`
     );
+
+    // create object with buidling info if availible
     let workorder = res.data.data;
     let buildingInfo = {};
     buildingInfo.siteId = workorder.building.site;
@@ -47,6 +70,8 @@ export const getWorkOrder = (id, studioId) => async (dispatch) => {
     }
     if (workorder.floor) {
       buildingInfo.floorId = workorder.floor.id;
+    } else {
+      dispatch(getFloorId(buildingInfo.buildingId, studioId));
     }
     dispatch({ type: SET_SPACE_INFO, payload: buildingInfo });
 

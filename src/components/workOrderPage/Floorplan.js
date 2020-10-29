@@ -1,5 +1,4 @@
 import React from 'react';
-// import ScriptTag from 'react-script-tag';
 
 const Floorplan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
   // TODO handle loading
