@@ -17,8 +17,8 @@ import { summaryTableStyles } from '../../styles/GridStyles';
 
 const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
   const classes = summaryTableStyles();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('request_number');
+  const [order, setOrder] = useState('desc');
+  const [orderBy, setOrderBy] = useState('request_date');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -52,8 +52,7 @@ const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
           className={classes.table}
           aria-labelledby='tableTitle'
           size='medium'
-          aria-label='enhanced table'
-        >
+          aria-label='enhanced table'>
           <SummaryHead
             classes={classes}
             order={order}
@@ -71,8 +70,7 @@ const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
                     hover
                     onClick={() => handleRowSelect(row.id)}
                     tabIndex={-1}
-                    key={row.id}
-                  >
+                    key={row.id}>
                     <TableCell component='th' id={labelId} scope='row'>
                       {dayjs(row.request_date).format('MM/DD/YYYY')}
                     </TableCell>
@@ -81,8 +79,7 @@ const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
                       className={
                         row.assigned_priority === 1 ? classes.urgent : ''
                       }
-                      align='left'
-                    >
+                      align='left'>
                       {row.request_description.split('\r\n')[0]}
                     </TableCell>
                     <TableCell align='left'>{row.request_number}</TableCell>

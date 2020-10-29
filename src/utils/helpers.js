@@ -76,7 +76,9 @@ export const workOrderFieldGen = (workOrder) => {
           href={
             'mailto:' +
             request_email +
-            `?subject=Workorder request for room ${space.number} in ${building.name}`
+            `?subject=Workorder request for room ${space && space.number} in ${
+              building.name
+            }`
           }>{`${submitted_by} (${request_email})`}</a>,
         request_telephone && (
           <a
@@ -96,12 +98,13 @@ export const workOrderFieldGen = (workOrder) => {
         `${building.number} ${(building.number || building.name) && '- '}${
           building.name
         }`,
-        <br key='1' />,
-        floor && !!floor.name && floor.name,
-        floor && !!floor.name && <br key='2' />,
-        `${space && space.number && space.number} ${
-          space && space.number && space.name && '- '
-        }${space && space.name && space.name}`,
+        !!floor && !!floor.name && <br key='1' />,
+        !!floor && !!floor.name && floor.name,
+        !!space && <br key='2' />,
+        !!space && space.number && space.number,
+        ' ',
+        !!space && space.number && space.name && '- ',
+        !!space && space.name && space.name,
         location_description && <br key='3' />,
         location_description && location_description,
       ],
@@ -254,3 +257,18 @@ export const inDev = () => {
     return true;
   }
 };
+
+// Function to generate anchor tag for tech email
+
+export const TechEmail = (name, email, building, room) => (
+  <a
+    style={{ textDecoration: 'none' }}
+    href={
+      'mailto:' +
+      email +
+      `?subject=Regarding work order for ${building && building} ${
+        room && 'in ' + room
+      }` +
+      `&body=Hi%20${name},`
+    }>{`${name} (${email})`}</a>
+);

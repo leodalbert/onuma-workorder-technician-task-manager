@@ -42,7 +42,7 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
           )}
         </TableCell>
         <TableCell align='left'>
-          $ {(Math.round(task.material_cost * 100) / 100).toFixed(2)}
+          $&nbsp;{(Math.round(task.material_cost * 100) / 100).toFixed(2)}
         </TableCell>
         <TableCell align='left'>
           {dayjs(task.date).format('MM/DD/YYYY')}
@@ -76,7 +76,8 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
                         </TableCell>
 
                         <TableCell align='right'>
-                          $ {(Math.round(cost.cost * 100) / 100).toFixed(2)}
+                          $&nbsp;
+                          {(Math.round(cost.cost * 100) / 100).toFixed(2)}
                         </TableCell>
                         <TableCell></TableCell>
                       </TableRow>
@@ -88,7 +89,8 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
                   </TableCell>
 
                   <TableCell className={classes.head} align='right'>
-                    $ {(Math.round(task.material_cost * 100) / 100).toFixed(2)}
+                    $&nbsp;
+                    {(Math.round(task.material_cost * 100) / 100).toFixed(2)}
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>

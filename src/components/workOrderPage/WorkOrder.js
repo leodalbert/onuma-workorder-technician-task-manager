@@ -5,7 +5,8 @@ import { getWorkOrder } from '../../actions/workOrder';
 import { getSpaceComponents } from '../../actions/component';
 
 import RequestDetails from './RequestDetails';
-import PreviousTasks from './PreviousTasks';
+import PreviousTasks from '../tasks/PreviousTasks';
+import TaskDetails from '../tasks/TaskDetails';
 import Spinner from '../layout/Spinner';
 import { workOrderStyles } from '../../styles/GridStyles';
 
@@ -26,7 +27,12 @@ const WorkOrder = ({
   components,
   getSpaceComponents,
   tasks,
-  workOrder: { loading, current, spaceId },
+  workOrderStatus,
+  workOrder: {
+    loading,
+    current,
+    currentSpaceInfo: { spaceId },
+  },
 }) => {
   useEffect(() => {
     spaceId && getSpaceComponents(spaceId, params.studioId);
@@ -83,19 +89,23 @@ const WorkOrder = ({
           </AccordionDetails>
         </Accordion>
       )}
-      <Accordion
-        classes={{ expanded: classes.expanded }}
-        square
-        defaultExpanded>
-        <AccordionSummary
-          className={classes.header}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='taskDetails-content'
-          id='taskDetails-header'>
-          <Typography className={classes.heading}>Task Details</Typography>
-        </AccordionSummary>
-        <AccordionDetails></AccordionDetails>
-      </Accordion>
+      {workOrderStatus !== 'Completed' && (
+        <Accordion
+          classes={{ expanded: classes.expanded }}
+          square
+          defaultExpanded>
+          <AccordionSummary
+            className={classes.header}
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='taskDetails-content'
+            id='taskDetails-header'>
+            <Typography className={classes.heading}>Task Details</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TaskDetails studioId={params.studioId} />
+          </AccordionDetails>
+        </Accordion>
+      )}
       <Accordion
         classes={{ expanded: classes.expanded }}
         square
@@ -123,6 +133,7 @@ WorkOrder.propTypes = {
 
 const mapStateToProps = (state) => ({
   workOrder: state.workOrder,
+  workOrderStatus: state.workOrder.current.status,
   components: state.component.components,
   tasks: state.workOrder.current.tasks,
 });

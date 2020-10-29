@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid, TextField, Button, Divider } from '@material-ui/core';
 
@@ -9,14 +10,14 @@ import Floorplan from './Floorplan';
 import FloorplanDev from './FloorplanDev';
 import { inDev } from '../../utils/helpers';
 
-const RequestDetails = ({ workOrder, components, studioId }) => {
+const RequestDetails = ({
+  workOrder,
+  components,
+  studioId,
+  spaceInfo: { siteId, buildingId, floorId, spaceId },
+}) => {
   const classes = requestDetailsGridStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
-  const {
-    building: { id: buildingId, site: siteId },
-    floor: { id: floorId },
-    space: { id: spaceId },
-  } = workOrder;
   return (
     <div className={classes.root}>
       <Grid item container xs={12}>
@@ -90,4 +91,8 @@ RequestDetails.propTypes = {
   components: PropTypes.array.isRequired,
 };
 
-export default RequestDetails;
+const mapStateToProps = (state) => ({
+  spaceInfo: state.workOrder.currentSpaceInfo,
+});
+
+export default connect(mapStateToProps)(RequestDetails);

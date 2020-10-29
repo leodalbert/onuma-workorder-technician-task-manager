@@ -13,13 +13,13 @@ import {
 } from '@material-ui/core';
 
 import PreviousTaskRow from './PreviousTaskRow';
-import { getCosts } from '../../actions/task';
+import { getTaskCosts } from '../../actions/task';
 import { previousTaskStyles } from '../../styles/TaskStyles';
 
-const PreviousTasks = ({ tasks, techs, studioId, getCosts, taskCosts }) => {
+const PreviousTasks = ({ tasks, techs, studioId, getTaskCosts, taskCosts }) => {
   useEffect(() => {
-    getCosts(studioId, tasks);
-  }, [tasks, studioId, getCosts]);
+    getTaskCosts(studioId, tasks);
+  }, [tasks, studioId, getTaskCosts]);
   const classes = previousTaskStyles();
 
   const techName = (task) => {
@@ -64,7 +64,7 @@ PreviousTasks.propTypes = {
   tasks: PropTypes.array.isRequired,
   techs: PropTypes.array.isRequired,
   taskCosts: PropTypes.array.isRequired,
-  getCosts: PropTypes.func.isRequired,
+  getTaskCosts: PropTypes.func.isRequired,
   studioId: PropTypes.string.isRequired,
 };
 
@@ -72,6 +72,8 @@ const mapStateToProps = (state) => ({
   tasks: state.workOrder.current.tasks,
   techs: state.tech.techs,
   taskCosts: state.task.taskCosts,
+  // studioId: PropTypes.string.isRequired,
+  // getTaskCosts: PropTypes.func.isRequired,
 });
 
-export default connect(mapStateToProps, { getCosts })(PreviousTasks);
+export default connect(mapStateToProps, { getTaskCosts })(PreviousTasks);

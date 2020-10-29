@@ -190,3 +190,69 @@ export const summaryTableStyles = makeStyles((theme) => ({
     color: theme.palette.info.main,
   },
 }));
+
+export const taskDetailsGridStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  lable: {
+    padding: theme.spacing(1),
+    fontWeight: 'bolder',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'left',
+      padding: '6px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      textAlign: 'right',
+    },
+    color: theme.palette.text.primary,
+  },
+  detail: {
+    [theme.breakpoints.down('xs')]: {
+      padding: '6px',
+    },
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.palette.text.primary,
+  },
+  lableGrid: {
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: '0px !important',
+    },
+  },
+  detailGrid: {
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '0px !important',
+    },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 330,
+  },
+  forwardBtn: {
+    float: 'right',
+    [theme.breakpoints.down('xs')]: {
+      float: 'left',
+    },
+  },
+  selectLable: {
+    padding: theme.spacing(1),
+    fontWeight: 'bolder',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'left',
+      padding: '6px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      textAlign: 'right',
+      paddingTop: 30,
+    },
+    color: theme.palette.text.primary,
+  },
+  costHead: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  saveBtn: {
+    backgroundColor: theme.palette.secondary.main,
+    padding: '6px 24px',
+  },
+}));

@@ -27,6 +27,8 @@ import {
 import { componentSearchGridStyles } from '../../styles/DialogStyles';
 
 // TODO handle no result search
+//  TODO add close modal button for mobile
+// TODO add helper text for component search btn on mobile
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;

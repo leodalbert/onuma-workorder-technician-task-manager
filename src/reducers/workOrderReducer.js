@@ -6,14 +6,29 @@ import {
   CLEAR_CURRENT,
   ADD_COMPONENT,
   REMOVE_COMPONENT,
+  ADD_TASK,
+  CHANGE_WORKORDER_STATUS,
+  SET_SPACE_INFO,
 } from '../actions/types';
 
 const initialState = {
   workOrders: [],
   current: {
+    id: '',
     tasks: [],
+    collaborators: [],
+    building: { name: '' },
+    space: { name: '' },
+    status: 'Assigned',
   },
-  spaceId: '',
+  currentSpaceInfo: {
+    siteId: '',
+    buildingId: '',
+    floorId: 0,
+    spaceId: '',
+    spaceName: '',
+  },
+  // spaceId: undefined,
   loading: true,
   error: {},
 };
@@ -32,8 +47,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         current: payload,
-        spaceId: payload.space.id,
         loading: false,
+      };
+    case SET_SPACE_INFO:
+      return {
+        ...state,
+        currentSpaceInfo: {
+          ...state.currentSpaceInfo,
+          ...payload,
+        },
       };
     case ADD_COMPONENT:
       return {
@@ -53,6 +75,16 @@ export default function (state = initialState, action) {
           ),
         },
       };
+    case ADD_TASK:
+      return {
+        ...state,
+        current: { ...state.current, tasks: [...state.current.tasks, payload] },
+      };
+    case CHANGE_WORKORDER_STATUS:
+      return {
+        ...state,
+        current: { ...state.current, status: payload },
+      };
     case SET_LOADING:
       return {
         ...state,
@@ -62,6 +94,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         current: initialState.current,
+        currentSpaceInfo: initialState.currentSpaceInfo,
       };
     case ERROR:
       return {
