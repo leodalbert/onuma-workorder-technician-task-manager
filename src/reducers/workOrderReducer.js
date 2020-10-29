@@ -9,6 +9,7 @@ import {
   ADD_TASK,
   CHANGE_WORKORDER_STATUS,
   SET_SPACE_INFO,
+  UPDATE_WORKORDER_TASK,
 } from '../actions/types';
 
 const initialState = {
@@ -63,6 +64,22 @@ export default function (state = initialState, action) {
         current: {
           ...state.current,
           components: [...state.current.components, payload],
+        },
+      };
+    case UPDATE_WORKORDER_TASK:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          tasks: state.current.tasks.map((task) => {
+            console.log(task);
+            if (task.id === payload.id) {
+              console.log('this one: ', task);
+              return payload;
+            } else {
+              return task;
+            }
+          }),
         },
       };
     case REMOVE_COMPONENT:
