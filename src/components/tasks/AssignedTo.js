@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Grid, List, ListItem, Typography, Button } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 
+import AddCollaboratorDialog from './AddCollaboratorDialog';
 import { TechEmail } from '../../utils/helpers';
 
 const AssignedTo = ({
@@ -14,7 +15,16 @@ const AssignedTo = ({
   building,
   techs,
   collaborators,
+  removeCollaborator,
+  handleAddCollaborator,
+  studioId,
+  currentTechId,
 }) => {
+  const [collaboratorDialog, setCollaboratorDialog] = useState(false);
+  const handleAdd = (selectedTechId) => {
+    setCollaboratorDialog(false);
+    handleAddCollaborator(selectedTechId);
+  };
   return (
     <Fragment>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
@@ -29,7 +39,9 @@ const AssignedTo = ({
             <Typography variant='subtitle2'>Other collaborators:</Typography>
             <List dense style={{ paddingTop: 0 }}>
               {collaborators.map((collaborator) => {
-                let tech = techs.filter((tech) => tech.id === collaborator.id);
+                let tech = techs.filter(
+                  (tech) => tech.id === collaborator.collaborator
+                );
                 return (
                   <ListItem key={tech[0].id}>
                     {TechEmail(
@@ -38,7 +50,12 @@ const AssignedTo = ({
                       room,
                       building
                     )}
-                    <Button variant='text' size='small'>
+                    <Button
+                      onClick={() =>
+                        removeCollaborator(collaborator.id, studioId)
+                      }
+                      variant='text'
+                      size='small'>
                       <ClearIcon fontSize='small' />
                     </Button>
                   </ListItem>
@@ -49,10 +66,22 @@ const AssignedTo = ({
         )}
       </Grid>
       <Grid className={classes.detailGrid} item xs={12} sm={3}>
-        <Button className={classes.forwardBtn} variant='outlined'>
+        <Button
+          onClick={() => setCollaboratorDialog(true)}
+          className={classes.forwardBtn}
+          variant='outlined'>
           Add collaborator
         </Button>
       </Grid>
+      <AddCollaboratorDialog
+        techs={techs}
+        collaborators={collaborators}
+        currentTechId={currentTechId}
+        open={collaboratorDialog}
+        setCollaboratorDialog={setCollaboratorDialog}
+        handleAdd={handleAdd}
+        classes={classes}
+      />
     </Fragment>
   );
 };
@@ -65,6 +94,9 @@ AssignedTo.propTypes = {
   building: PropTypes.string,
   techs: PropTypes.array.isRequired,
   collaborators: PropTypes.array,
+  removeCollaborator: PropTypes.func.isRequired,
+  handleAddCollaborator: PropTypes.func.isRequired,
+  currentTechId: PropTypes.number,
 };
 
 export default AssignedTo;

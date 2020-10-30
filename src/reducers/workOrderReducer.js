@@ -10,6 +10,8 @@ import {
   CHANGE_WORKORDER_STATUS,
   SET_SPACE_INFO,
   UPDATE_WORKORDER_TASK,
+  ADD_COLLABORATOR,
+  REMOVE_COLLABORATOR,
 } from '../actions/types';
 
 const initialState = {
@@ -63,6 +65,24 @@ export default function (state = initialState, action) {
         current: {
           ...state.current,
           components: [...state.current.components, payload],
+        },
+      };
+    case ADD_COLLABORATOR:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          collaborators: [...state.current.collaborators, payload],
+        },
+      };
+    case REMOVE_COLLABORATOR:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          collaborators: state.current.collaborators.filter(
+            (colaborator) => colaborator.id !== payload
+          ),
         },
       };
     case UPDATE_WORKORDER_TASK:

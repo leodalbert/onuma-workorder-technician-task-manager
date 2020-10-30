@@ -13,7 +13,11 @@ import ConfirmSaveDialog from './ConfirmSaveDialog';
 
 import { taskDetailsGridStyles } from '../../styles/GridStyles';
 import { addNewTask } from '../../actions/task';
-import { workOrderStatusChange } from '../../actions/workOrder';
+import {
+  workOrderStatusChange,
+  removeCollaborator,
+  addCollaborator,
+} from '../../actions/workOrder';
 
 const initialCostState = {
   description: '',
@@ -34,7 +38,7 @@ const initialTimeState = { hrs: '', mins: '' };
 const TaskDetails = ({
   name,
   email,
-  id,
+  currentTechId,
   room,
   building,
   collaborators,
@@ -44,6 +48,8 @@ const TaskDetails = ({
   studioId,
   addNewTask,
   workOrderStatusChange,
+  removeCollaborator,
+  addCollaborator,
 }) => {
   const classes = taskDetailsGridStyles();
 
@@ -56,14 +62,14 @@ const TaskDetails = ({
   const [openCostAlert, setOpenCostAlert] = useState(false);
 
   useEffect(() => {
-    id &&
+    currentTechId &&
       setTaskForm({
         ...taskForm,
-        assigned_technician: id,
+        assigned_technician: currentTechId,
         workorder: workOrderId,
       });
     // eslint-disable-next-line
-  }, [id, workOrderId]);
+  }, [currentTechId, workOrderId]);
 
   useEffect(() => {
     if (!_.isEqual(timeState, initialTimeState)) {
@@ -114,6 +120,10 @@ const TaskDetails = ({
     }
   };
 
+  const handleAddCollaborator = (techId) => {
+    addCollaborator(workOrderId, techId, studioId);
+  };
+
   const handleSave = () => {
     setOpenSaveAlert(false);
     setOpenCostAlert(false);
@@ -128,7 +138,7 @@ const TaskDetails = ({
     }
     setTaskForm({
       ...initialTaskState,
-      assigned_technician: id,
+      assigned_technician: currentTechId,
       workorder: workOrderId,
     });
     setCostForm(initialCostState);
@@ -148,12 +158,16 @@ const TaskDetails = ({
             building={building}
             techs={techs}
             collaborators={collaborators}
+            removeCollaborator={removeCollaborator}
+            handleAddCollaborator={handleAddCollaborator}
+            studioId={studioId}
+            currentTechId={currentTechId}
           />
           <TaskForm
             classes={classes}
             handleFormChange={handleFormChange}
             techs={techs}
-            id={id}
+            id={currentTechId}
             name={name}
             setTimeState={setTimeState}
             timeState={timeState}
@@ -216,7 +230,7 @@ const TaskDetails = ({
 TaskDetails.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  id: PropTypes.number,
+  currentTechId: PropTypes.number,
   room: PropTypes.string.isRequired,
   building: PropTypes.string.isRequired,
   collaborators: PropTypes.array.isRequired,
@@ -226,22 +240,25 @@ TaskDetails.propTypes = {
   studioId: PropTypes.string.isRequired,
   addNewTask: PropTypes.func.isRequired,
   workOrderStatusChange: PropTypes.func.isRequired,
+  removeCollaborator: PropTypes.func.isRequired,
+  addCollaborator: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.tech.email,
   name: state.tech.name,
-  id: state.tech.id,
+  currentTechId: state.tech.id,
   building: state.workOrder.current.building.name,
   room: state.workOrder.currentSpaceInfo.spaceName,
   status: state.workOrder.current.status,
   workOrderId: state.workOrder.current.id,
   collaborators: state.workOrder.current.collaborators,
   techs: state.tech.techs,
-  workOrderStatusChange: PropTypes.func.isRequired,
-  addNewTask: PropTypes.func.isRequired,
 });
 
-export default connect(mapStateToProps, { addNewTask, workOrderStatusChange })(
-  TaskDetails
-);
+export default connect(mapStateToProps, {
+  addNewTask,
+  workOrderStatusChange,
+  removeCollaborator,
+  addCollaborator,
+})(TaskDetails);
