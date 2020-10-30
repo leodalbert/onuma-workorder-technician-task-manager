@@ -61,8 +61,6 @@ const TaskDetails = ({
   const [openSaveAlert, setOpenSaveAlert] = useState(false);
   const [openCostAlert, setOpenCostAlert] = useState(false);
 
-  console.log(workOrderStatus);
-
   useEffect(() => {
     currentTechId &&
       setTaskForm({
@@ -88,7 +86,7 @@ const TaskDetails = ({
       !costTasks.length < 1) &&
     workOrderStatus === 'Assigned'
   ) {
-    setWorkOrderStatus('Work in Progress');
+    setWorkOrderStatus('Work In Progress');
   }
 
   const handleFormChange = (e) => {
