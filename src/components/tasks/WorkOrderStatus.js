@@ -29,7 +29,7 @@ const WorkOrderStatus = ({ classes, workOrderStatus, setWorkOrderStatus }) => {
               />
             ) : (
               <FormControlLabel
-                value='Work In Progress'
+                value='Work in Progress'
                 control={<Radio color='default' />}
                 label='In Progress'
               />

@@ -61,6 +61,8 @@ const TaskDetails = ({
   const [openSaveAlert, setOpenSaveAlert] = useState(false);
   const [openCostAlert, setOpenCostAlert] = useState(false);
 
+  console.log(workOrderStatus);
+
   useEffect(() => {
     currentTechId &&
       setTaskForm({
