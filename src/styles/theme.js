@@ -22,6 +22,7 @@ const theme = createMuiTheme({
       dark: '#830000',
     },
   },
+  spacing: 5,
   overrides: {
     MuiSelect: {
       select: {

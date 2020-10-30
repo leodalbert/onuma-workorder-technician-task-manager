@@ -5,6 +5,7 @@ import {
   DialogContent,
   Dialog,
   Grid,
+  Container,
   Slide,
   TextField,
   Button,
@@ -15,6 +16,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 
 import Header from '../layout/Header';
+import QrReader from './QrReader';
 import ComponentSearchDialogResults from './ComponentSearchDialogResults';
 import ComponentDetailDialog from './ComponentDetailDialog';
 import {
@@ -51,6 +53,8 @@ const ComponentSearchDialog = ({
 
   const [searchField, setSearchField] = useState('');
   const [openDetailDailog, setOpenDetailDialog] = useState(false);
+  const [openQrReader, setOpenQrReader] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const [isDesktop, setDesktop] = useState(window.innerWidth > 750);
   const updateMedia = () => {
@@ -62,6 +66,7 @@ const ComponentSearchDialog = ({
   });
 
   const handleSearch = () => {
+    setHasSearched(true);
     searchComponents(searchField, building.id, studioId);
   };
 
@@ -71,6 +76,7 @@ const ComponentSearchDialog = ({
   };
 
   const handleCloseComponentDialog = () => {
+    setHasSearched(false);
     setOpenDetailDialog(false);
     clearComponentDialog();
   };
@@ -82,6 +88,14 @@ const ComponentSearchDialog = ({
     setSearchField('');
     handleClose();
     clearSearchState();
+  };
+  const handleScan = (data) => {
+    if (!!data) {
+      setHasSearched(true);
+      setOpenQrReader(false);
+      setSearchField(data);
+      searchComponents(data, building.id, studioId);
+    }
   };
 
   const headerLocation = [
@@ -133,7 +147,7 @@ const ComponentSearchDialog = ({
                       <SearchIcon />
                       {isDesktop && ' Search'}
                     </Button>
-                    <Button>
+                    <Button onClick={() => setOpenQrReader(!openQrReader)}>
                       <i className='fas fa-qrcode'></i>
                     </Button>
                   </ButtonGroup>
@@ -148,12 +162,28 @@ const ComponentSearchDialog = ({
               />
             )}
           </Grid>
+          {openQrReader && (
+            <Grid item xs={12}>
+              <Container disableGutters maxWidth='sm'>
+                <QrReader handleScan={handleScan} />
+              </Container>
+            </Grid>
+          )}
+
           <Grid className={classes.textFieldGrid} container item xs={12}>
-            <ComponentSearchDialogResults
-              searchResults={searchResults}
-              handleOpenComponentDialog={handleOpenComponentDialog}
-              handleSelectComponent={handleSelectComponent}
-            />
+            {!loading && hasSearched && searchResults.length < 1 ? (
+              <Grid style={{ textAlign: 'center' }} item xs={12}>
+                <Typography style={{ paddingTop: '20px' }}>
+                  No search results found...
+                </Typography>
+              </Grid>
+            ) : (
+              <ComponentSearchDialogResults
+                searchResults={searchResults}
+                handleOpenComponentDialog={handleOpenComponentDialog}
+                handleSelectComponent={handleSelectComponent}
+              />
+            )}
           </Grid>
         </Grid>
         <ComponentDetailDialog

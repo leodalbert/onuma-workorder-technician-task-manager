@@ -52,7 +52,7 @@ const RequestDetails = ({
           <TextField
             className={classes.commentFieldStyle}
             id='commentField'
-            label='Comments To Requestor'
+            label='Comments To Requester'
             multiline
             fullWidth
             rows={4}
@@ -64,7 +64,7 @@ const RequestDetails = ({
             }}
             helperText={
               comment !== workOrder.administrator_comment &&
-              "If you would like the requestor to receive an email with this comment, click 'Send' button."
+              'Click "Save + Send" to email your comment to requester'
             }
           />
         </Grid>
@@ -73,7 +73,7 @@ const RequestDetails = ({
             disabled={comment === workOrder.administrator_comment}
             variant='contained'
             color='secondary'>
-            Send
+            Save + Send
           </Button>
         </Grid>
       </Grid>

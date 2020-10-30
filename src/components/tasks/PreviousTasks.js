@@ -34,7 +34,7 @@ const PreviousTasks = ({ tasks, techs, studioId, getTaskCosts, taskCosts }) => {
   };
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label='task table'>
+      <Table size='small' className={classes.table} aria-label='task table'>
         <TableHead>
           <TableRow>
             <TableCell>Description</TableCell>
