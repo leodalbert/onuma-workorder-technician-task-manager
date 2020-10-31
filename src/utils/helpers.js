@@ -26,9 +26,9 @@ export const insertBreak = (arr) => {
   }, []);
 };
 
-// function to generate list of fields workorder page
+// function to generate list of fields workorder page pt 1
 
-export const workOrderFieldGen = (workOrder) => {
+export const workOrderFieldGen1 = (workOrder) => {
   const {
     request_number,
     request_date,
@@ -36,13 +36,9 @@ export const workOrderFieldGen = (workOrder) => {
     request_email,
     submitted_by,
     building,
-    floor,
     space,
-    request_description,
-    location_description,
     request_telephone,
     due_date,
-    administrator_to_technician_comment,
   } = workOrder;
 
   let FIELDS = [];
@@ -91,6 +87,22 @@ export const workOrderFieldGen = (workOrder) => {
       ]),
     });
 
+  return FIELDS;
+};
+
+// function to generate list of fields workorder page pt 2
+
+export const workOrderFieldGen2 = (workOrder) => {
+  const {
+    building,
+    floor,
+    space,
+    request_description,
+    location_description,
+    administrator_to_technician_comment,
+  } = workOrder;
+
+  let FIELDS = [];
   (building.number || building.name) &&
     FIELDS.push({
       lable: 'Location:',

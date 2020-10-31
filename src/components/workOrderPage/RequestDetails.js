@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Grid, TextField, Button, Divider } from '@material-ui/core';
+import { Grid, TextField, Button, Divider, Hidden } from '@material-ui/core';
 
-import RequestDetailGrid from './RequestDetailGrid';
+import { RequestDetailGrid1, RequestDetailGrid2 } from './RequestDetailGrid';
 import Components from '../components/Components';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
 import FloorplanDev from './FloorplanDev';
@@ -24,12 +24,15 @@ const RequestDetails = ({
       <Grid item container xs={12}>
         <Grid item container direction='column' xs={12} lg={7}>
           <Grid item container spacing={3}>
-            <RequestDetailGrid workOrder={workOrder} />
+            <RequestDetailGrid1 workOrder={workOrder} />
+            <Hidden mdDown>
+              <RequestDetailGrid2 workOrder={workOrder} />
+            </Hidden>
           </Grid>
         </Grid>
         <Grid item container direction='column' justify='center' xs={12} lg={5}>
-          <Grid item>
-            {inDev() ? (
+          {inDev() ? (
+            <Grid item>
               <div className={classes.floorPlan}>
                 <FloorplanDev
                   studioId={studioId}
@@ -39,17 +42,29 @@ const RequestDetails = ({
                   spaceId={spaceId}
                 />
               </div>
-            ) : (
-              <OnumaFloorplan
-                studioId={studioId}
-                siteId={siteId}
-                buildingId={buildingId}
-                floorId={floorId}
-                spaceId={spaceId}
-              />
-            )}
-          </Grid>
+            </Grid>
+          ) : (
+            <Grid item>
+              <div className={classes.floorPlan}>
+                <OnumaFloorplan
+                  studioId={studioId}
+                  siteId={siteId}
+                  buildingId={buildingId}
+                  floorId={floorId}
+                  spaceId={spaceId}
+                />
+              </div>
+            </Grid>
+          )}
         </Grid>
+        <Hidden lgUp>
+          <Grid item container direction='column' xs={12} lg={7}>
+            <Grid item container spacing={3}>
+              <RequestDetailGrid2 workOrder={workOrder} />
+            </Grid>
+          </Grid>
+        </Hidden>
+
         <Grid className={classes.commentField} item xs={12}>
           <TextField
             className={classes.commentFieldStyle}
