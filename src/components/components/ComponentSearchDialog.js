@@ -28,7 +28,6 @@ import {
 } from '../../actions/component';
 import { componentSearchGridStyles } from '../../styles/DialogStyles';
 
-// TODO handle no result search
 //  TODO add close modal button for mobile
 // TODO add helper text for component search btn on mobile
 
@@ -118,6 +117,7 @@ const ComponentSearchDialog = ({
         text={headerLocation}
         dialogHeader={true}
         handleClose={handleClose}
+        isMobile={!isDesktop}
       />
       <DialogContent>
         <Grid container spacing={3}>

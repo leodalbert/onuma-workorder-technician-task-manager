@@ -82,7 +82,7 @@ export const componentSearchGridStyles = makeStyles((theme) => ({
       paddingRight: 0,
     },
     '& .MuiButton-outlinedSizeLarge ': {
-      padding: '14px 21px',
+      padding: '14px 16px',
     },
   },
   textFieldTitle: {

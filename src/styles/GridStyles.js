@@ -64,8 +64,9 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   },
   floorPlan: {
     padding: theme.spacing(2),
-    minHeight: '300px',
-    // height: '100%',
+    // height: '300px',
+    // maxWidth: '500px',
+    // width: '90%',
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },

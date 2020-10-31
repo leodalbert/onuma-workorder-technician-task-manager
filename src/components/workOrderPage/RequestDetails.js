@@ -30,13 +30,15 @@ const RequestDetails = ({
         <Grid item container direction='column' justify='center' xs={12} lg={5}>
           <Grid item>
             {inDev() ? (
-              <FloorplanDev
-                studioId={studioId}
-                siteId={siteId}
-                buildingId={buildingId}
-                floorId={floorId}
-                spaceId={spaceId}
-              />
+              <div className={classes.floorPlan}>
+                <FloorplanDev
+                  studioId={studioId}
+                  siteId={siteId}
+                  buildingId={buildingId}
+                  floorId={floorId}
+                  spaceId={spaceId}
+                />
+              </div>
             ) : (
               <OnumaFloorplan
                 studioId={studioId}

@@ -8,30 +8,53 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import logo from './onumalogo_noshad.jpg';
 
-const Header = ({ email, name, studio, text, dialogHeader, handleClose}) => {
+const Header = ({
+  email,
+  name,
+  studio,
+  text,
+  dialogHeader,
+  handleClose,
+  isMobile,
+}) => {
   const classes = headerStyles();
   return (
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar classes={{ root: classes.toolbar }}>
           <Typography
-            style={dialogHeader? {fontSize: '16px'} : { textDecoration: 'inherit' }}
-            component={dialogHeader ? "h6" : Link}
-            to={`${process.env.PUBLIC_URL}/${studio}/technicians/${email && email}`}
+            style={
+              dialogHeader
+                ? { fontSize: '16px' }
+                : { textDecoration: 'inherit' }
+            }
+            component={dialogHeader ? 'h6' : Link}
+            to={`${process.env.PUBLIC_URL}/${studio}/technicians/${
+              email && email
+            }`}
             variant='h6'
-            className={classes.title}
-          >
-            {text} {(!dialogHeader && name) && `- ${name}`}
+            className={classes.title}>
+            {text} {!dialogHeader && name && `- ${name}`}
           </Typography>
-
+          {isMobile && (
+            <Button onClick={handleClose} color='inherit'>
+              <CloseIcon />
+            </Button>
+          )}
           <img src={logo} alt='logo' className={classes.logo} />
           <Hidden xsDown>
-            { dialogHeader ? 
-              <Button onClick={handleClose} color='inherit' className={classes.btn}>Close  <CloseIcon/></Button>
-              : 
+            {dialogHeader ? (
+              <Button
+                onClick={handleClose}
+                color='inherit'
+                className={classes.btn}>
+                Close <CloseIcon />
+              </Button>
+            ) : (
               <Button color='inherit' className={classes.btn}>
-              Get in touch
-            </Button>}
+                Get in touch
+              </Button>
+            )}
           </Hidden>
         </Toolbar>
       </AppBar>
@@ -49,13 +72,14 @@ Header.propTypes = {
 
 Header.defaultProps = {
   text: ['Assignments'],
-  dialogHeader: false
-}
+  dialogHeader: false,
+  isMobile: false,
+};
 
 const mapStateToProps = (state) => ({
   email: state.tech.email,
   name: state.tech.name,
-  studio: state.tech.studio
+  studio: state.tech.studio,
 });
 
 export default connect(mapStateToProps)(Header);

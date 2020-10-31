@@ -14,8 +14,10 @@ const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
     <div
       style={{
         height: '300px',
-        width: '500px',
+        maxWidth: '500px',
+        width: '90%',
         border: '1px solid lightgrey',
+        margin: 'auto',
       }}
       className='floorplan-component'>
       {loaded && floorId ? (
