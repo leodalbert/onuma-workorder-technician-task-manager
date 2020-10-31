@@ -56,6 +56,7 @@ const Components = ({
   const [openDetailDailog, setOpenDetailDialog] = useState(false);
   const [openSearchDailog, setOpenSearchDialog] = useState(false);
   const [filteredComponents, setFilteredComponents] = useState([]);
+  const [openQrReader, setOpenQrReader] = useState(false);
 
   const handleOpenComponentDialog = (component) => {
     fillComponentDialog(component);
@@ -73,6 +74,7 @@ const Components = ({
 
   const handleCloseSearchDialog = () => {
     setOpenSearchDialog(false);
+    setOpenQrReader(false);
   };
 
   const handleChange = (
@@ -164,6 +166,8 @@ const Components = ({
         open={openSearchDailog}
         handleClose={handleCloseSearchDialog}
         studioId={studioId}
+        openQrReader={openQrReader}
+        setOpenQrReader={setOpenQrReader}
       />
     </Fragment>
   );

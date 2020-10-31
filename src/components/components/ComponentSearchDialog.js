@@ -46,13 +46,14 @@ const ComponentSearchDialog = ({
   fillComponentDialog,
   addComponent,
   clearSearchState,
+  setOpenQrReader,
+  openQrReader,
   workOrder: { id: workOrderId, building, floor, space },
 }) => {
   const classes = componentSearchGridStyles();
 
   const [searchField, setSearchField] = useState('');
   const [openDetailDailog, setOpenDetailDialog] = useState(false);
-  const [openQrReader, setOpenQrReader] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
   const [isDesktop, setDesktop] = useState(window.innerWidth > 750);
@@ -204,6 +205,8 @@ ComponentSearchDialog.propTypes = {
   clearComponentDialog: PropTypes.func.isRequired,
   fillComponentDialog: PropTypes.func.isRequired,
   addComponent: PropTypes.func.isRequired,
+  setOpenQrReader: PropTypes.func.isRequired,
+  openQrReader: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
