@@ -64,10 +64,6 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   },
   floorPlan: {
     padding: theme.spacing(2),
-    // height: '300px',
-    // maxWidth: '500px',
-    // width: '90%',
-    textAlign: 'center',
     color: theme.palette.text.secondary,
   },
   lableGrid: {
@@ -100,12 +96,11 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
     },
   },
   helperText: {
-    color: theme.palette.text + '!important',
     fontWeight: 'bolder',
+    fontSize: '1rem',
   },
   commentFieldStyle: {
     maxWidth: '700px',
-
     '& label.Mui-focused': {
       color: theme.palette.common.black,
     },

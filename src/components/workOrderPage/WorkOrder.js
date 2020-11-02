@@ -27,6 +27,7 @@ const WorkOrder = ({
   components,
   getSpaceComponents,
   tasks,
+  siteGroup,
   workOrderStatus,
   workOrder: {
     loading,
@@ -44,8 +45,8 @@ const WorkOrder = ({
     getWorkOrder(params.id, params.studioId);
   }, [getWorkOrder, params.id, params.studioId]);
   useEffect(() => {
-    getTechs(params.studioId);
-  }, [getTechs, params.studioId]);
+    siteGroup && getTechs(params.studioId, siteGroup);
+  }, [siteGroup, getTechs, params.studioId]);
 
   const classes = workOrderStyles();
 
@@ -129,6 +130,7 @@ WorkOrder.propTypes = {
   getCurrentTech: PropTypes.func.isRequired,
   components: PropTypes.array.isRequired,
   getTechs: PropTypes.func.isRequired,
+  siteGroup: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
@@ -136,6 +138,7 @@ const mapStateToProps = (state) => ({
   workOrderStatus: state.workOrder.current.status,
   components: state.component.components,
   tasks: state.workOrder.current.tasks,
+  siteGroup: state.tech.siteGroup,
 });
 
 export default connect(mapStateToProps, {

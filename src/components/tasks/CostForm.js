@@ -92,6 +92,7 @@ const CostForm = ({
                 id='formatted-numberformat-input'
                 InputProps={{
                   inputComponent: NumberFormat,
+                  type: 'text',
                   startAdornment: (
                     <InputAdornment position='start'>$</InputAdornment>
                   ),

@@ -18,6 +18,7 @@ export default (props) => {
         });
       }}
       thousandSeparator
+      inputMode='decimal'
       isNumericString
       decimalScale='2'
     />

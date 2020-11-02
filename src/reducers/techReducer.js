@@ -3,6 +3,7 @@ import { CURRENT_TECH, GET_TECHS } from '../actions/types';
 const initialState = {
   techs: [],
   current: null,
+  siteGroup: undefined,
   email: '',
   name: '',
   id: undefined,
@@ -25,6 +26,7 @@ export default function (state = initialState, action) {
         email: payload.email,
         name: payload.first_name + ' ' + payload.last_name,
         studio: payload.studioId,
+        siteGroup: Number(payload.site_group.id),
         id: Number(payload.id),
       };
     default:
