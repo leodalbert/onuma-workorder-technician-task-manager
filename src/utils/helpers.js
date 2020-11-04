@@ -284,3 +284,17 @@ export const TechEmail = (name, email, building, room) => (
       `&body=Hi%20${name},`
     }>{`${name} (${email})`}</a>
 );
+
+// Function to sort file list by file type
+export const sortFilesByType = (a, b) => {
+  const typeA = a.directus_files.type.toUpperCase();
+  const typeB = b.directus_files.type.toUpperCase();
+
+  let comparison = 0;
+  if (typeA < typeB) {
+    comparison = 1;
+  } else if (typeA > typeB) {
+    comparison = -1;
+  }
+  return comparison;
+};

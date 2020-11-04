@@ -10,6 +10,8 @@ import {
   SET_SPACE_INFO,
   ADD_COLLABORATOR,
   REMOVE_COLLABORATOR,
+  GET_WORKORDER_FILES,
+  ADD_WORKORDER_FILE,
 } from './types';
 
 // Get all work orders by tech email
@@ -53,10 +55,10 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
 };
 
 // Get Work order by work order Id
-export const getWorkOrder = (id, studioId) => async (dispatch) => {
+export const getWorkOrder = (workorderId, studioId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder/${id}?fields=*,*.*&fields=id,status,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.collaborator,collaborators.id`
+      `/${studioId}/api/items/workorder/${workorderId}?fields=*,*.*&fields=id,status,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.collaborator,collaborators.id`
     );
 
     // create object with buidling info if availible
@@ -76,7 +78,28 @@ export const getWorkOrder = (id, studioId) => async (dispatch) => {
     }
     dispatch({ type: SET_SPACE_INFO, payload: buildingInfo });
 
+    dispatch(getWorkorderFiles(workorderId, studioId));
     dispatch({ type: GET_WORK_ORDER, payload: res.data.data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Get all files attached to work order
+export const getWorkorderFiles = (workorderId, studioId) => async (
+  dispatch
+) => {
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/workorder_directus_files?filter[workorder]=${workorderId}&fields=directus_files.id,directus_files.type,directus_files.title,directus_files.uploaded_on,directus_files.width,directus_files.filename_download,directus_files.height,directus_files.data.*`
+    );
+    dispatch({ type: GET_WORKORDER_FILES, payload: res.data.data });
   } catch (err) {
     dispatch({
       type: ERROR,
@@ -142,6 +165,55 @@ export const removeCollaborator = (collaboratorId, studioId) => async (
       `/${studioId}/api/items/workorder_collaborator/${collaboratorId}`
     );
     dispatch({ type: REMOVE_COLLABORATOR, payload: collaboratorId });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+// Patch workorder with new file attachment
+export const patchWorkorderWithFile = (id, studioId, workorderId) => async (
+  dispatch
+) => {
+  try {
+    const res = await axios.patch(
+      `https://api.onuma.com/${studioId}/items/workorder/${workorderId}?fields=*,*.*.*`,
+      {
+        files: [{ directus_files: { id: id } }],
+      }
+    );
+    const files = res.data.data.files;
+    dispatch({ type: ADD_WORKORDER_FILE, payload: files[files.length - 1] });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+// Upload file Attachment
+export const uploadFile = (data, studioId, workorderId) => async (dispatch) => {
+  const formData = new FormData();
+  formData.append('file', data.file);
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  };
+  try {
+    const res = await axios.post(
+      `https://api.onuma.com/${studioId}/files`,
+      formData,
+      config
+    );
+    dispatch(patchWorkorderWithFile(res.data.data.id, studioId, workorderId));
   } catch (err) {
     dispatch({
       type: ERROR,

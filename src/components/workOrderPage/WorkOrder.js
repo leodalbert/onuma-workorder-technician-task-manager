@@ -7,6 +7,7 @@ import { getSpaceComponents } from '../../actions/component';
 import RequestDetails from './RequestDetails';
 import PreviousTasks from '../tasks/PreviousTasks';
 import TaskDetails from '../tasks/TaskDetails';
+import AttachmentPage from '../attachments/AttachmentPage';
 import Spinner from '../layout/Spinner';
 import { workOrderStyles } from '../../styles/GridStyles';
 
@@ -118,6 +119,9 @@ const WorkOrder = ({
           id='attachment-header'>
           <Typography className={classes.heading}>Attachments</Typography>
         </AccordionSummary>
+        <AccordionDetails>
+          <AttachmentPage studioId={params.studioId} />
+        </AccordionDetails>
       </Accordion>
     </div>
   );

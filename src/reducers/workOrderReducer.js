@@ -12,6 +12,8 @@ import {
   UPDATE_WORKORDER_TASK,
   ADD_COLLABORATOR,
   REMOVE_COLLABORATOR,
+  GET_WORKORDER_FILES,
+  ADD_WORKORDER_FILE,
 } from '../actions/types';
 
 const initialState = {
@@ -24,6 +26,7 @@ const initialState = {
     space: { name: '' },
     status: 'Assigned',
   },
+  currentFiles: [],
   currentSpaceInfo: {
     siteId: '',
     buildingId: '',
@@ -50,6 +53,16 @@ export default function (state = initialState, action) {
         ...state,
         current: payload,
         loading: false,
+      };
+    case GET_WORKORDER_FILES:
+      return {
+        ...state,
+        currentFiles: payload,
+      };
+    case ADD_WORKORDER_FILE:
+      return {
+        ...state,
+        currentFiles: [...state.currentFiles, payload],
       };
     case SET_SPACE_INFO:
       return {
@@ -131,6 +144,7 @@ export default function (state = initialState, action) {
         ...state,
         current: initialState.current,
         currentSpaceInfo: initialState.currentSpaceInfo,
+        currentFiles: initialState.currentFiles,
       };
     case ERROR:
       return {
