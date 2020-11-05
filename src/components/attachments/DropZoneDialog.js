@@ -7,7 +7,12 @@ import { uploadFile } from '../../actions/workOrder';
 
 import { dropzoneStyles } from '../../styles/AttachmentStyles';
 
-const DropZoneDialog = ({ uploadFile, studioId, workorderId }) => {
+const DropZoneDialog = ({
+  uploadFile,
+  studioId,
+  workorderId,
+  currentFiles,
+}) => {
   const classes = dropzoneStyles();
   const [expanded, setExpanded] = useState(false);
   const [fileObjects, setFileObjects] = useState();
@@ -17,7 +22,7 @@ const DropZoneDialog = ({ uploadFile, studioId, workorderId }) => {
       variant='contained'
       color='primary'
       onClick={() => setExpanded(true)}>
-      Add Image
+      Add Attachment
     </Button>
   ) : (
     <Fragment>
@@ -47,7 +52,7 @@ const DropZoneDialog = ({ uploadFile, studioId, workorderId }) => {
         </Button>
         <Button
           onClick={() => {
-            uploadFile(fileObjects[0], studioId, workorderId);
+            uploadFile(fileObjects[0], studioId, workorderId, currentFiles);
             setExpanded(false);
             setFileObjects();
           }}

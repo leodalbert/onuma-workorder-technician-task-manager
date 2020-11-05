@@ -175,19 +175,38 @@ export const removeCollaborator = (collaboratorId, studioId) => async (
     });
   }
 };
-// Patch workorder with new file attachment
+
+// GET directus_file data for new record
+export const getFileInfo = (studioId, fileWorkorderId) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/workorder_directus_files/${fileWorkorderId}?fields=directus_files.*`
+    );
+    dispatch({ type: ADD_WORKORDER_FILE, payload: res.data.data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Post new workorder_directus_files record with new directus_files record
 export const patchWorkorderWithFile = (id, studioId, workorderId) => async (
   dispatch
 ) => {
   try {
-    const res = await axios.patch(
-      `https://api.onuma.com/${studioId}/items/workorder/${workorderId}?fields=*,*.*.*`,
+    const res = await axios.post(
+      `/${studioId}/api/items/workorder_directus_files?filter[workorder]=${workorderId}`,
       {
-        files: [{ directus_files: { id: id } }],
+        workorder: workorderId,
+        directus_files: id,
       }
     );
-    const files = res.data.data.files;
-    dispatch({ type: ADD_WORKORDER_FILE, payload: files[files.length - 1] });
+    dispatch(getFileInfo(studioId, res.data.data.id));
   } catch (err) {
     dispatch({
       type: ERROR,
@@ -208,11 +227,7 @@ export const uploadFile = (data, studioId, workorderId) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post(
-      `https://api.onuma.com/${studioId}/files`,
-      formData,
-      config
-    );
+    const res = await axios.post(`/${studioId}/api/files`, formData, config);
     dispatch(patchWorkorderWithFile(res.data.data.id, studioId, workorderId));
   } catch (err) {
     dispatch({

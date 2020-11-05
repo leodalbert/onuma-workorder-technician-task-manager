@@ -21,7 +21,6 @@ const ImageCard = ({ file }) => {
     );
     if (newWindow) newWindow.opener = null;
   };
-
   return (
     <Grid item xs={12}>
       <Card className={classes.root}>
@@ -32,7 +31,11 @@ const ImageCard = ({ file }) => {
           <img
             alt={file.title}
             className={classes.media}
-            src={file.data.full_url}
+            src={
+              file.data.thumbnails.find(
+                (obj) => obj.key === 'directus-large-contain'
+              ).url
+            }
             title='image-display'
           />
           <CardContent className={classes.content}>

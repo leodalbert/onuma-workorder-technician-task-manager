@@ -8,7 +8,7 @@ import FileCard from './FileCard';
 import DropZoneDialog from './DropZoneDialog';
 import { sortFilesByType } from '../../utils/helpers';
 
-const AttachmentPage = ({ files, studioId, workorderId }) => {
+const AttachmentPage = ({ files, studioId, workorderId, currentFiles }) => {
   return (
     <Grid container alignItems='stretch' spacing={2}>
       {files.length > 0 &&
@@ -20,7 +20,11 @@ const AttachmentPage = ({ files, studioId, workorderId }) => {
           }
         })}
       <Grid style={{ textAlign: 'center' }} item xs={12}>
-        <DropZoneDialog studioId={studioId} workorderId={workorderId} />
+        <DropZoneDialog
+          studioId={studioId}
+          workorderId={workorderId}
+          currentFiles={currentFiles}
+        />
       </Grid>
     </Grid>
   );
@@ -35,6 +39,7 @@ AttachmentPage.propTypes = {
 const mapStateToProps = (state) => ({
   files: state.workOrder.currentFiles,
   workorderId: state.workOrder.current.id,
+  currentFiles: state.workOrder.currentFiles,
 });
 
 export default connect(mapStateToProps)(AttachmentPage);

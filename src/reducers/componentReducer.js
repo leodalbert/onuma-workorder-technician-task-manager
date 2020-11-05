@@ -9,6 +9,7 @@ import {
   SEARCH_COMPONENTS,
   SEARCH_LOADING,
   CLEAR_SEARCH_STATE,
+  GET_COMPONENT_LINKS,
 } from '../actions/types';
 
 const initialState = {
@@ -43,6 +44,7 @@ const initialState = {
     model_number: '',
     type_attributes: {},
     instance_attributes: {},
+    attachments: [],
   },
 };
 
@@ -59,6 +61,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         workOrderComponents: [...state.workOrderComponents, payload],
+      };
+    case GET_COMPONENT_LINKS:
+      return {
+        ...state,
+        workOrderComponents: state.workOrderComponents.map((component) => {
+          if (component.id === payload.componentId) {
+            return { ...component, attachments: payload.links };
+          } else {
+            return component;
+          }
+        }),
       };
     case CLEAR_COMPONENT_STATE:
       return {
@@ -102,6 +115,7 @@ export default function (state = initialState, action) {
         model_number,
         type_attributes,
         instance_attributes,
+        attachments,
       } = initialState.dialogComponent;
       let data = payload;
       if (!data.component_type) {
@@ -150,6 +164,7 @@ export default function (state = initialState, action) {
           model_number: data.component_type.model_number || model_number,
           instance_attributes: data.attributes || instance_attributes,
           type_attributes: data.component_type.attributes || type_attributes,
+          attachments: data.attachments || attachments,
         },
       };
     case SEARCH_COMPONENTS: {

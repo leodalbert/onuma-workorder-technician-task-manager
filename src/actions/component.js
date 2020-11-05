@@ -12,6 +12,7 @@ import {
   SEARCH_COMPONENTS,
   SEARCH_LOADING,
   CLEAR_SEARCH_STATE,
+  GET_COMPONENT_LINKS,
 } from './types';
 
 // Get all components by space id
@@ -22,6 +23,45 @@ export const getSpaceComponents = (spaceId, studioId) => async (dispatch) => {
     );
 
     dispatch({ type: GET_SPACE_COMPONENTS, payload: res.data.data.components });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Get component Attachments
+export const getComponentFiles = (componentId, studioId) => async (
+  dispatch
+) => {
+  try {
+    const res = await axios.get(
+      `/${studioId}/shared/list-attachments.load?component_id=${componentId}`
+    );
+    let parser = new DOMParser();
+    let links = [];
+    let doc = parser.parseFromString(res.data, 'text/html');
+    doc.querySelectorAll('.attachment-documents-container a').forEach((a) => {
+      if (a.querySelector('img')) {
+        links.push({
+          type: 'img',
+          thumbnail: a.querySelector('img').src,
+          url: a.href,
+        });
+      } else {
+        links.push({ type: 'file', url: a.href, text: a.textContent });
+      }
+    });
+    if (links.length > 0) {
+      dispatch({
+        type: GET_COMPONENT_LINKS,
+        payload: { componentId: componentId, links: links },
+      });
+    }
   } catch (err) {
     dispatch({
       type: ERROR,
@@ -47,6 +87,7 @@ export const getWorkOrderComponentDetails = (
     data.instanceId = instanceId;
     dispatch({ type: SET_COMPONENT_LOADING, payload: false });
     dispatch({ type: GET_WORK_ORDER_COMPONENTS, payload: data });
+    dispatch(getComponentFiles(componentId, studioId));
   } catch (err) {
     dispatch({
       type: ERROR,
