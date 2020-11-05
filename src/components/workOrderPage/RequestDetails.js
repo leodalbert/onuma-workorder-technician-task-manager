@@ -5,6 +5,7 @@ import { Grid, TextField, Button, Divider, Hidden } from '@material-ui/core';
 
 import { RequestDetailGrid1, RequestDetailGrid2 } from './RequestDetailGrid';
 import Components from '../components/Components';
+import { sendCommentToRequestor } from '../../actions/workOrder';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
 import FloorplanDev from './FloorplanDev';
 import OnumaFloorplan from './OnumaFloorplan';
@@ -14,6 +15,7 @@ const RequestDetails = ({
   workOrder,
   components,
   studioId,
+  sendCommentToRequestor,
   spaceInfo: { siteId, buildingId, floorId, spaceId },
 }) => {
   useEffect(() => {}, [floorId]);
@@ -87,6 +89,9 @@ const RequestDetails = ({
         </Grid>
         <Grid className={classes.commentButton} item xs={12}>
           <Button
+            onClick={() =>
+              sendCommentToRequestor(comment, studioId, workOrder.id)
+            }
             disabled={comment === workOrder.administrator_comment}
             variant='contained'
             color='secondary'>
@@ -107,10 +112,13 @@ const RequestDetails = ({
 RequestDetails.propTypes = {
   workOrder: PropTypes.object.isRequired,
   components: PropTypes.array.isRequired,
+  sendCommentToRequestor: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   spaceInfo: state.workOrder.currentSpaceInfo,
 });
 
-export default connect(mapStateToProps)(RequestDetails);
+export default connect(mapStateToProps, { sendCommentToRequestor })(
+  RequestDetails
+);

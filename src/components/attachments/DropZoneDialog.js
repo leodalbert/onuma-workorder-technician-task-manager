@@ -12,6 +12,7 @@ const DropZoneDialog = ({
   studioId,
   workorderId,
   currentFiles,
+  techId,
 }) => {
   const classes = dropzoneStyles();
   const [expanded, setExpanded] = useState(false);
@@ -33,7 +34,7 @@ const DropZoneDialog = ({
         fileObjects={fileObjects}
         filesLimit={1}
         showFileNames
-        previewText=''
+        showAlerts={['error', 'info']}
         previewGridProps={{
           container: { spacing: 5, justify: 'center' },
           item: { xs: 2 },
@@ -52,7 +53,7 @@ const DropZoneDialog = ({
         </Button>
         <Button
           onClick={() => {
-            uploadFile(fileObjects[0], studioId, workorderId, currentFiles);
+            uploadFile(fileObjects[0], studioId, workorderId, techId);
             setExpanded(false);
             setFileObjects();
           }}
@@ -70,6 +71,7 @@ DropZoneDialog.propTypes = {
   uploadFile: PropTypes.func.isRequired,
   studioId: PropTypes.string.isRequired,
   workorderId: PropTypes.number.isRequired,
+  techId: PropTypes.number.isRequired,
 };
 
 export default connect(null, { uploadFile })(DropZoneDialog);

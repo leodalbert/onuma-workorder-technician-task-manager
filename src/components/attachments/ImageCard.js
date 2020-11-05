@@ -6,11 +6,13 @@ import {
   Grid,
   CardContent,
   Typography,
+  IconButton,
 } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import { attachmentPageStyles } from '../../styles/AttachmentStyles';
 
-const ImageCard = ({ file }) => {
+const ImageCard = ({ file, techId, id, handleDelete }) => {
   const classes = attachmentPageStyles();
 
   const openInNewTab = () => {
@@ -38,12 +40,20 @@ const ImageCard = ({ file }) => {
             }
             title='image-display'
           />
-          <CardContent className={classes.content}>
-            <Typography variant='h6' component='h5'>
-              {file.title}
-            </Typography>
-          </CardContent>
         </CardActionArea>
+        <CardContent className={classes.content}>
+          <Typography variant='h6' component='h5'>
+            {file.title}
+          </Typography>
+          {techId === file.technician && (
+            <IconButton
+              onClick={() => handleDelete(id)}
+              className={classes.icon}
+              size='small'>
+              <DeleteForeverIcon />
+            </IconButton>
+          )}
+        </CardContent>
       </Card>
     </Grid>
   );
@@ -51,6 +61,9 @@ const ImageCard = ({ file }) => {
 
 ImageCard.propTypes = {
   file: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  techId: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default ImageCard;

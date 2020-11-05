@@ -14,6 +14,8 @@ import {
   REMOVE_COLLABORATOR,
   GET_WORKORDER_FILES,
   ADD_WORKORDER_FILE,
+  SEND_COMMENT_TO_REQUESTOR,
+  DELETE_ATTACHMENT,
 } from '../actions/types';
 
 const initialState = {
@@ -54,6 +56,14 @@ export default function (state = initialState, action) {
         current: payload,
         loading: false,
       };
+    case SEND_COMMENT_TO_REQUESTOR:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          administrator_comment: payload,
+        },
+      };
     case GET_WORKORDER_FILES:
       return {
         ...state,
@@ -63,6 +73,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentFiles: [...state.currentFiles, payload],
+      };
+    case DELETE_ATTACHMENT:
+      return {
+        ...state,
+        currentFiles: state.currentFiles.filter((file) => file.id !== payload),
       };
     case SET_SPACE_INFO:
       return {

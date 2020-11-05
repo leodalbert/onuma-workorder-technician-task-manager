@@ -12,6 +12,8 @@ import {
   REMOVE_COLLABORATOR,
   GET_WORKORDER_FILES,
   ADD_WORKORDER_FILE,
+  SEND_COMMENT_TO_REQUESTOR,
+  DELETE_ATTACHMENT,
 } from './types';
 
 // Get all work orders by tech email
@@ -97,7 +99,7 @@ export const getWorkorderFiles = (workorderId, studioId) => async (
 ) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder_directus_files?filter[workorder]=${workorderId}&fields=directus_files.id,directus_files.type,directus_files.title,directus_files.uploaded_on,directus_files.width,directus_files.filename_download,directus_files.height,directus_files.data.*`
+      `/${studioId}/api/items/workorder_directus_files?filter[workorder]=${workorderId}&fields=id,directus_files.id,directus_files.type,directus_files.title,directus_files.uploaded_on,directus_files.width,directus_files.filename_download,directus_files.technician,directus_files.height,directus_files.data.*`
     );
     dispatch({ type: GET_WORKORDER_FILES, payload: res.data.data });
   } catch (err) {
@@ -180,7 +182,7 @@ export const removeCollaborator = (collaboratorId, studioId) => async (
 export const getFileInfo = (studioId, fileWorkorderId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder_directus_files/${fileWorkorderId}?fields=directus_files.*`
+      `/${studioId}/api/items/workorder_directus_files/${fileWorkorderId}?fields=id,directus_files.*`
     );
     dispatch({ type: ADD_WORKORDER_FILE, payload: res.data.data });
   } catch (err) {
@@ -217,10 +219,28 @@ export const patchWorkorderWithFile = (id, studioId, workorderId) => async (
     });
   }
 };
+// Delete workorder_directus_files record
+export const deleteAttachment = (id, studioId) => async (dispatch) => {
+  try {
+    await axios.delete(`/${studioId}/api/items/workorder_directus_files/${id}`);
+    dispatch({ type: DELETE_ATTACHMENT, payload: id });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
 // Upload file Attachment
-export const uploadFile = (data, studioId, workorderId) => async (dispatch) => {
+export const uploadFile = (data, studioId, workorderId, techId) => async (
+  dispatch
+) => {
   const formData = new FormData();
   formData.append('file', data.file);
+  formData.append('technician', techId);
   const config = {
     headers: {
       'content-type': 'multipart/form-data',
@@ -240,6 +260,33 @@ export const uploadFile = (data, studioId, workorderId) => async (dispatch) => {
   }
 };
 
+// Patch Workorder with new comment to requestor
+export const sendCommentToRequestor = (
+  comment,
+  studioId,
+  workorderId
+) => async (dispatch) => {
+  try {
+    const res = await axios.patch(
+      `/${studioId}/api/items/workorder/${workorderId}?fields=*,*`,
+      {
+        administrator_comment: comment,
+      }
+    );
+    dispatch({
+      type: SEND_COMMENT_TO_REQUESTOR,
+      payload: res.data.data.administrator_comment,
+    });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
 // Clear Current Workorder and components
 export const clearCurrent = () => (dispatch) => {
   dispatch({ type: CLEAR_CURRENT });

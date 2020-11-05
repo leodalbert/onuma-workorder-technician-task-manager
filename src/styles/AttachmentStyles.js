@@ -13,10 +13,14 @@ export const attachmentPageStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     display: 'flex',
     alignItems: 'center',
+    '&:last-child': {
+      paddingBottom: '6px',
+    },
   },
   icon: {
     verticalAlign: 'middle',
     display: 'inline-flex',
+    marginRight: '0px 12px 0px 6px',
   },
 }));
 
