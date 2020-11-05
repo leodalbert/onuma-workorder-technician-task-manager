@@ -14,6 +14,7 @@ import {
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ComponentDetailDialog from './ComponentDetailDialog';
 import ComponentSearchDialog from './ComponentSearchDialog';
+import ConfirmDialog from '../tasks/ConfirmDialog';
 import ComponentButtons from './ComponentButtons';
 import {
   getWorkOrderComponentDetails,
@@ -24,8 +25,6 @@ import {
 } from '../../actions/component';
 import { filterComponents } from '../../utils/helpers';
 import { requestDetailsGridStyles } from '../../styles/GridStyles';
-
-// TODO - add delete component confirmation modal
 
 const Components = ({
   components,
@@ -55,6 +54,8 @@ const Components = ({
 
   const [openDetailDailog, setOpenDetailDialog] = useState(false);
   const [openSearchDailog, setOpenSearchDialog] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  const [deleteComponent, setDeleteComponent] = useState('');
   const [filteredComponents, setFilteredComponents] = useState([]);
   const [openQrReader, setOpenQrReader] = useState(false);
 
@@ -108,9 +109,9 @@ const Components = ({
             <ComponentButtons
               handleOpenComponentDialog={handleOpenComponentDialog}
               components={workOrderComponents}
-              removeComponent={removeComponent}
               classes={classes}
-              studioId={studioId}
+              setOpenDeleteAlert={setOpenDeleteAlert}
+              setDeleteComponent={setDeleteComponent}
             />
           )}
           {loading && (
@@ -168,6 +169,18 @@ const Components = ({
         studioId={studioId}
         openQrReader={openQrReader}
         setOpenQrReader={setOpenQrReader}
+      />
+      <ConfirmDialog
+        openAlert={openDeleteAlert}
+        setOpenAlert={setOpenDeleteAlert}
+        handleSave={() => {
+          setOpenDeleteAlert(false);
+          removeComponent(deleteComponent, studioId);
+        }}
+        title='Remove Component?'
+        content='Are you sure you would like to remove component from work order?'
+        confirmBtn='Remove'
+        declineBtn='Cancel'
       />
     </Fragment>
   );

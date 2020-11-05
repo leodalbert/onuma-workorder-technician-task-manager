@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
-const ConfirmSaveDialog = ({
+const ConfirmDialog = ({
   openAlert,
   setOpenAlert,
   handleSave,
@@ -49,4 +49,4 @@ const ConfirmSaveDialog = ({
   );
 };
 
-export default ConfirmSaveDialog;
+export default ConfirmDialog;

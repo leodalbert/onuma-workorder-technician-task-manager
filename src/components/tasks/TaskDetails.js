@@ -9,7 +9,7 @@ import AssignedTo from './AssignedTo';
 import TaskForm from './TaskForm';
 import CostForm from './CostForm';
 import WorkOrderStatus from './WorkOrderStatus';
-import ConfirmSaveDialog from './ConfirmSaveDialog';
+import ConfirmDialog from './ConfirmDialog';
 
 import { taskDetailsGridStyles } from '../../styles/GridStyles';
 import { addNewTask } from '../../actions/task';
@@ -205,7 +205,7 @@ const TaskDetails = ({
           </Grid>
         </Grid>
       </Grid>
-      <ConfirmSaveDialog
+      <ConfirmDialog
         openAlert={openSaveAlert}
         setOpenAlert={setOpenSaveAlert}
         handleSave={handleSave}
@@ -214,7 +214,7 @@ const TaskDetails = ({
         confirmBtn='Submit'
         declineBtn='Cancle'
       />
-      <ConfirmSaveDialog
+      <ConfirmDialog
         openAlert={openCostAlert}
         setOpenAlert={setOpenCostAlert}
         handleSave={handleSave}

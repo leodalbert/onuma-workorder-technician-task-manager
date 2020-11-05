@@ -8,8 +8,8 @@ const ComponentButtons = ({
   components,
   classes,
   handleOpenComponentDialog,
-  removeComponent,
-  studioId
+  setOpenDeleteAlert,
+  setDeleteComponent,
 }) => {
   return _.map(components, (component) => {
     return (
@@ -18,19 +18,19 @@ const ComponentButtons = ({
           className={classes.buttonGroup}
           color='primary'
           variant='contained'
-          aria-label='split button'
-        >
+          aria-label='split button'>
           <Button
             onClick={() => handleOpenComponentDialog(component)}
-            style={{ minWidth: '200px', justifyContent: 'left' }}
-          >
+            style={{ minWidth: '200px', justifyContent: 'left' }}>
             {component.name}
             {component.instance_name && ` -  ${component.instance_name}`}
           </Button>
           <Button
-            onClick={() => removeComponent(component.instanceId, studioId)}
-            size='small'
-          >
+            onClick={() => {
+              setDeleteComponent(component.instanceId);
+              setOpenDeleteAlert(true);
+            }}
+            size='small'>
             <ClearIcon fontSize='small' />
           </Button>
         </ButtonGroup>
@@ -43,7 +43,6 @@ ComponentButtons.propTypes = {
   components: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   handleOpenComponentDialog: PropTypes.func.isRequired,
-  removeComponent: PropTypes.func.isRequired,
 };
 
 export default ComponentButtons;
