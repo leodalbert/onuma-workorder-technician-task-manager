@@ -10,6 +10,8 @@ import {
   FormControl,
   Button,
   Tooltip,
+  Hidden,
+  Typography,
 } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ComponentDetailDialog from './ComponentDetailDialog';
@@ -156,6 +158,16 @@ const Components = ({
                 Search components
               </Button>
             </Tooltip>
+            <Hidden smUp>
+              <Typography
+                style={{ paddingTop: '5px' }}
+                variant='subtitle2'
+                align='center'
+                color='textPrimary'>
+                Search for components if the work order is related to components
+                in another location
+              </Typography>
+            </Hidden>
           </FormControl>
         </div>
       </Grid>

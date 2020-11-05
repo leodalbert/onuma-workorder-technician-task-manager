@@ -28,7 +28,6 @@ import {
 } from '../../actions/component';
 import { componentSearchGridStyles } from '../../styles/DialogStyles';
 
-//  TODO add close modal button for mobile
 // TODO add helper text for component search btn on mobile
 
 const Transition = forwardRef(function Transition(props, ref) {
