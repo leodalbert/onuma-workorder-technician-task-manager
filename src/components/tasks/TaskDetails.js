@@ -162,6 +162,7 @@ const TaskDetails = ({
             handleAddCollaborator={handleAddCollaborator}
             studioId={studioId}
             currentTechId={currentTechId}
+            workOrderId={workOrderId}
           />
           <TaskForm
             classes={classes}

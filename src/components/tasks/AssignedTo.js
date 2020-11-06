@@ -19,6 +19,7 @@ const AssignedTo = ({
   handleAddCollaborator,
   studioId,
   currentTechId,
+  workOrderId,
 }) => {
   const [collaboratorDialog, setCollaboratorDialog] = useState(false);
   const handleAdd = (selectedTechId) => {
@@ -32,7 +33,7 @@ const AssignedTo = ({
       </Grid>
       <Grid className={classes.detailGrid} item xs={12} sm={6}>
         <div className={classes.detail}>
-          {TechEmail(name, email, room, building)}
+          {TechEmail(name, email, room, building, workOrderId)}
         </div>
         {collaborators.length > 0 && !_.isEmpty(techs) && (
           <div style={{ paddingLeft: '25px' }}>
@@ -48,7 +49,8 @@ const AssignedTo = ({
                       `${tech[0].first_name} ${tech[0].last_name}`,
                       tech[0].email,
                       room,
-                      building
+                      building,
+                      workOrderId
                     )}
                     <Button
                       onClick={() =>

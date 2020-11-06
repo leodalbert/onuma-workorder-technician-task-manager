@@ -272,15 +272,15 @@ export const inDev = () => {
 
 // Function to generate anchor tag for tech email
 
-export const TechEmail = (name, email, building, room) => (
+export const TechEmail = (name, email, building, room, workOrderId) => (
   <a
     style={{ textDecoration: 'none' }}
     href={
       'mailto:' +
       email +
-      `?subject=Regarding work order for ${building && building} ${
-        room && 'in ' + room
-      }` +
+      `?subject=Regarding work order ${workOrderId && `#${workOrderId}`} for ${
+        building && building
+      } ${room && 'in ' + room}` +
       `&body=Hi%20${name},`
     }>{`${name} (${email})`}</a>
 );
