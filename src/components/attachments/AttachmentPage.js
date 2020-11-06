@@ -22,7 +22,8 @@ const AttachmentPage = ({
   };
   return (
     <Grid container alignItems='stretch' spacing={2}>
-      {files.length > 0 &&
+      {files &&
+        files.length > 0 &&
         files.sort(sortFilesByType).map(({ directus_files: file, id }) => {
           if (file.type.split('/')[0] === 'image') {
             return (

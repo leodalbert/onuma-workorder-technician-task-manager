@@ -278,8 +278,8 @@ export const TechEmail = (name, email, building, room, workOrderId) => (
     href={
       'mailto:' +
       email +
-      `?subject=Regarding work order ${workOrderId && `#${workOrderId}`} for ${
-        building && building
+      `?subject=Regarding work order ${workOrderId && `#${workOrderId}`} ${
+        building && `for ${building}`
       } ${room && 'in ' + room}` +
       `&body=Hi%20${name},`
     }>{`${name} (${email})`}</a>

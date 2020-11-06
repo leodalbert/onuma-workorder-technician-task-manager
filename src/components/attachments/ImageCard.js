@@ -27,12 +27,14 @@ const ImageCard = ({ file, techId, id, handleDelete }) => {
     <Grid item xs={12}>
       <Card className={classes.root}>
         <CardActionArea
+          style={{ textAlign: 'center' }}
           onClick={() => {
             openInNewTab();
           }}>
           <img
             alt={file.title}
             className={classes.media}
+            style={{ maxWidth: file.width }}
             src={
               file.data.thumbnails.find(
                 (obj) => obj.key === 'directus-large-contain'
@@ -42,7 +44,13 @@ const ImageCard = ({ file, techId, id, handleDelete }) => {
           />
         </CardActionArea>
         <CardContent className={classes.content}>
-          <Typography variant='h6' component='h5'>
+          <Typography
+            onClick={() => {
+              openInNewTab();
+            }}
+            variant='subtitle1'
+            // style={{ color: 'blue' }}
+            component='h5'>
             {file.title}
           </Typography>
           {techId === file.technician && (

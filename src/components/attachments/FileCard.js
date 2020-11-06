@@ -31,7 +31,8 @@ const FileCard = ({ file, techId, id, handleDelete }) => {
             onClick={() => {
               openInNewTab();
             }}
-            variant='h6'
+            variant='subtitle1'
+            // style={{ color: 'blue' }}
             component='h5'>
             {file.filename_download}
           </Typography>

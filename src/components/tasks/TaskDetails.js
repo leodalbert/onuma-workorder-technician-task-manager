@@ -145,7 +145,6 @@ const TaskDetails = ({
     setTimeState(initialTimeState);
     setCostTasks([]);
   };
-  //   TODO generate link to workorder for email
   return (
     <div className={classes.root}>
       <Grid item container xs={12}>
