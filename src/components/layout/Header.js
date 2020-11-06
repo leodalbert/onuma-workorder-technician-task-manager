@@ -18,6 +18,16 @@ const Header = ({
   isMobile,
 }) => {
   const classes = headerStyles();
+  const openInPopup = () => {
+    const newWindow = window.open(
+      `https://system.onuma.com/${studio}/bugs?url=${encodeURIComponent(
+        window.location.href
+      )}`,
+      'window',
+      'toolbar=no, menubar=no, resizable=no, width=400,height=500, top=300, left=300'
+    );
+    if (newWindow) newWindow.opener = null;
+  };
   return (
     <div className={classes.root}>
       <AppBar position='static'>
@@ -51,7 +61,12 @@ const Header = ({
                 Close <CloseIcon />
               </Button>
             ) : (
-              <Button color='inherit' className={classes.btn}>
+              <Button
+                onClick={() => {
+                  openInPopup();
+                }}
+                color='inherit'
+                className={classes.btn}>
                 Get in touch
               </Button>
             )}
