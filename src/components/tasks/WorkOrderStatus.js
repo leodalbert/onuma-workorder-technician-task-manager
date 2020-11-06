@@ -8,7 +8,13 @@ import {
   RadioGroup,
 } from '@material-ui/core';
 
-const WorkOrderStatus = ({ classes, workOrderStatus, setWorkOrderStatus }) => {
+const WorkOrderStatus = ({
+  classes,
+  workOrderStatus,
+  setWorkOrderStatus,
+  currentTechId,
+  workOrderTech,
+}) => {
   return (
     <Fragment>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
@@ -34,11 +40,13 @@ const WorkOrderStatus = ({ classes, workOrderStatus, setWorkOrderStatus }) => {
                 label='In Progress'
               />
             )}
-            <FormControlLabel
-              value='Completed'
-              control={<Radio color='default' />}
-              label='Completed'
-            />
+            {workOrderTech === currentTechId && (
+              <FormControlLabel
+                value='Completed'
+                control={<Radio color='default' />}
+                label='Completed'
+              />
+            )}
           </RadioGroup>
         </FormControl>
       </Grid>
@@ -50,6 +58,8 @@ WorkOrderStatus.propTypes = {
   classes: PropTypes.object.isRequired,
   workOrderStatus: PropTypes.string.isRequired,
   setWorkOrderStatus: PropTypes.func.isRequired,
+  workOrderTech: PropTypes.number,
+  currentTechId: PropTypes.number,
 };
 
 export default WorkOrderStatus;

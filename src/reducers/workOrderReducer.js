@@ -27,6 +27,9 @@ const initialState = {
     building: { name: '' },
     space: { name: '' },
     status: 'Assigned',
+    assigned_technician: {
+      id: undefined,
+    },
   },
   currentFiles: [],
   currentSpaceInfo: {

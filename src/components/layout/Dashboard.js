@@ -7,7 +7,7 @@ import {
   setLoading,
 } from '../../actions/workOrder';
 import { getCurrentTech } from '../../actions/tech';
-import SummaryTable from '../tables/SummaryTable';
+import SummaryTable from '../dashboardTable/SummaryTable';
 import Spinner from './Spinner';
 import { Container } from '@material-ui/core';
 
@@ -18,17 +18,18 @@ const Dashboard = ({
   loading,
   workOrders,
   getCurrentTech,
-  match: {params}
+  techId,
+  match: { params },
 }) => {
   useEffect(() => {
     clearCurrent();
   }, [clearCurrent]);
   useEffect(() => {
-    getAllWorkOrders(params.techEmail, params.studioId);
-  }, [params.techEmail, params.studioId, getAllWorkOrders]);
-  useEffect(() => {
     getCurrentTech(params.techEmail, params.studioId);
   }, [getCurrentTech, params.techEmail, params.studioId]);
+  useEffect(() => {
+    getAllWorkOrders(techId, params.studioId);
+  }, [techId, params.studioId, getAllWorkOrders]);
 
   return loading ? (
     <Spinner />
@@ -38,6 +39,7 @@ const Dashboard = ({
         workOrders={workOrders}
         setLoading={setLoading}
         techEmail={params.techEmail}
+        techId={techId}
       />
     </Container>
   );
@@ -51,11 +53,13 @@ Dashboard.propTypes = {
   loading: PropTypes.bool.isRequired,
   workOrders: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
+  id: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
   loading: state.workOrder.loading,
   workOrders: state.workOrder.workOrders,
+  techId: state.tech.id,
 });
 
 export default connect(mapStateToProps, {

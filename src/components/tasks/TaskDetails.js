@@ -50,6 +50,7 @@ const TaskDetails = ({
   workOrderStatusChange,
   removeCollaborator,
   addCollaborator,
+  workOrderTech,
 }) => {
   const classes = taskDetailsGridStyles();
 
@@ -185,6 +186,8 @@ const TaskDetails = ({
             classes={classes}
             workOrderStatus={workOrderStatus}
             setWorkOrderStatus={setWorkOrderStatus}
+            workOrderTech={workOrderTech}
+            currentTechId={currentTechId}
           />
           <Grid style={{ textAlign: 'center' }} item xs={12}>
             <Typography style={{ marginBottom: '15px' }}>
@@ -242,6 +245,7 @@ TaskDetails.propTypes = {
   workOrderStatusChange: PropTypes.func.isRequired,
   removeCollaborator: PropTypes.func.isRequired,
   addCollaborator: PropTypes.func.isRequired,
+  workOrderTech: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
@@ -252,6 +256,7 @@ const mapStateToProps = (state) => ({
   room: state.workOrder.currentSpaceInfo.spaceName,
   status: state.workOrder.current.status,
   workOrderId: state.workOrder.current.id,
+  workOrderTech: state.workOrder.current.assigned_technician.id,
   collaborators: state.workOrder.current.collaborators,
   techs: state.tech.techs,
 });

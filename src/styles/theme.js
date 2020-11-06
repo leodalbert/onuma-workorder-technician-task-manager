@@ -36,6 +36,12 @@ const theme = createMuiTheme({
         fontSize: '14px',
       },
     },
+
+    MuiTableCell: {
+      root: {
+        padding: '12px 0px',
+      },
+    },
   },
 });
 

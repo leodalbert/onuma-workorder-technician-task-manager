@@ -9,18 +9,26 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
+  TableFooter,
+  Typography,
 } from '@material-ui/core';
 
 import SummaryHead from './SummaryHead';
-import { getComparator, stableSort } from './SummaryFilters';
+import { getComparator, stableSort } from './summaryFilters';
 import { summaryTableStyles } from '../../styles/GridStyles';
 
-const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
+const SummaryTable = ({
+  workOrders,
+  history,
+  setLoading,
+  techEmail,
+  techId,
+}) => {
   const classes = summaryTableStyles();
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('request_date');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -71,7 +79,10 @@ const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
                     onClick={() => handleRowSelect(row.id)}
                     tabIndex={-1}
                     key={row.id}>
-                    <TableCell component='th' id={labelId} scope='row'>
+                    <TableCell
+                      style={{ paddingRight: '10px' }}
+                      id={labelId}
+                      align='left'>
                       {dayjs(row.request_date).format('MM/DD/YYYY')}
                     </TableCell>
                     <TableCell align='left'>{row.status}</TableCell>
@@ -80,31 +91,44 @@ const SummaryTable = ({ workOrders, history, setLoading, techEmail }) => {
                         row.assigned_priority === 1 ? classes.urgent : ''
                       }
                       align='left'>
+                      {row.assigned_technician.id !== techId && '* '}
                       {row.request_description.split('\r\n')[0]}
                     </TableCell>
                     <TableCell align='left'>{row.request_number}</TableCell>
-                    <TableCell align='left'>{row.building}</TableCell>
-                    <TableCell align='left'>{row.space}</TableCell>
+                    <TableCell align='left'>
+                      {row.building.id} - {row.space && row.space.id}
+                    </TableCell>
                   </TableRow>
                 );
               })}
             {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
+              <TableRow style={{ height: 53 * 5 }}>
                 <TableCell colSpan={6} />
               </TableRow>
             )}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell style={{ borderBottom: 'none' }} colSpan={1}>
+                <Typography color='textSecondary'>
+                  * You are a collaborator
+                </Typography>
+              </TableCell>
+
+              <TablePagination
+                colSpan={4}
+                rowsPerPageOptions={[5, 10, 25]}
+                component='td'
+                count={workOrders.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component='div'
-        count={workOrders.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
     </div>
   );
 };
@@ -114,6 +138,7 @@ SummaryTable.propTypes = {
   history: PropTypes.object.isRequired,
   setLoading: PropTypes.func.isRequired,
   techEmail: PropTypes.string.isRequired,
+  techId: PropTypes.number,
 };
 
 export default withRouter(SummaryTable);

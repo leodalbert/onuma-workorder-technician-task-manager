@@ -16,12 +16,12 @@ import {
   DELETE_ATTACHMENT,
 } from './types';
 
-// Get all work orders by tech email
-export const getAllWorkOrders = (techEmail, studioId) => async (dispatch) => {
+// Get all work orders by tech Id
+export const getAllWorkOrders = (techId, studioId) => async (dispatch) => {
   dispatch({ type: SET_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space, status&filter[assigned_technician.email]=${techEmail}`
+      `/${studioId}/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status, collaborators.collaborator&filter[collaborators.collaborator][contains]=17&filter[assigned_technician.id][contains]=17&filter[assigned_technician.id][logical]=or`
     );
     dispatch({ type: GET_TECHS_WORK_ORDERS, payload: res.data.data });
   } catch (err) {
