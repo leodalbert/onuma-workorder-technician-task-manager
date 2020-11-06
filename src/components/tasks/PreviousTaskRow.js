@@ -26,8 +26,10 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
         <TableCell component='th' scope='row'>
           {task.description}
         </TableCell>
-        <TableCell align='left'>{task.hours}</TableCell>
-        <TableCell padding='checkbox' align='right'>
+        <TableCell style={{ padding: 0 }} align='left'>
+          {task.hours}
+        </TableCell>
+        <TableCell padding='none' align='right'>
           {!!task.material_cost && (
             <IconButton
               aria-label='expand row'
@@ -44,7 +46,7 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
         <TableCell align='left'>
           $&nbsp;{(Math.round(task.material_cost * 100) / 100).toFixed(2)}
         </TableCell>
-        <TableCell align='left'>
+        <TableCell style={{ padding: 0 }} align='left'>
           {dayjs(task.date).format('MM/DD/YYYY')}
         </TableCell>
         <TableCell align='left'>{techName(task)}</TableCell>

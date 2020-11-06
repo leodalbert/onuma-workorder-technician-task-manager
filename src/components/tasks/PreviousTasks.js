@@ -37,11 +37,17 @@ const PreviousTasks = ({ tasks, techs, studioId, getTaskCosts, taskCosts }) => {
       <Table size='small' className={classes.table} aria-label='task table'>
         <TableHead>
           <TableRow>
-            <TableCell>Description</TableCell>
-            <TableCell align='left'>Hours</TableCell>
-            <TableCell padding='checkbox'></TableCell>
+            <TableCell style={{ minWidth: '200px' }} width='30%'>
+              Description
+            </TableCell>
+            <TableCell style={{ padding: 0 }} align='left'>
+              Hours
+            </TableCell>
+            <TableCell padding='none'></TableCell>
             <TableCell align='left'>Material&nbsp;Costs</TableCell>
-            <TableCell align='left'>Date</TableCell>
+            <TableCell style={{ padding: 0 }} align='left'>
+              Date
+            </TableCell>
             <TableCell align='left'>By</TableCell>
           </TableRow>
         </TableHead>
