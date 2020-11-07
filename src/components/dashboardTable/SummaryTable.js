@@ -85,13 +85,15 @@ const SummaryTable = ({
                       align='left'>
                       {dayjs(row.request_date).format('MM/DD/YYYY')}
                     </TableCell>
-                    <TableCell align='left'>{row.status}</TableCell>
+                    <TableCell align='left'>
+                      {techId && row.assigned_technician.id !== techId && '* '}
+                      {row.status}
+                    </TableCell>
                     <TableCell
                       className={
                         row.assigned_priority === 1 ? classes.urgent : ''
                       }
                       align='left'>
-                      {row.assigned_technician.id !== techId && '* '}
                       {row.request_description.split('\r\n')[0]}
                     </TableCell>
                     <TableCell align='left'>{row.request_number}</TableCell>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -7,6 +7,8 @@ import {
   setLoading,
 } from '../../actions/workOrder';
 import { getCurrentTech } from '../../actions/tech';
+import { getVisibleWorkorders } from '../../utils/helpers';
+import WorkorderFilterSelect from './WorkorderFilterSelect';
 import SummaryTable from '../dashboardTable/SummaryTable';
 import Spinner from './Spinner';
 import { Container } from '@material-ui/core';
@@ -21,6 +23,9 @@ const Dashboard = ({
   techId,
   match: { params },
 }) => {
+  const [filter, setFilter] = useState('active');
+  const [filteredWorkorders, setFilteredWorkorders] = useState([]);
+
   useEffect(() => {
     clearCurrent();
   }, [clearCurrent]);
@@ -30,18 +35,24 @@ const Dashboard = ({
   useEffect(() => {
     getAllWorkOrders(techId, params.studioId);
   }, [techId, params.studioId, getAllWorkOrders]);
+  useEffect(() => {
+    setFilteredWorkorders(getVisibleWorkorders(workOrders, filter));
+  }, [getVisibleWorkorders, setFilteredWorkorders, filter, workOrders]);
 
   return loading ? (
     <Spinner />
   ) : (
-    <Container>
-      <SummaryTable
-        workOrders={workOrders}
-        setLoading={setLoading}
-        techEmail={params.techEmail}
-        techId={techId}
-      />
-    </Container>
+    <Fragment>
+      <WorkorderFilterSelect filter={filter} setFilter={setFilter} />
+      <Container>
+        <SummaryTable
+          workOrders={filteredWorkorders}
+          setLoading={setLoading}
+          techEmail={params.techEmail}
+          techId={techId}
+        />
+      </Container>
+    </Fragment>
   );
 };
 

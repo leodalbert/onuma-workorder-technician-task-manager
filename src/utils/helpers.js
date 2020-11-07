@@ -298,3 +298,30 @@ export const sortFilesByType = (a, b) => {
   }
   return comparison;
 };
+
+export const getVisibleWorkorders = (workorders, filter) => {
+  return workorders.filter((workorder) => {
+    if (filter === 'all') {
+      return workorder.status !== 'Archived';
+    }
+    if (filter === 'assigned') {
+      return workorder.status === 'Assigned';
+    }
+    if (filter === 'work in progress') {
+      return workorder.status === 'Work In Progress';
+    }
+    if (filter === 'active') {
+      return (
+        workorder.status === 'Work In Progress' ||
+        workorder.status === 'Assigned'
+      );
+    }
+    if (filter === 'completed') {
+      return (
+        workorder.status === 'Completed' ||
+        workorder.status === 'Completion Confirmed'
+      );
+    }
+    return workorders;
+  });
+};
