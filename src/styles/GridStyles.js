@@ -218,11 +218,11 @@ export const taskDetailsGridStyles = makeStyles((theme) => ({
     },
   },
   lable: {
-    padding: theme.spacing(1),
+    // padding: theme.spacing(1),
     fontWeight: 'bolder',
     [theme.breakpoints.down('xs')]: {
       textAlign: 'left',
-      padding: '6px',
+      // padding: '6px',
     },
     [theme.breakpoints.up('sm')]: {
       textAlign: 'right',
@@ -232,10 +232,10 @@ export const taskDetailsGridStyles = makeStyles((theme) => ({
 
   detail: {
     [theme.breakpoints.down('xs')]: {
-      padding: '6px',
+      // padding: '6px',
     },
     textAlign: 'left',
-    paddingTop: '7px',
+    // paddingTop: '7px',
     color: theme.palette.text.primary,
   },
   lableGrid: {
