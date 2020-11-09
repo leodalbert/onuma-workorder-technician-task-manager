@@ -27,7 +27,7 @@ const ComponentButtons = ({
             {component.instance_name && ` -  ${component.instance_name}`}
           </Button>
           <Button
-            className={classes.closeBtn}
+            style={{ width: '36px' }}
             onClick={() => {
               setDeleteComponent(component.instanceId);
               setOpenDeleteAlert(true);

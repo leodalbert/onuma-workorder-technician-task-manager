@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import loadFloorplan from './loadFloorplan';
 
 const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
-  // TODO handle loading
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    console.log(floorId);
     loadFloorplan(() => {
       setLoaded(true);
     });
@@ -23,7 +21,6 @@ const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
       {loaded && floorId ? (
         <onuma-plan
           style={{ height: '600px', width: '600px', background: 'lightgray' }}
-          loading={true}
           studio-id={studioId}
           site-id={siteId}
           building-id={buildingId}

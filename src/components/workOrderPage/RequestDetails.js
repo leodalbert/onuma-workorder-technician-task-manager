@@ -131,16 +131,13 @@ const RequestDetails = ({
             <Grid
               item
               xs={12}
-              className={clsx(
-                classes.detailGrid,
-                classes.marginTop,
-                classes.commentButton
-              )}>
+              className={clsx(classes.commentButton, classes.componentBtn)}>
               <Tooltip
                 title='Search for components if the work order is related to components in another location'
                 placement='bottom'>
                 <Button
                   style={{ width: '190px' }}
+                  className={classes.componentBtn}
                   onClick={() => setOpenSearchDialog(true)}
                   variant='contained'
                   color='secondary'>

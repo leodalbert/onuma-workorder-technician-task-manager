@@ -21,7 +21,7 @@ export const getAllWorkOrders = (techId, studioId) => async (dispatch) => {
   dispatch({ type: SET_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status, collaborators.collaborator&filter[collaborators.collaborator][contains]=17&filter[assigned_technician.id][contains]=17&filter[assigned_technician.id][logical]=or`
+      `/${studioId}/api/items/workorder?fields=id, request_number, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status, collaborators.collaborator&filter[collaborators.collaborator][contains]=${techId}&filter[assigned_technician.id][contains]=${techId}&filter[assigned_technician.id][logical]=or`
     );
     dispatch({ type: GET_TECHS_WORK_ORDERS, payload: res.data.data });
   } catch (err) {

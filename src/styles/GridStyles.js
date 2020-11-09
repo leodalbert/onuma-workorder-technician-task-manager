@@ -146,6 +146,11 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   marginBottom: {
     marginBottom: theme.spacing(2),
   },
+  componentBtn: {
+    [theme.breakpoints.down('lg')]: {
+      marginTop: theme.spacing(1),
+    },
+  },
   spinnerDiv: {
     position: 'relative',
     top: '50%',
