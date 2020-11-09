@@ -7,24 +7,21 @@ import { uploadFile } from '../../actions/workOrder';
 
 import { dropzoneStyles } from '../../styles/AttachmentStyles';
 
-const DropZoneDialog = ({
-  uploadFile,
-  studioId,
-  workorderId,
-  currentFiles,
-  techId,
-}) => {
+const DropZoneDialog = ({ uploadFile, studioId, workorderId, techId }) => {
   const classes = dropzoneStyles();
   const [expanded, setExpanded] = useState(false);
   const [fileObjects, setFileObjects] = useState();
 
   return !expanded ? (
-    <Button
-      variant='contained'
-      color='primary'
-      onClick={() => setExpanded(true)}>
-      Add Attachment
-    </Button>
+    <div className={classes.btnBreak}>
+      <Button
+        style={{ width: '190px' }}
+        variant='contained'
+        color='secondary'
+        onClick={() => setExpanded(true)}>
+        Add Attachment
+      </Button>
+    </div>
   ) : (
     <Fragment>
       <DropzoneAreaBase
@@ -70,7 +67,7 @@ const DropZoneDialog = ({
 DropZoneDialog.propTypes = {
   uploadFile: PropTypes.func.isRequired,
   studioId: PropTypes.string.isRequired,
-  workorderId: PropTypes.number.isRequired,
+  workorderId: PropTypes.number,
   techId: PropTypes.number.isRequired,
 };
 

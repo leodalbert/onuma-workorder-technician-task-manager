@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Grid, TextField, Button, Divider, Hidden } from '@material-ui/core';
+import clsx from 'clsx';
+import {
+  Grid,
+  TextField,
+  Button,
+  Divider,
+  Tooltip,
+  Hidden,
+  Typography,
+} from '@material-ui/core';
 
 import { RequestDetailGrid1, RequestDetailGrid2 } from './RequestDetailGrid';
 import Components from '../components/Components';
@@ -21,6 +30,7 @@ const RequestDetails = ({
   useEffect(() => {}, [floorId]);
   const classes = requestDetailsGridStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
+  const [openSearchDailog, setOpenSearchDialog] = useState(false);
   return (
     <div className={classes.root}>
       <Grid item container xs={12}>
@@ -67,42 +77,88 @@ const RequestDetails = ({
           </Grid>
         </Hidden>
 
-        <Grid className={classes.commentField} item xs={12}>
-          <TextField
-            className={classes.commentFieldStyle}
-            id='commentField'
-            label='Comments To Requester'
-            multiline
-            fullWidth
-            rows={4}
-            variant='outlined'
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            FormHelperTextProps={{
-              className: classes.helperText,
-            }}
-            helperText={
-              comment !== workOrder.administrator_comment &&
-              'Click "Save + Send" to email your comment to requester'
-            }
-          />
+        <Grid item container direction='column' xs={12} lg={9}>
+          <Grid item container spacing={3} justify='flex-end'>
+            <Grid item xs={12} sm={8} style={{ margin: '12px 0px' }}>
+              <TextField
+                className={classes.commentFieldStyle}
+                id='commentField'
+                label='Comments To Requester'
+                multiline
+                fullWidth
+                rows={4}
+                variant='outlined'
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                FormHelperTextProps={{
+                  className: classes.helperText,
+                }}
+                helperText={
+                  comment !== workOrder.administrator_comment &&
+                  'Click "Save + Send" to email your comment to requester'
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid className={classes.commentButton} item xs={12}>
+        <Grid className={classes.commentButton} item xs={12} lg={3}>
           <Button
             onClick={() =>
               sendCommentToRequestor(comment, studioId, workOrder.id)
             }
             disabled={comment === workOrder.administrator_comment}
             variant='contained'
+            style={{ width: '190px' }}
             color='secondary'>
             Save + Send
           </Button>
         </Grid>
       </Grid>
       <Divider style={{ marginBottom: '15px' }} />
-      <Grid item container direction='column' xs={12} lg={7}>
-        <Grid item container spacing={3}>
-          <Components components={components} studioId={studioId} />
+      <Grid item container xs={12}>
+        <Grid item container direction='column' xs={12} lg={7}>
+          <Grid item container spacing={3}>
+            <Components
+              components={components}
+              studioId={studioId}
+              openSearchDailog={openSearchDailog}
+              setOpenSearchDialog={setOpenSearchDialog}
+            />
+          </Grid>
+        </Grid>
+        <Grid item container direction='column' xs={12} lg={5}>
+          <Grid item container spacing={3}>
+            <Grid
+              item
+              xs={12}
+              className={clsx(
+                classes.detailGrid,
+                classes.marginTop,
+                classes.commentButton
+              )}>
+              <Tooltip
+                title='Search for components if the work order is related to components in another location'
+                placement='bottom'>
+                <Button
+                  style={{ width: '190px' }}
+                  onClick={() => setOpenSearchDialog(true)}
+                  variant='contained'
+                  color='secondary'>
+                  Search components
+                </Button>
+              </Tooltip>
+              <Hidden smUp>
+                <Typography
+                  style={{ paddingTop: '5px' }}
+                  variant='subtitle2'
+                  align='center'
+                  color='textPrimary'>
+                  Search for components if the work order is related to
+                  components in another location
+                </Typography>
+              </Hidden>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>

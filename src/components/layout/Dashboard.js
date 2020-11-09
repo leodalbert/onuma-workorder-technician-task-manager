@@ -37,7 +37,7 @@ const Dashboard = ({
   }, [techId, params.studioId, getAllWorkOrders]);
   useEffect(() => {
     setFilteredWorkorders(getVisibleWorkorders(workOrders, filter));
-  }, [getVisibleWorkorders, setFilteredWorkorders, filter, workOrders]);
+  }, [setFilteredWorkorders, filter, workOrders]);
 
   return loading ? (
     <Spinner />

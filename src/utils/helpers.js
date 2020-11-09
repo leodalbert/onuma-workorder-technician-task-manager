@@ -39,6 +39,7 @@ export const workOrderFieldGen1 = (workOrder) => {
     space,
     request_telephone,
     due_date,
+    assigned_trade,
   } = workOrder;
 
   let FIELDS = [];
@@ -85,6 +86,11 @@ export const workOrderFieldGen1 = (workOrder) => {
           </a>
         ),
       ]),
+    });
+  assigned_trade &&
+    FIELDS.push({
+      lable: 'Assigned Trade:',
+      detail: assigned_trade,
     });
 
   return FIELDS;

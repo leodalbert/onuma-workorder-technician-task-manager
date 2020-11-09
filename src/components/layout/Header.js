@@ -6,7 +6,7 @@ import { Hidden, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
 import { headerStyles } from '../../styles/HeaderStyles';
 import CloseIcon from '@material-ui/icons/Close';
 
-import logo from './onumalogo_noshad.jpg';
+import logo from './BIM_GENIE_GREEN_100p.jpg';
 
 const Header = ({
   email,
@@ -32,26 +32,29 @@ const Header = ({
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar classes={{ root: classes.toolbar }}>
-          <Typography
-            style={
-              dialogHeader
-                ? { fontSize: '16px' }
-                : { textDecoration: 'inherit' }
-            }
-            component={dialogHeader ? 'h6' : Link}
-            to={`${process.env.PUBLIC_URL}/${studio}/technicians/${
-              email && email
-            }`}
-            variant='h6'
-            className={classes.title}>
-            {text} {!dialogHeader && name && `- ${name}`}
-          </Typography>
+          <div className={classes.titleContainer}>
+            <img src={logo} alt='logo' className={classes.logo} />
+            <Typography
+              style={
+                dialogHeader
+                  ? { fontSize: '16px' }
+                  : { textDecoration: 'inherit' }
+              }
+              component={dialogHeader ? 'h6' : Link}
+              to={`${process.env.PUBLIC_URL}/${studio}/technicians/${
+                email && email
+              }`}
+              variant='h6'
+              className={classes.title}>
+              {text} {!dialogHeader && name && `- ${name}`}
+            </Typography>
+          </div>
           {isMobile && (
             <Button onClick={handleClose} color='inherit'>
               <CloseIcon />
             </Button>
           )}
-          <img src={logo} alt='logo' className={classes.logo} />
+
           <Hidden xsDown>
             {dialogHeader ? (
               <Button

@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   Switch,
   TextField,
+  Typography,
 } from '@material-ui/core';
 
 const TaskForm = ({
@@ -25,9 +26,12 @@ const TaskForm = ({
   return (
     <Fragment>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <div style={{ paddingTop: '15px' }} className={classes.lable}>
+        <Typography
+          variant='subtitle1'
+          style={{ paddingTop: '10px' }}
+          className={classes.lable}>
           Completed by:
-        </div>
+        </Typography>
       </Grid>
       <Grid className={classes.detailGrid} item xs={12} sm={9}>
         <FormControl className={classes.formControl}>
@@ -51,7 +55,9 @@ const TaskForm = ({
         </FormControl>
       </Grid>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <div className={classes.selectLable}>Actual Hours:</div>
+        <Typography variant='subtitle1' className={classes.hourSelectLable}>
+          Actual Hours:
+        </Typography>
       </Grid>
       <Grid className={classes.detailGrid} item xs={4} sm={3}>
         <FormControl fullWidth>
@@ -114,7 +120,9 @@ const TaskForm = ({
         />
       </Grid>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <div className={classes.lable}>Task Description:</div>
+        <Typography variant='subtitle1' className={classes.lable}>
+          Task Description:
+        </Typography>
       </Grid>
       <Grid className={classes.detailGrid} item xs={12} sm={9}>
         <TextField

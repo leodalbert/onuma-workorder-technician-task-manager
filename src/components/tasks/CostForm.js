@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import {
   Grid,
   Button,
@@ -13,6 +14,7 @@ import {
   TableBody,
   TableRow,
   TableContainer,
+  Typography,
 } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 
@@ -28,17 +30,21 @@ const CostForm = ({
   return (
     <Fragment>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <div style={{ paddingTop: '15px' }} className={classes.lable}>
+        <Typography
+          variant='subtitle1'
+          style={{ paddingTop: '15px' }}
+          className={classes.lable}>
           Material Costs:
-        </div>
+        </Typography>
       </Grid>
       <Grid className={classes.detailGrid} item xs={12} sm={9}>
         {costTasks.length > 0 && (
           <Grid item xs={12}>
             <TableContainer component={Paper}>
-              <Table>
+              <Table className={classes.tableCell}>
                 <TableHead>
-                  <TableRow className={classes.costHead}>
+                  <TableRow
+                    className={clsx(classes.costHead, classes.tableCell)}>
                     <TableCell>Description</TableCell>
                     <TableCell>Amount</TableCell>
                     <TableCell padding='checkbox'></TableCell>
@@ -81,42 +87,43 @@ const CostForm = ({
             rowsMax={3}
           />
           <Grid container item xs={12}>
-            <Grid item xs={9}>
-              <TextField
-                placeholder='Amount'
-                fullWidth
-                variant='outlined'
-                value={costForm.cost}
-                onChange={(e) => handleCostChange(e)}
-                name='cost'
-                id='formatted-numberformat-input'
-                InputProps={{
-                  inputComponent: NumberFormat,
-                  type: 'text',
-                  startAdornment: (
-                    <InputAdornment position='start'>$</InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <Tooltip
-                disableHoverListener={!!costForm.description}
-                enterDelay={500}
-                title='Add description and amount to add cost!'
-                placement='bottom'>
-                <span>
-                  <Button
-                    disabled={!costForm.description || !costForm.cost}
-                    onClick={() => handleAddCost()}
-                    style={{ padding: '7px 15px' }}
-                    variant='contained'
-                    color='secondary'
-                    fullWidth>
-                    Add
-                  </Button>
-                </span>
-              </Tooltip>
+            <Grid item container spacing={1}>
+              <Grid item xs={12} sm={5}>
+                <TextField
+                  placeholder='Amount'
+                  fullWidth
+                  variant='outlined'
+                  value={costForm.cost}
+                  onChange={(e) => handleCostChange(e)}
+                  name='cost'
+                  id='formatted-numberformat-input'
+                  InputProps={{
+                    inputComponent: NumberFormat,
+                    type: 'text',
+                    startAdornment: (
+                      <InputAdornment position='start'>$</InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={7} className={classes.btnBreak}>
+                <Tooltip
+                  disableHoverListener={!!costForm.description}
+                  enterDelay={500}
+                  title='Add description and amount to add cost!'
+                  placement='bottom'>
+                  <span>
+                    <Button
+                      className={classes.costBtn}
+                      disabled={!costForm.description || !costForm.cost}
+                      onClick={() => handleAddCost()}
+                      variant='contained'
+                      color='secondary'>
+                      Add Cost
+                    </Button>
+                  </span>
+                </Tooltip>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

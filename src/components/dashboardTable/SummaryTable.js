@@ -86,7 +86,9 @@ const SummaryTable = ({
                       {dayjs(row.request_date).format('MM/DD/YYYY')}
                     </TableCell>
                     <TableCell align='left'>
-                      {techId && row.assigned_technician.id !== techId && '* '}
+                      {techId && row.assigned_technician.id !== techId && (
+                        <span>*&nbsp;</span>
+                      )}
                       {row.status}
                     </TableCell>
                     <TableCell

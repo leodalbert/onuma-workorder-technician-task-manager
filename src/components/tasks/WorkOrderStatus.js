@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Typography,
 } from '@material-ui/core';
 
 const WorkOrderStatus = ({
@@ -18,7 +19,9 @@ const WorkOrderStatus = ({
   return (
     <Fragment>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <div className={classes.lable}>Work Order Status:</div>
+        <Typography variant='subtitle1' className={classes.lable}>
+          Work Order Status:
+        </Typography>
       </Grid>
       <Grid className={classes.detailGrid} item xs={12} sm={9}>
         <FormControl component='fieldset'>

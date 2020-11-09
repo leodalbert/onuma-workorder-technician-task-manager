@@ -21,7 +21,7 @@ import {
 const initialState = {
   workOrders: [],
   current: {
-    id: '',
+    id: undefined,
     tasks: [],
     collaborators: [],
     building: { name: '' },
@@ -33,10 +33,10 @@ const initialState = {
   },
   currentFiles: [],
   currentSpaceInfo: {
-    siteId: '',
-    buildingId: '',
+    siteId: undefined,
+    buildingId: undefined,
     floorId: 0,
-    spaceId: '',
+    spaceId: undefined,
     spaceName: '',
   },
   loading: true,

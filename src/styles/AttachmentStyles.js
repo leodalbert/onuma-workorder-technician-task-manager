@@ -36,4 +36,10 @@ export const dropzoneStyles = makeStyles((theme) => ({
       textAlign: 'right',
     },
   },
+  btnBreak: {
+    textAlign: 'right',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+    },
+  },
 }));

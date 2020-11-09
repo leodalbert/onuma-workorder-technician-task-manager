@@ -20,6 +20,7 @@ const AssignedTo = ({
   studioId,
   currentTechId,
   workOrderId,
+  workOrderTechId,
 }) => {
   const [collaboratorDialog, setCollaboratorDialog] = useState(false);
   const handleAdd = (selectedTechId) => {
@@ -29,12 +30,14 @@ const AssignedTo = ({
   return (
     <Fragment>
       <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <div className={classes.lable}>Assigned To:</div>
+        <Typography variant='subtitle1' className={classes.lable}>
+          Assigned To:
+        </Typography>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={12} sm={6}>
-        <div className={classes.detail}>
+      <Grid className={classes.detailGrid} item xs={12} sm={4}>
+        <Typography variant='body1' className={classes.detail}>
           {TechEmail(name, email, room, building, workOrderId)}
-        </div>
+        </Typography>
         {collaborators.length > 0 && !_.isEmpty(techs) && (
           <div style={{ paddingLeft: '25px' }}>
             <Typography variant='subtitle2'>Other collaborators:</Typography>
@@ -52,14 +55,16 @@ const AssignedTo = ({
                       building,
                       workOrderId
                     )}
-                    <Button
-                      onClick={() =>
-                        removeCollaborator(collaborator.id, studioId)
-                      }
-                      variant='text'
-                      size='small'>
-                      <ClearIcon fontSize='small' />
-                    </Button>
+                    {workOrderTechId === currentTechId && (
+                      <Button
+                        onClick={() =>
+                          removeCollaborator(collaborator.id, studioId)
+                        }
+                        variant='text'
+                        size='small'>
+                        <ClearIcon fontSize='small' />
+                      </Button>
+                    )}
                   </ListItem>
                 );
               })}
@@ -67,11 +72,13 @@ const AssignedTo = ({
           </div>
         )}
       </Grid>
-      <Grid className={classes.detailGrid} item xs={12} sm={3}>
+      <Grid className={classes.buttonDetailGrid} item xs={12} sm={5}>
         <Button
           onClick={() => setCollaboratorDialog(true)}
-          className={classes.forwardBtn}
-          variant='outlined'>
+          className={classes.commentButton}
+          style={{ width: '190px' }}
+          color='secondary'
+          variant='contained'>
           Add collaborator
         </Button>
       </Grid>
@@ -89,6 +96,7 @@ const AssignedTo = ({
 };
 
 AssignedTo.propTypes = {
+  workOrderTechId: PropTypes.number,
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,

@@ -152,9 +152,10 @@ const TaskDetails = ({
         <Grid item container spacing={3}>
           <AssignedTo
             classes={classes}
-            name={name}
-            email={email}
+            name={workOrderTech.first_name + ' ' + workOrderTech.last_name}
+            email={workOrderTech.email}
             room={room}
+            workOrderTechId={workOrderTech.id}
             building={building}
             techs={techs}
             collaborators={collaborators}
@@ -186,14 +187,16 @@ const TaskDetails = ({
             classes={classes}
             workOrderStatus={workOrderStatus}
             setWorkOrderStatus={setWorkOrderStatus}
-            workOrderTech={workOrderTech}
+            workOrderTech={workOrderTech.id}
             currentTechId={currentTechId}
           />
-          <Grid style={{ textAlign: 'center' }} item xs={12}>
+          <Grid className={classes.saveTextBreak} item xs={12} lg={10}>
             <Typography style={{ marginBottom: '15px' }}>
               You can keep on adding new tasks until you set the Work Order
               Status as "Completed".
             </Typography>
+          </Grid>
+          <Grid className={classes.btnBreak} item xs={12} lg={2}>
             <Button
               disabled={
                 !taskForm.hours &&
@@ -239,13 +242,13 @@ TaskDetails.propTypes = {
   collaborators: PropTypes.array.isRequired,
   techs: PropTypes.array.isRequired,
   status: PropTypes.string.isRequired,
-  workOrderId: PropTypes.number.isRequired,
+  workOrderId: PropTypes.number,
   studioId: PropTypes.string.isRequired,
   addNewTask: PropTypes.func.isRequired,
   workOrderStatusChange: PropTypes.func.isRequired,
   removeCollaborator: PropTypes.func.isRequired,
   addCollaborator: PropTypes.func.isRequired,
-  workOrderTech: PropTypes.number,
+  workOrderTech: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
@@ -256,7 +259,7 @@ const mapStateToProps = (state) => ({
   room: state.workOrder.currentSpaceInfo.spaceName,
   status: state.workOrder.current.status,
   workOrderId: state.workOrder.current.id,
-  workOrderTech: state.workOrder.current.assigned_technician.id,
+  workOrderTech: state.workOrder.current.assigned_technician,
   collaborators: state.workOrder.current.collaborators,
   techs: state.tech.techs,
 });

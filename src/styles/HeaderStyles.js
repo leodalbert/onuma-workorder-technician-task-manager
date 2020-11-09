@@ -6,13 +6,16 @@ export const headerStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   logo: {
-    maxHeight: '70%',
-    maxWidth: 65,
+    height: 65,
+    widht: 65,
   },
   title: {
     textAlign: 'left',
+    margin: 'auto',
+    paddingLeft: theme.spacing(3),
   },
-  btn: {
-    marginLeft: '140px',
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));

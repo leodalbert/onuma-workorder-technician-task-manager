@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -17,12 +18,16 @@ export const RequestDetailGrid1 = ({ workOrder }) => {
     return (
       <Fragment key={lable}>
         <Grid className={classes.lableGrid} item xs={12} sm={4} lg={5}>
-          <div className={classes.lable}>{lable}</div>
+          <Typography variant='subtitle1' className={classes.lable}>
+            {lable}
+          </Typography>
         </Grid>
         <Grid className={classes.detailGrid} item xs={12} sm={8} lg={7}>
-          <div className={detailColor ? classes[detailColor] : classes.detail}>
+          <Typography
+            variant='body1'
+            className={detailColor ? classes[detailColor] : classes.detail}>
             {detail}
-          </div>
+          </Typography>
         </Grid>
       </Fragment>
     );
@@ -41,12 +46,16 @@ export const RequestDetailGrid2 = ({ workOrder }) => {
     return (
       <Fragment key={lable}>
         <Grid className={classes.lableGrid} item xs={12} sm={4} lg={5}>
-          <div className={classes.lable}>{lable}</div>
+          <Typography variant='subtitle1' className={classes.lable}>
+            {lable}
+          </Typography>
         </Grid>
         <Grid className={classes.detailGrid} item xs={12} sm={8} lg={7}>
-          <div className={detailColor ? classes[detailColor] : classes.detail}>
+          <Typography
+            variant='body1'
+            className={detailColor ? classes[detailColor] : classes.detail}>
             {detail}
-          </div>
+          </Typography>
         </Grid>
       </Fragment>
     );

@@ -3,16 +3,7 @@ import { connect } from 'react-redux';
 import clsx from 'clsx';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import {
-  Grid,
-  MenuItem,
-  Select,
-  FormControl,
-  Button,
-  Tooltip,
-  Hidden,
-  Typography,
-} from '@material-ui/core';
+import { Grid, MenuItem, Select, FormControl } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ComponentDetailDialog from './ComponentDetailDialog';
 import ComponentSearchDialog from './ComponentSearchDialog';
@@ -40,22 +31,32 @@ const Components = ({
   workOrderId,
   loading,
   studioId,
+  setOpenSearchDialog,
+  openSearchDailog,
 }) => {
   const classes = requestDetailsGridStyles();
   // get details for every component in workorder
   useEffect(() => {
-    workOrderComponentIds.map((component) =>
-      getWorkOrderComponentDetails(component.component, component.id, studioId)
-    );
+    workOrderComponentIds &&
+      workOrderComponentIds.map((component) =>
+        getWorkOrderComponentDetails(
+          component.component,
+          component.id,
+          studioId
+        )
+      );
     // eslint-disable-next-line
   }, [getWorkOrderComponentDetails, studioId]);
   // remove components in workorder from component select
   useEffect(() => {
-    setFilteredComponents(filterComponents(components, workOrderComponentIds));
+    components &&
+      workOrderComponentIds &&
+      setFilteredComponents(
+        filterComponents(components, workOrderComponentIds)
+      );
   }, [components, workOrderComponentIds]);
 
   const [openDetailDailog, setOpenDetailDialog] = useState(false);
-  const [openSearchDailog, setOpenSearchDialog] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [deleteComponent, setDeleteComponent] = useState('');
   const [filteredComponents, setFilteredComponents] = useState([]);
@@ -70,10 +71,6 @@ const Components = ({
     setOpenDetailDialog(false);
     clearComponentDialog();
   };
-  const handleOpenSearchDialog = () => {
-    // fillComponentDialog(component);
-    setOpenSearchDialog(true);
-  };
 
   const handleCloseSearchDialog = () => {
     setOpenSearchDialog(false);
@@ -85,7 +82,6 @@ const Components = ({
     workOrderId
   ) => {
     addComponent(componentId, workOrderId, studioId);
-    // addComponentButton()
   };
 
   return (
@@ -101,7 +97,11 @@ const Components = ({
         </div>
       </Grid>
       <Grid
-        className={clsx(classes.detailGrid, classes.marginTop)}
+        className={clsx(
+          classes.detailGrid,
+          classes.marginTop,
+          classes.marginBottom
+        )}
         item
         xs={12}
         sm={8}
@@ -122,17 +122,20 @@ const Components = ({
             </div>
           )}
         </Grid>
-        <div className={classes.detail}>
-          <FormControl className={classes.formControl}>
+        <Grid className={classes.selectDetail}>
+          <FormControl fullWidth>
             <Select
+              disableUnderline
               value={''}
-              variant='outlined'
+              variant='filled'
               onChange={(e) => {
                 handleChange(e.target.value, workOrderId);
               }}
               displayEmpty
               className={classes.selectLable}
-              inputProps={{ 'aria-label': 'Without label' }}>
+              inputProps={{
+                'aria-label': 'Without label',
+              }}>
               <MenuItem value='' disabled>
                 Add component from current space
               </MenuItem>
@@ -148,29 +151,10 @@ const Components = ({
                 }
               )}
             </Select>
-            <Tooltip
-              title='Search for components if the work order is related to components in another location'
-              placement='bottom'>
-              <Button
-                onClick={handleOpenSearchDialog}
-                className={classes.searchButton}
-                variant='outlined'>
-                Search components
-              </Button>
-            </Tooltip>
-            <Hidden smUp>
-              <Typography
-                style={{ paddingTop: '5px' }}
-                variant='subtitle2'
-                align='center'
-                color='textPrimary'>
-                Search for components if the work order is related to components
-                in another location
-              </Typography>
-            </Hidden>
           </FormControl>
-        </div>
+        </Grid>
       </Grid>
+
       <ComponentDetailDialog
         open={openDetailDailog}
         handleClose={handleCloseComponentDialog}
@@ -199,8 +183,8 @@ const Components = ({
 };
 
 Components.propTypes = {
-  workOrderId: PropTypes.number.isRequired,
-  workOrderComponentIds: PropTypes.array.isRequired,
+  workOrderId: PropTypes.number,
+  workOrderComponentIds: PropTypes.array,
   workOrderComponents: PropTypes.array.isRequired,
   components: PropTypes.array.isRequired,
   getWorkOrderComponentDetails: PropTypes.func.isRequired,
@@ -210,6 +194,8 @@ Components.propTypes = {
   removeComponent: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   studioId: PropTypes.number.isRequired,
+  openSearchDailog: PropTypes.bool.isRequired,
+  setOpenSearchDialog: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -15,17 +15,19 @@ const ComponentButtons = ({
     return (
       <Grid key={component.instanceId}>
         <ButtonGroup
+          fullWidth
           className={classes.buttonGroup}
           color='primary'
           variant='contained'
           aria-label='split button'>
           <Button
-            onClick={() => handleOpenComponentDialog(component)}
-            style={{ minWidth: '200px', justifyContent: 'left' }}>
+            className={classes.textBtn}
+            onClick={() => handleOpenComponentDialog(component)}>
             {component.name}
             {component.instance_name && ` -  ${component.instance_name}`}
           </Button>
           <Button
+            className={classes.closeBtn}
             onClick={() => {
               setDeleteComponent(component.instanceId);
               setOpenDeleteAlert(true);

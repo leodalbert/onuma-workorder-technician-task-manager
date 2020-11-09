@@ -4,7 +4,6 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -15,7 +14,6 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
     fontWeight: 'bolder',
     [theme.breakpoints.down('xs')]: {
       textAlign: 'left',
-      padding: '6px',
     },
     [theme.breakpoints.up('sm')]: {
       textAlign: 'right',
@@ -24,15 +22,19 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   },
   selectLable: {
     textAlign: 'left',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
     },
-    [theme.breakpoints.up('sm')]: {
-      paddingLeft: theme.spacing(1),
+
+    '& .MuiFilledInput-input': {
+      padding: '8.5px 14px',
+      backgroundColor: theme.palette.primary.main,
+      boxShadow:
+        '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
     },
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: theme.spacing(2),
+    '& .MuiSelect-select': {
+      borderRadius: '4px',
     },
   },
   searchButton: {
@@ -43,20 +45,34 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   },
   detail: {
     [theme.breakpoints.down('xs')]: {
-      padding: '6px',
+      padding: theme.spacing(1),
     },
-    padding: theme.spacing(1),
+    textAlign: 'left',
+    paddingTop: theme.spacing(2),
+    color: theme.palette.text.primary,
+  },
+  selectDetail: {
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: theme.spacing(1),
+    },
     textAlign: 'left',
     color: theme.palette.text.primary,
   },
   buttonGroup: {
-    marginLeft: theme.spacing(2),
-    marginBottom: 15,
+    // marginLeft: theme.spacing(2),
+    pading: '5px',
+    marginBottom: theme.spacing(2),
     color: theme.palette.text.primary,
+  },
+  textBtn: {
+    justifyContent: 'left',
+  },
+  closeBtn: {
+    width: '36px',
   },
   redDetail: {
     [theme.breakpoints.down('xs')]: {
-      padding: '6px',
+      padding: theme.spacing(1),
     },
     padding: theme.spacing(1),
     textAlign: 'left',
@@ -85,10 +101,10 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
     textAlign: 'left',
   },
   commentButton: {
-    paddingTop: '30px',
+    padding: '12px 0px',
     [theme.breakpoints.up('sm')]: {
-      padding: '30px 0px 25px 15%',
-      textAlign: 'left',
+      // padding: '15px 0px 21px 15%',
+      textAlign: 'right',
     },
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
@@ -117,7 +133,6 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
     },
   },
   formControl: {
-    marginLeft: theme.spacing(1),
     [theme.breakpoints.down('md')]: {
       minWidth: 280,
     },
@@ -127,6 +142,9 @@ export const requestDetailsGridStyles = makeStyles((theme) => ({
   },
   marginTop: {
     marginTop: theme.spacing(2),
+  },
+  marginBottom: {
+    marginBottom: theme.spacing(2),
   },
   spinnerDiv: {
     position: 'relative',
@@ -146,8 +164,8 @@ export const workOrderStyles = makeStyles((theme) => ({
     },
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: theme.typography.pxToRem(20),
+    fontWeight: theme.typography.fontWeightMedium,
   },
   header: {
     backgroundColor: theme.palette.primary.main,
@@ -156,7 +174,8 @@ export const workOrderStyles = makeStyles((theme) => ({
   },
   expanded: {
     margin: 0,
-    boxShadow: 'none',
+    // border around accordion
+    // boxShadow: 'none',
   },
 }));
 
@@ -191,6 +210,13 @@ export const taskDetailsGridStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  commentButton: {
+    // padding: '12px 0px',
+    [theme.breakpoints.up('sm')]: {
+      // padding: '15px 0px 21px 15%',
+      textAlign: 'right',
+    },
+  },
   lable: {
     padding: theme.spacing(1),
     fontWeight: 'bolder',
@@ -203,17 +229,26 @@ export const taskDetailsGridStyles = makeStyles((theme) => ({
     },
     color: theme.palette.text.primary,
   },
+
   detail: {
     [theme.breakpoints.down('xs')]: {
       padding: '6px',
     },
-    padding: theme.spacing(1),
     textAlign: 'left',
+    paddingTop: '7px',
     color: theme.palette.text.primary,
   },
   lableGrid: {
     [theme.breakpoints.down('xs')]: {
       paddingBottom: '0px !important',
+    },
+  },
+
+  buttonDetailGrid: {
+    textAlign: 'right',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+      paddingTop: '0px !important',
     },
   },
   detailGrid: {
@@ -223,17 +258,18 @@ export const taskDetailsGridStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 330,
+    // minWidth: 330,
   },
-  forwardBtn: {
-    float: 'right',
+  btnBreak: {
+    textAlign: 'right',
     [theme.breakpoints.down('xs')]: {
-      float: 'left',
+      textAlign: 'center',
     },
   },
   selectLable: {
-    padding: theme.spacing(1),
+    // padding: theme.spacing(1),
     fontWeight: 'bolder',
+    backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.down('xs')]: {
       textAlign: 'left',
       padding: '6px',
@@ -244,11 +280,42 @@ export const taskDetailsGridStyles = makeStyles((theme) => ({
     },
     color: theme.palette.text.primary,
   },
+  hourSelectLable: {
+    padding: theme.spacing(1),
+    fontWeight: 'bolder',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'left',
+      padding: '6px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      textAlign: 'right',
+      paddingTop: 20,
+    },
+    color: theme.palette.text.primary,
+  },
+  saveTextBreak: {
+    textAlign: 'center',
+    [theme.breakpoints.up('lg')]: {
+      textAlign: 'right',
+    },
+  },
+  tableCell: {
+    '& .MuiTableCell-root': {
+      paddingLeft: '10px',
+    },
+  },
+  costBtn: {
+    width: '190px',
+    [theme.breakpoints.up('lg')]: {
+      padding: '7px 15px',
+    },
+  },
   costHead: {
     backgroundColor: theme.palette.primary.main,
   },
   saveBtn: {
     backgroundColor: theme.palette.secondary.main,
+    width: '190px',
     padding: '6px 24px',
   },
 }));

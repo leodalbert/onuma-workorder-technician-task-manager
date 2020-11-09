@@ -62,7 +62,7 @@ const AttachmentPage = ({
 AttachmentPage.propTypes = {
   files: PropTypes.array.isRequired,
   studioId: PropTypes.string.isRequired,
-  workorderId: PropTypes.number.isRequired,
+  workorderId: PropTypes.number,
   techId: PropTypes.number.isRequired,
   deleteAttachment: PropTypes.func.isRequired,
 };

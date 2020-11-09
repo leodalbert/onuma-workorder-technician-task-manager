@@ -37,14 +37,14 @@ const WorkOrder = ({
   },
 }) => {
   useEffect(() => {
+    getWorkOrder(params.id, params.studioId);
+  }, [getWorkOrder, params.id, params.studioId]);
+  useEffect(() => {
     spaceId && getSpaceComponents(spaceId, params.studioId);
   }, [getSpaceComponents, spaceId, params.studioId]);
   useEffect(() => {
     getCurrentTech(params.techEmail, params.studioId);
   }, [getCurrentTech, params.techEmail, params.studioId]);
-  useEffect(() => {
-    getWorkOrder(params.id, params.studioId);
-  }, [getWorkOrder, params.id, params.studioId]);
   useEffect(() => {
     siteGroup && getTechs(params.studioId, siteGroup);
   }, [siteGroup, getTechs, params.studioId]);
