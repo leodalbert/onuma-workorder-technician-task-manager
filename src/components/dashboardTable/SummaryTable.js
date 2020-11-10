@@ -92,6 +92,7 @@ const SummaryTable = ({
                       {row.status}
                     </TableCell>
                     <TableCell
+                      style={{ paddingLeft: 5, paddingRight: 5 }}
                       className={
                         row.assigned_priority === 1
                           ? layoutClasses.urgentFont

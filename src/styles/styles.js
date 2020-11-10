@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const layoutStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // width: '100%',
   },
   accordionHeader: {
     backgroundColor: theme.palette.primary.main,
@@ -227,6 +226,10 @@ export const componentStyles = makeStyles((theme) => ({
     verticalAlign: 'middle',
     display: 'inline-flex',
     marginRight: '0px 12px 0px 6px',
+  },
+  attachmentMedia: {
+    height: 'auto',
+    width: '100%',
   },
   commentBtnCtr: {
     padding: '12px 0px',

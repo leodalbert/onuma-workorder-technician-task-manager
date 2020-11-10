@@ -119,8 +119,8 @@ const RequestDetails = ({
           </Button>
         </Grid>
       </Grid>
-      <Divider className={spacingClasses.marginBottomL} />
-      <Grid item container xs={12}>
+      <Divider />
+      <Grid className={spacingClasses.marginTopL} item container xs={12}>
         <Grid item container direction='column' xs={12} lg={7}>
           <Grid item container spacing={3}>
             <Components
