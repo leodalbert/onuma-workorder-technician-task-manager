@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import loadFloorplan from './loadFloorplan';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { componentStyles } from '../../styles/styles';
 
 const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
-  const [loaded, setLoaded] = useState(false);
+  const componentClasses = componentStyles();
+
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [isLoaded, setisLoaded] = useState(false);
+
   useEffect(() => {
     loadFloorplan(() => {
-      setLoaded(true);
+      setScriptLoaded(true);
     });
   }, [floorId]);
+  if (document.querySelector('onuma-plan')) {
+    const el = document.querySelector('onuma-plan');
+    el.addEventListener('svgInitedEmitter', (event) => {
+      setisLoaded(event.returnValue);
+    });
+  }
+
   return (
     <div
       style={{
@@ -18,7 +31,12 @@ const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
         margin: 'auto',
       }}
       className='floorplan-component'>
-      {loaded && floorId ? (
+      {!isLoaded && (
+        <div className={componentClasses.spinnerDiv}>
+          <CircularProgress className={componentClasses.spinner} />
+        </div>
+      )}
+      {scriptLoaded && floorId ? (
         <onuma-plan
           style={{ height: '600px', width: '600px', background: 'lightgray' }}
           studio-id={studioId}
