@@ -15,7 +15,7 @@ import {
 
 import SummaryHead from './SummaryHead';
 import { getComparator, stableSort } from './summaryFilters';
-import { summaryTableStyles } from '../../styles/GridStyles';
+import { layoutStyles } from '../../styles/styles';
 
 const SummaryTable = ({
   workOrders,
@@ -24,7 +24,7 @@ const SummaryTable = ({
   techEmail,
   techId,
 }) => {
-  const classes = summaryTableStyles();
+  const layoutClasses = layoutStyles();
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('request_date');
   const [page, setPage] = useState(0);
@@ -54,15 +54,15 @@ const SummaryTable = ({
     rowsPerPage - Math.min(rowsPerPage, workOrders.length - page * rowsPerPage);
 
   return (
-    <div className={classes.root}>
+    <div className={layoutClasses.root}>
       <TableContainer>
         <Table
-          className={classes.table}
+          className={layoutClasses.dashboardTable}
           aria-labelledby='tableTitle'
           size='medium'
           aria-label='enhanced table'>
           <SummaryHead
-            classes={classes}
+            layoutClasses={layoutClasses}
             order={order}
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
@@ -93,7 +93,9 @@ const SummaryTable = ({
                     </TableCell>
                     <TableCell
                       className={
-                        row.assigned_priority === 1 ? classes.urgent : ''
+                        row.assigned_priority === 1
+                          ? layoutClasses.urgentFont
+                          : ''
                       }
                       align='left'>
                       {row.request_description.split('\r\n')[0]}

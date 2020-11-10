@@ -7,8 +7,13 @@ import ClearIcon from '@material-ui/icons/Clear';
 import AddCollaboratorDialog from './AddCollaboratorDialog';
 import { TechEmail } from '../../utils/helpers';
 
+import {
+  layoutStyles,
+  componentStyles,
+  spacingStyles,
+} from '../../styles/styles';
+
 const AssignedTo = ({
-  classes,
   name,
   email,
   room,
@@ -22,6 +27,9 @@ const AssignedTo = ({
   workOrderId,
   workOrderTechId,
 }) => {
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
+  const spacingClasses = spacingStyles();
   const [collaboratorDialog, setCollaboratorDialog] = useState(false);
   const handleAdd = (selectedTechId) => {
     setCollaboratorDialog(false);
@@ -29,19 +37,21 @@ const AssignedTo = ({
   };
   return (
     <Fragment>
-      <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <Typography variant='subtitle1' className={classes.lable}>
+      <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
+        <Typography variant='subtitle1' className={layoutClasses.labelStyle}>
           Assigned To:
         </Typography>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={12} sm={4}>
-        <Typography variant='body1' className={classes.detail}>
+      <Grid className={layoutClasses.detailCtr} item xs={12} sm={4}>
+        <Typography variant='body1' className={layoutClasses.detailStyle}>
           {TechEmail(name, email, room, building, workOrderId)}
         </Typography>
         {collaborators.length > 0 && !_.isEmpty(techs) && (
           <div style={{ paddingLeft: '25px' }}>
-            <Typography variant='subtitle2'>Other collaborators:</Typography>
-            <List dense style={{ paddingTop: 0 }}>
+            <Typography variant='subtitle1' style={{ fontWeight: 'bolder' }}>
+              Other collaborators:
+            </Typography>
+            <List dense className={spacingClasses.noPadding}>
               {collaborators.map((collaborator) => {
                 let tech = techs.filter(
                   (tech) => tech.id === collaborator.collaborator
@@ -72,11 +82,10 @@ const AssignedTo = ({
           </div>
         )}
       </Grid>
-      <Grid className={classes.buttonDetailGrid} item xs={12} sm={5}>
+      <Grid className={componentClasses.commentBtnCtr} item xs={12} sm={5}>
         <Button
           onClick={() => setCollaboratorDialog(true)}
-          className={classes.commentButton}
-          style={{ width: '190px' }}
+          className={componentClasses.btnWidth}
           color='secondary'
           variant='contained'>
           Add collaborator
@@ -89,7 +98,6 @@ const AssignedTo = ({
         open={collaboratorDialog}
         setCollaboratorDialog={setCollaboratorDialog}
         handleAdd={handleAdd}
-        classes={classes}
       />
     </Fragment>
   );
@@ -97,7 +105,6 @@ const AssignedTo = ({
 
 AssignedTo.propTypes = {
   workOrderTechId: PropTypes.number,
-  classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   room: PropTypes.string,

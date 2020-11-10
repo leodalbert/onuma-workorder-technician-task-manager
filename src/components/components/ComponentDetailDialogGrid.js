@@ -1,26 +1,27 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import Grid from '@material-ui/core/Grid';
-import { componentDetailGridStyles } from '../../styles/DialogStyles';
+import { Grid, Typography } from '@material-ui/core';
+import { layoutStyles } from '../../styles/styles';
 
 const ComponentDetailDialogGrid = ({ fields }) => {
-  const classes = componentDetailGridStyles();
+  const layoutClasses = layoutStyles();
   return (
     <Grid item container spacing={2}>
       {_.map(fields, ({ lable, detail }, index) => {
         return (
           <Fragment key={index}>
-            <Grid className={classes.lableGrid} item xs={4}>
-              <div className={classes.lable}>{lable}</div>
+            <Grid className={layoutClasses.labelCtr} item xs={4}>
+              <Typography className={layoutClasses.labelStyle}>
+                {lable}
+              </Typography>
             </Grid>
-            <Grid className={classes.detailGrid} item xs={8}>
-              <div
+            <Grid className={layoutClasses.detailCtr} item xs={8}>
+              <Typography
                 style={{ whiteSpace: 'pre-line' }}
-                className={classes.detail}
-              >
+                className={layoutClasses.detailStyle}>
                 {detail}
-              </div>
+              </Typography>
             </Grid>
           </Fragment>
         );

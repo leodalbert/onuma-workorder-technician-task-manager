@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography } from '@material-ui/core';
 import ComponentSearchButtons from './ComponentSearchButtons';
-
-import { componentSearchGridStyles } from '../../styles/DialogStyles';
+import { spacingStyles } from '../../styles/styles';
 
 // TODO handle no floor name
 
@@ -12,7 +11,7 @@ const ComponentSearchDialogResults = ({
   handleOpenComponentDialog,
   handleSelectComponent,
 }) => {
-  const classes = componentSearchGridStyles();
+  const spacingClasses = spacingStyles();
   let spaces = [];
 
   searchResults.map(({ component }) => {
@@ -52,13 +51,16 @@ const ComponentSearchDialogResults = ({
         </div>
         {floor.map((space) => {
           return (
-            <Grid className={classes.spaceGrid} item xs={12} key={space.number}>
+            <Grid
+              className={spacingClasses.paddingS}
+              item
+              xs={12}
+              key={space.number}>
               <Typography variant='subtitle1' key={space.number}>{`${
                 space.number
               } ${space.name && ` - ${space.name}`}`}</Typography>
-              <div className={classes.spaceGrid}>
+              <div className={spacingClasses.paddingS}>
                 <ComponentSearchButtons
-                  classes={classes}
                   components={searchResults}
                   spaceId={space.number}
                   handleOpenComponentDialog={handleOpenComponentDialog}

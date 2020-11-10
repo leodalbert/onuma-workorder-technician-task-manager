@@ -16,8 +16,12 @@ import {
   addComponent,
   removeComponent,
 } from '../../actions/component';
+import {
+  layoutStyles,
+  componentStyles,
+  spacingStyles,
+} from '../../styles/styles';
 import { filterComponents } from '../../utils/helpers';
-import { requestDetailsGridStyles } from '../../styles/GridStyles';
 
 const Components = ({
   components,
@@ -34,7 +38,9 @@ const Components = ({
   setOpenSearchDialog,
   openSearchDailog,
 }) => {
-  const classes = requestDetailsGridStyles();
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
+  const spacingClasses = spacingStyles();
   // get details for every component in workorder
   useEffect(() => {
     workOrderComponentIds &&
@@ -87,20 +93,20 @@ const Components = ({
   return (
     <Fragment>
       <Grid
-        className={clsx(classes.lableGrid, classes.marginTop)}
+        className={clsx(layoutClasses.detailCtr, spacingClasses.marginTopS)}
         item
         xs={12}
         sm={4}
         lg={5}>
-        <div justify='center' className={classes.lable}>
+        <div justify='center' className={layoutClasses.labelStyle}>
           Components:
         </div>
       </Grid>
       <Grid
         className={clsx(
-          classes.detailGrid,
-          classes.marginTop,
-          classes.marginBottom
+          layoutClasses.detailCtr,
+          spacingClasses.marginTopS,
+          spacingClasses.marginBottomS
         )}
         item
         xs={12}
@@ -111,18 +117,17 @@ const Components = ({
             <ComponentButtons
               handleOpenComponentDialog={handleOpenComponentDialog}
               components={workOrderComponents}
-              classes={classes}
               setOpenDeleteAlert={setOpenDeleteAlert}
               setDeleteComponent={setDeleteComponent}
             />
           )}
           {loading && (
-            <div className={classes.spinnerDiv}>
-              <CircularProgress className={classes.spinner} />
+            <div className={componentClasses.spinnerDiv}>
+              <CircularProgress className={componentClasses.spinner} />
             </div>
           )}
         </Grid>
-        <Grid className={classes.selectDetail}>
+        <Grid className={layoutClasses.detailSelectCtr}>
           <FormControl fullWidth>
             <Select
               disableUnderline
@@ -132,7 +137,7 @@ const Components = ({
                 handleChange(e.target.value, workOrderId);
               }}
               displayEmpty
-              className={classes.selectLable}
+              className={layoutClasses.labelStyleSelect}
               inputProps={{
                 'aria-label': 'Without label',
               }}>

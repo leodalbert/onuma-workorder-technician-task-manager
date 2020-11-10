@@ -26,7 +26,7 @@ import {
   addComponent,
   clearSearchState,
 } from '../../actions/component';
-import { componentSearchGridStyles } from '../../styles/DialogStyles';
+import { layoutStyles } from '../../styles/styles';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -47,7 +47,7 @@ const ComponentSearchDialog = ({
   openQrReader,
   workOrder: { id: workOrderId, building, floor, space },
 }) => {
-  const classes = componentSearchGridStyles();
+  const layoutClasses = layoutStyles();
 
   const [searchField, setSearchField] = useState('');
   const [openDetailDailog, setOpenDetailDialog] = useState(false);
@@ -119,13 +119,13 @@ const ComponentSearchDialog = ({
       />
       <DialogContent>
         <Grid container spacing={3}>
-          <Grid className={classes.textFieldGrid} item xs={12}>
-            <Typography className={classes.textFieldTitle}>
+          <Grid className={layoutClasses.searchDialogTextFieldCtr} item xs={12}>
+            <Typography className={layoutClasses.searchDialogTextFieldtitle}>
               Component Search:
             </Typography>
 
             <TextField
-              className={classes.textField}
+              className={layoutClasses.searchDialogTextField}
               id='component_serach_field'
               onChange={(e) => setSearchField(e.target.value)}
               value={searchField}
@@ -155,7 +155,7 @@ const ComponentSearchDialog = ({
             {loading && (
               <LinearProgress
                 style={{ marginTop: '5px' }}
-                className={classes.textField}
+                className={layoutClasses.searchDialogTextField}
                 color='secondary'
               />
             )}
@@ -168,7 +168,11 @@ const ComponentSearchDialog = ({
             </Grid>
           )}
 
-          <Grid className={classes.textFieldGrid} container item xs={12}>
+          <Grid
+            className={layoutClasses.searchDialogTextFieldCtr}
+            container
+            item
+            xs={12}>
             {!loading && hasSearched && searchResults.length < 1 ? (
               <Grid style={{ textAlign: 'center' }} item xs={12}>
                 <Typography style={{ paddingTop: '20px' }}>

@@ -9,11 +9,11 @@ import {
   IconButton,
 } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-
-import { attachmentPageStyles } from '../../styles/AttachmentStyles';
+import { layoutStyles, componentStyles } from '../../styles/styles';
 
 const ImageCard = ({ file, techId, id, handleDelete }) => {
-  const classes = attachmentPageStyles();
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
 
   const openInNewTab = () => {
     const newWindow = window.open(
@@ -25,7 +25,7 @@ const ImageCard = ({ file, techId, id, handleDelete }) => {
   };
   return (
     <Grid item xs={12}>
-      <Card className={classes.root}>
+      <Card className={layoutClasses.root}>
         <CardActionArea
           style={{ textAlign: 'center' }}
           onClick={() => {
@@ -33,7 +33,7 @@ const ImageCard = ({ file, techId, id, handleDelete }) => {
           }}>
           <img
             alt={file.title}
-            className={classes.media}
+            className={componentClasses.attachmentMedia}
             style={{ maxWidth: file.width }}
             src={
               file.data.thumbnails.find(
@@ -43,20 +43,19 @@ const ImageCard = ({ file, techId, id, handleDelete }) => {
             title='image-display'
           />
         </CardActionArea>
-        <CardContent className={classes.content}>
+        <CardContent className={componentClasses.attachmentContent}>
           <Typography
             onClick={() => {
               openInNewTab();
             }}
             variant='subtitle1'
-            // style={{ color: 'blue' }}
             component='h5'>
             {file.title}
           </Typography>
           {techId === file.technician && (
             <IconButton
               onClick={() => handleDelete(id)}
-              className={classes.icon}
+              className={componentClasses.attachmentIcon}
               size='small'>
               <DeleteForeverIcon />
             </IconButton>

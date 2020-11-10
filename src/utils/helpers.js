@@ -60,7 +60,7 @@ export const workOrderFieldGen1 = (workOrder) => {
     FIELDS.push({
       lable: 'Due Date:',
       detail: dayjs(due_date).format('MM/DD/YYYY'),
-      detailColor: 'redDetail',
+      detailColor: 'detailRed',
     });
 
   request_email &&
@@ -280,7 +280,7 @@ export const inDev = () => {
 
 export const TechEmail = (name, email, building, room, workOrderId) => (
   <a
-    style={{ textDecoration: 'none' }}
+    style={{ textDecoration: 'none', fontFamily: 'sans-serif' }}
     href={
       'mailto:' +
       email +

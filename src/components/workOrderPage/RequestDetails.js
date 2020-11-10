@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {
   Grid,
   TextField,
@@ -11,11 +10,15 @@ import {
   Hidden,
   Typography,
 } from '@material-ui/core';
+import {
+  layoutStyles,
+  componentStyles,
+  spacingStyles,
+} from '../../styles/styles';
 
 import { RequestDetailGrid1, RequestDetailGrid2 } from './RequestDetailGrid';
 import Components from '../components/Components';
 import { sendCommentToRequestor } from '../../actions/workOrder';
-import { requestDetailsGridStyles } from '../../styles/GridStyles';
 import FloorplanDev from './FloorplanDev';
 import OnumaFloorplan from './OnumaFloorplan';
 import { inDev } from '../../utils/helpers';
@@ -28,11 +31,13 @@ const RequestDetails = ({
   spaceInfo: { siteId, buildingId, floorId, spaceId },
 }) => {
   useEffect(() => {}, [floorId]);
-  const classes = requestDetailsGridStyles();
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
+  const spacingClasses = spacingStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
   const [openSearchDailog, setOpenSearchDialog] = useState(false);
   return (
-    <div className={classes.root}>
+    <div className={layoutClasses.root}>
       <Grid item container xs={12}>
         <Grid item container direction='column' xs={12} lg={7}>
           <Grid item container spacing={3}>
@@ -45,7 +50,7 @@ const RequestDetails = ({
         <Grid item container direction='column' justify='center' xs={12} lg={5}>
           {inDev() ? (
             <Grid item>
-              <div className={classes.floorPlan}>
+              <div className={layoutClasses.floorPlan}>
                 <FloorplanDev
                   studioId={studioId}
                   siteId={siteId}
@@ -57,7 +62,7 @@ const RequestDetails = ({
             </Grid>
           ) : (
             <Grid item>
-              <div className={classes.floorPlan}>
+              <div className={layoutClasses.floorPlan}>
                 <OnumaFloorplan
                   studioId={studioId}
                   siteId={siteId}
@@ -81,7 +86,7 @@ const RequestDetails = ({
           <Grid item container spacing={3} justify='flex-end'>
             <Grid item xs={12} sm={8} style={{ margin: '12px 0px' }}>
               <TextField
-                className={classes.commentFieldStyle}
+                className={layoutClasses.commentField}
                 id='commentField'
                 label='Comments To Requester'
                 multiline
@@ -91,7 +96,7 @@ const RequestDetails = ({
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 FormHelperTextProps={{
-                  className: classes.helperText,
+                  className: layoutClasses.commentFieldHelperText,
                 }}
                 helperText={
                   comment !== workOrder.administrator_comment &&
@@ -101,20 +106,20 @@ const RequestDetails = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid className={classes.commentButton} item xs={12} lg={3}>
+        <Grid className={componentClasses.commentBtnCtr} item xs={12} lg={3}>
           <Button
             onClick={() =>
               sendCommentToRequestor(comment, studioId, workOrder.id)
             }
             disabled={comment === workOrder.administrator_comment}
             variant='contained'
-            style={{ width: '190px' }}
+            className={componentClasses.btnWidth}
             color='secondary'>
             Save + Send
           </Button>
         </Grid>
       </Grid>
-      <Divider style={{ marginBottom: '15px' }} />
+      <Divider className={spacingClasses.marginBottomL} />
       <Grid item container xs={12}>
         <Grid item container direction='column' xs={12} lg={7}>
           <Grid item container spacing={3}>
@@ -128,16 +133,12 @@ const RequestDetails = ({
         </Grid>
         <Grid item container direction='column' xs={12} lg={5}>
           <Grid item container spacing={3}>
-            <Grid
-              item
-              xs={12}
-              className={clsx(classes.commentButton, classes.componentBtn)}>
+            <Grid item xs={12} className={componentClasses.commentBtnCtr}>
               <Tooltip
                 title='Search for components if the work order is related to components in another location'
                 placement='bottom'>
                 <Button
-                  style={{ width: '190px' }}
-                  className={classes.componentBtn}
+                  className={componentClasses.btnWidth}
                   onClick={() => setOpenSearchDialog(true)}
                   variant='contained'
                   color='secondary'>
@@ -146,7 +147,7 @@ const RequestDetails = ({
               </Tooltip>
               <Hidden smUp>
                 <Typography
-                  style={{ paddingTop: '5px' }}
+                  className={spacingClasses.paddingTopS}
                   variant='subtitle2'
                   align='center'
                   color='textPrimary'>

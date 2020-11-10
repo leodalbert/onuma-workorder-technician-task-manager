@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import ComponentDetailDialogGrid from './ComponentDetailDialogGrid';
 import { componentDialogFieldGen } from '../../utils/helpers';
-import { componentDetailGridStyles } from '../../styles/DialogStyles';
+import { layoutStyles, componentStyles } from '../../styles/styles';
 
 const ComponentDetailDialog = ({ open, handleClose, component }) => {
   const { name, instance_name, attachments } = component;
@@ -21,7 +21,8 @@ const ComponentDetailDialog = ({ open, handleClose, component }) => {
   //   helper function to generate dialog fields
   const fields = componentDialogFieldGen(component);
 
-  const classes = componentDetailGridStyles();
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
   return (
     <Dialog
       fullWidth
@@ -33,12 +34,14 @@ const ComponentDetailDialog = ({ open, handleClose, component }) => {
         {name} - {instance_name}
         <IconButton
           aria-label='close'
-          className={classes.closeButton}
+          className={componentClasses.btnClose}
           onClick={handleClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers classes={{ dividers: classes.dialogContent }}>
+      <DialogContent
+        dividers
+        classes={{ dividers: layoutClasses.dialogContentDivider }}>
         <Grid item container direction='column' xs={12}>
           <ComponentDetailDialogGrid fields={fields} />
         </Grid>
@@ -62,15 +65,17 @@ const ComponentDetailDialog = ({ open, handleClose, component }) => {
           ) : (
             <Grid key={a.url} item container direction='column' xs={12}>
               <Grid item container spacing={2}>
-                <Grid className={classes.lableGrid} item xs={4}>
-                  <div style={{ paddingTop: '10px' }} className={classes.lable}>
+                <Grid className={layoutClasses.labelCtr} item xs={4}>
+                  <div
+                    style={{ paddingTop: '10px' }}
+                    className={layoutClasses.labelStyle}>
                     File
                   </div>
                 </Grid>
-                <Grid className={classes.detailGrid} item xs={8}>
+                <Grid className={layoutClasses.detailCtr} item xs={8}>
                   <div
                     style={{ whiteSpace: 'pre-line' }}
-                    className={classes.detail}>
+                    className={layoutClasses.detailStyle}>
                     <Chip
                       label={a.text}
                       component='a'
@@ -78,7 +83,6 @@ const ComponentDetailDialog = ({ open, handleClose, component }) => {
                       target='_blank'
                       rel='noopener noreferrer'
                       clickable
-                      // variant='outlined'
                     />
                   </div>
                 </Grid>
@@ -102,13 +106,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(ComponentDetailDialog);
-
-// <a
-//   href='https://system.onuma.com/26/documents/download.load/1522'
-//   target='_blank'
-//   rel='noopener noreferrer'>
-//   <img
-//     src='https://system.onuma.com/26/documents/thumbnail.load/1522'
-//     alt='thumbnail'
-//   />
-// </a>;

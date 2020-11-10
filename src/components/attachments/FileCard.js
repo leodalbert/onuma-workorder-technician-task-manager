@@ -10,10 +10,11 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import { attachmentPageStyles } from '../../styles/AttachmentStyles';
+import { layoutStyles, componentStyles } from '../../styles/styles';
 
 const FileCard = ({ file, techId, id, handleDelete }) => {
-  const classes = attachmentPageStyles();
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
 
   const openInNewTab = () => {
     const newWindow = window.open(
@@ -23,16 +24,16 @@ const FileCard = ({ file, techId, id, handleDelete }) => {
     );
     if (newWindow) newWindow.opener = null;
   };
+
   return (
     <Grid item xs={12}>
-      <Card className={classes.root}>
-        <CardContent className={classes.content}>
+      <Card className={layoutClasses.root}>
+        <CardContent className={componentClasses.attachmentContent}>
           <Typography
             onClick={() => {
               openInNewTab();
             }}
             variant='subtitle1'
-            // style={{ color: 'blue' }}
             component='h5'>
             {file.filename_download}
           </Typography>
@@ -40,13 +41,13 @@ const FileCard = ({ file, techId, id, handleDelete }) => {
             {techId === file.technician && (
               <IconButton
                 onClick={() => handleDelete(id)}
-                className={classes.icon}
+                className={componentClasses.attachmentIcon}
                 size='small'>
                 <DeleteForeverIcon />
               </IconButton>
             )}
             <IconButton
-              className={classes.icon}
+              className={componentClasses.attachmentIcon}
               onClick={() => {
                 openInNewTab();
               }}

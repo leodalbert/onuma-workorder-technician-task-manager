@@ -17,34 +17,39 @@ import {
   Typography,
 } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
+import { componentStyles, layoutStyles } from '../../styles/styles';
 
 import NumberFormat from './NumberFormat';
 const CostForm = ({
-  classes,
   costTasks,
   handleRemoveCost,
   handleAddCost,
   handleCostChange,
   costForm,
 }) => {
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
   return (
     <Fragment>
-      <Grid className={classes.lableGrid} item xs={12} sm={3}>
+      <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
         <Typography
           variant='subtitle1'
           style={{ paddingTop: '15px' }}
-          className={classes.lable}>
+          className={layoutClasses.labelStyle}>
           Material Costs:
         </Typography>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={12} sm={9}>
+      <Grid className={layoutClasses.detailCtr} item xs={12} sm={9}>
         {costTasks.length > 0 && (
           <Grid item xs={12}>
             <TableContainer component={Paper}>
-              <Table className={classes.tableCell}>
+              <Table className={layoutClasses.tableCell}>
                 <TableHead>
                   <TableRow
-                    className={clsx(classes.costHead, classes.tableCell)}>
+                    className={clsx(
+                      layoutClasses.backgroundColorMain,
+                      layoutClasses.tableCell
+                    )}>
                     <TableCell>Description</TableCell>
                     <TableCell>Amount</TableCell>
                     <TableCell padding='checkbox'></TableCell>
@@ -106,7 +111,7 @@ const CostForm = ({
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={7} className={classes.btnBreak}>
+              <Grid item xs={12} sm={7} className={componentClasses.btnBreak}>
                 <Tooltip
                   disableHoverListener={!!costForm.description}
                   enterDelay={500}
@@ -114,7 +119,7 @@ const CostForm = ({
                   placement='bottom'>
                   <span>
                     <Button
-                      className={classes.costBtn}
+                      className={componentClasses.btnWidth}
                       disabled={!costForm.description || !costForm.cost}
                       onClick={() => handleAddCost()}
                       variant='contained'
@@ -133,7 +138,6 @@ const CostForm = ({
 };
 
 CostForm.propTypes = {
-  classes: PropTypes.object.isRequired,
   costTasks: PropTypes.array.isRequired,
   handleRemoveCost: PropTypes.func.isRequired,
   handleAddCost: PropTypes.func.isRequired,

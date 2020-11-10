@@ -11,7 +11,7 @@ import CostForm from './CostForm';
 import WorkOrderStatus from './WorkOrderStatus';
 import ConfirmDialog from './ConfirmDialog';
 
-import { taskDetailsGridStyles } from '../../styles/GridStyles';
+import { componentStyles, layoutStyles } from '../../styles/styles';
 import { addNewTask } from '../../actions/task';
 import {
   workOrderStatusChange,
@@ -52,7 +52,8 @@ const TaskDetails = ({
   addCollaborator,
   workOrderTech,
 }) => {
-  const classes = taskDetailsGridStyles();
+  const layoutClasses = layoutStyles();
+  const componentClasses = componentStyles();
 
   const [taskForm, setTaskForm] = useState(initialTaskState);
   const [costForm, setCostForm] = useState(initialCostState);
@@ -147,11 +148,10 @@ const TaskDetails = ({
     setCostTasks([]);
   };
   return (
-    <div className={classes.root}>
+    <div className={layoutClasses.root}>
       <Grid item container xs={12}>
         <Grid item container spacing={3}>
           <AssignedTo
-            classes={classes}
             name={workOrderTech.first_name + ' ' + workOrderTech.last_name}
             email={workOrderTech.email}
             room={room}
@@ -166,7 +166,6 @@ const TaskDetails = ({
             workOrderId={workOrderId}
           />
           <TaskForm
-            classes={classes}
             handleFormChange={handleFormChange}
             techs={techs}
             id={currentTechId}
@@ -176,7 +175,6 @@ const TaskDetails = ({
             taskForm={taskForm}
           />
           <CostForm
-            classes={classes}
             costTasks={costTasks}
             handleRemoveCost={handleRemoveCost}
             handleCostChange={handleCostChange}
@@ -184,31 +182,31 @@ const TaskDetails = ({
             handleAddCost={handleAddCost}
           />
           <WorkOrderStatus
-            classes={classes}
             workOrderStatus={workOrderStatus}
             setWorkOrderStatus={setWorkOrderStatus}
             workOrderTech={workOrderTech.id}
             currentTechId={currentTechId}
           />
-          <Grid className={classes.saveTextBreak} item xs={12} lg={10}>
-            <Typography style={{ marginBottom: '15px' }}>
-              You can keep on adding new tasks until you set the Work Order
-              Status as "Completed".
-            </Typography>
-          </Grid>
-          <Grid className={classes.btnBreak} item xs={12} lg={2}>
-            <Button
-              disabled={
-                !taskForm.hours &&
-                !taskForm.description &&
-                !(workOrderStatus === 'Completed')
-              }
-              onClick={() => handlePreSave()}
-              variant='contained'
-              className={classes.saveBtn}>
-              Save Task
-            </Button>
-          </Grid>
+        </Grid>
+        <Grid className={componentClasses.saveTextBreak} item xs={12} lg={9}>
+          <Typography style={{ marginBottom: '15px' }}>
+            You can keep on adding new tasks until you set the Work Order Status
+            as "Completed".
+          </Typography>
+        </Grid>
+        <Grid className={componentClasses.btnBreak} item xs={12} lg={3}>
+          <Button
+            disabled={
+              !taskForm.hours &&
+              !taskForm.description &&
+              !(workOrderStatus === 'Completed')
+            }
+            onClick={() => handlePreSave()}
+            variant='contained'
+            color='secondary'
+            className={componentClasses.btnWidth}>
+            Save Task
+          </Button>
         </Grid>
       </Grid>
       <ConfirmDialog

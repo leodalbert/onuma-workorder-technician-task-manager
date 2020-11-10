@@ -30,14 +30,14 @@ const headCells = [
   { id: 'building-space', numeric: true, label: 'Building - Space' },
 ];
 
-const SumaryHead = ({ classes, order, orderBy, onRequestSort }) => {
+const SumaryHead = ({ layoutClasses, order, orderBy, onRequestSort }) => {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
     <TableHead>
-      <TableRow className={classes.root}>
+      <TableRow className={layoutClasses.root}>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -50,7 +50,7 @@ const SumaryHead = ({ classes, order, orderBy, onRequestSort }) => {
               onClick={createSortHandler(headCell.id)}>
               {headCell.label}
               {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
+                <span className={layoutClasses.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </span>
               ) : null}
@@ -63,6 +63,7 @@ const SumaryHead = ({ classes, order, orderBy, onRequestSort }) => {
 };
 
 SumaryHead.propTypes = {
+  layoutClasses: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,

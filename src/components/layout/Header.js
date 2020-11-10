@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Hidden, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
-import { headerStyles } from '../../styles/HeaderStyles';
+import { layoutStyles } from '../../styles/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
 import logo from './BIM_GENIE_GREEN_100p.jpg';
@@ -17,7 +17,7 @@ const Header = ({
   handleClose,
   isMobile,
 }) => {
-  const classes = headerStyles();
+  const layoutClasses = layoutStyles();
   const openInPopup = () => {
     const newWindow = window.open(
       `https://system.onuma.com/${studio}/bugs?url=${encodeURIComponent(
@@ -29,11 +29,11 @@ const Header = ({
     if (newWindow) newWindow.opener = null;
   };
   return (
-    <div className={classes.root}>
+    <div>
       <AppBar position='static'>
-        <Toolbar classes={{ root: classes.toolbar }}>
-          <div className={classes.titleContainer}>
-            <img src={logo} alt='logo' className={classes.logo} />
+        <Toolbar classes={{ root: layoutClasses.navbarContainer }}>
+          <div className={layoutClasses.navbarTitleContainer}>
+            <img src={logo} alt='logo' className={layoutClasses.navbarLogo} />
             <Typography
               style={
                 dialogHeader
@@ -45,7 +45,7 @@ const Header = ({
                 email && email
               }`}
               variant='h6'
-              className={classes.title}>
+              className={layoutClasses.navbarTitle}>
               {text} {!dialogHeader && name && `- ${name}`}
             </Typography>
           </div>
@@ -57,10 +57,7 @@ const Header = ({
 
           <Hidden xsDown>
             {dialogHeader ? (
-              <Button
-                onClick={handleClose}
-                color='inherit'
-                className={classes.btn}>
+              <Button onClick={handleClose} color='inherit'>
                 Close <CloseIcon />
               </Button>
             ) : (
@@ -68,8 +65,7 @@ const Header = ({
                 onClick={() => {
                   openInPopup();
                 }}
-                color='inherit'
-                className={classes.btn}>
+                color='inherit'>
                 Get in touch
               </Button>
             )}

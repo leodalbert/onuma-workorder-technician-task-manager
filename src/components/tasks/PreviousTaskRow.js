@@ -15,18 +15,24 @@ import {
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
-import { previousTaskStyles } from '../../styles/TaskStyles';
+import {
+  layoutStyles,
+  spacingStyles,
+  componentStyles,
+} from '../../styles/styles';
 
 const PreviousTaskRow = ({ task, techName, taskCosts }) => {
-  const classes = previousTaskStyles();
+  const layoutClasses = layoutStyles();
+  const spacingClasses = spacingStyles();
+  const componentClasses = componentStyles();
   const [open, setOpen] = useState(false);
   return (
     <Fragment>
-      <TableRow className={classes.root}>
+      <TableRow className={layoutClasses.taskRoot}>
         <TableCell component='th' scope='row'>
           {task.description}
         </TableCell>
-        <TableCell style={{ padding: 0 }} align='left'>
+        <TableCell className={spacingClasses.noPadding} align='left'>
           {task.hours}
         </TableCell>
         <TableCell padding='none' align='right'>
@@ -36,7 +42,7 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
               size='small'
               onClick={() => setOpen(!open)}>
               {open ? (
-                <KeyboardArrowUpIcon className={classes.arrowUp} />
+                <KeyboardArrowUpIcon className={componentClasses.arrowUp} />
               ) : (
                 <KeyboardArrowDownIcon />
               )}
@@ -46,22 +52,28 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
         <TableCell align='left'>
           $&nbsp;{(Math.round(task.material_cost * 100) / 100).toFixed(2)}
         </TableCell>
-        <TableCell style={{ padding: 0 }} align='left'>
+        <TableCell className={spacingClasses.noPadding} align='left'>
           {dayjs(task.date).format('MM/DD/YYYY')}
         </TableCell>
         <TableCell align='left'>{techName(task)}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell className={spacingClasses.noPadding} colSpan={6}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Table size='small' aria-label='costs'>
               <TableHead>
                 <TableRow>
-                  <TableCell width='33%' className={classes.head} align='right'>
+                  <TableCell
+                    width='33%'
+                    className={layoutClasses.taskHead}
+                    align='right'>
                     Description
                   </TableCell>
 
-                  <TableCell width='16%' className={classes.head} align='right'>
+                  <TableCell
+                    width='16%'
+                    className={layoutClasses.taskHead}
+                    align='right'>
                     Cost
                   </TableCell>
                   <TableCell></TableCell>
@@ -86,11 +98,11 @@ const PreviousTaskRow = ({ task, techName, taskCosts }) => {
                     );
                   })}
                 <TableRow>
-                  <TableCell className={classes.head} align='right'>
+                  <TableCell className={layoutClasses.taskHead} align='right'>
                     Total:
                   </TableCell>
 
-                  <TableCell className={classes.head} align='right'>
+                  <TableCell className={layoutClasses.taskHead} align='right'>
                     $&nbsp;
                     {(Math.round(task.material_cost * 100) / 100).toFixed(2)}
                   </TableCell>
@@ -112,7 +124,3 @@ PreviousTaskRow.propTypes = {
 };
 
 export default PreviousTaskRow;
-
-//<Typography variant='h6' component='div'>
-//   Material Costs
-// </Typography>

@@ -3,19 +3,21 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Button, ButtonGroup, Grid } from '@material-ui/core';
 
+import { componentStyles } from '../../styles/styles';
+
 const ComponentSearchButtons = ({
   components,
   spaceId,
-  classes,
   handleOpenComponentDialog,
   handleSelectComponent,
 }) => {
+  const componentClasses = componentStyles();
   return _.map(components, (component) => {
     if (component.component.space[0].space.number === spaceId) {
       return (
         <Grid key={component.id}>
           <ButtonGroup
-            className={classes.buttonGroup}
+            className={componentClasses.btnGroupComponentSearch}
             color='primary'
             variant='contained'
             aria-label='split button'>
@@ -40,7 +42,6 @@ const ComponentSearchButtons = ({
 
 ComponentSearchButtons.propTypes = {
   components: PropTypes.array.isRequired,
-  classes: PropTypes.object.isRequired,
   handleOpenComponentDialog: PropTypes.func.isRequired,
   spaceId: PropTypes.string.isRequired,
   handleSelectComponent: PropTypes.func.isRequired,

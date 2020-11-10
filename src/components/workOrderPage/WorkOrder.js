@@ -9,7 +9,7 @@ import PreviousTasks from '../tasks/PreviousTasks';
 import TaskDetails from '../tasks/TaskDetails';
 import AttachmentPage from '../attachments/AttachmentPage';
 import Spinner from '../layout/Spinner';
-import { workOrderStyles } from '../../styles/GridStyles';
+import { layoutStyles } from '../../styles/styles';
 
 import {
   Accordion,
@@ -49,22 +49,21 @@ const WorkOrder = ({
     siteGroup && getTechs(params.studioId, siteGroup);
   }, [siteGroup, getTechs, params.studioId]);
 
-  const classes = workOrderStyles();
+  const layoutClasses = layoutStyles();
 
   return loading ? (
     <Spinner />
   ) : (
-    <div className={classes.root}>
-      <Accordion
-        classes={{ expanded: classes.expanded }}
-        square
-        defaultExpanded>
+    <div className={layoutClasses.accordionRoot}>
+      <Accordion square defaultExpanded>
         <AccordionSummary
-          className={classes.header}
+          className={layoutClasses.accordionHeader}
           expandIcon={<ExpandMoreIcon />}
           aria-controls='requestDetails-content'
           id='requestDetails-header'>
-          <Typography className={classes.heading}>Request Details</Typography>
+          <Typography className={layoutClasses.accordionHeading}>
+            Request Details
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <RequestDetails
@@ -75,16 +74,15 @@ const WorkOrder = ({
         </AccordionDetails>
       </Accordion>
       {tasks.length > 0 && (
-        <Accordion
-          classes={{ expanded: classes.expanded }}
-          square
-          defaultExpanded>
+        <Accordion square defaultExpanded>
           <AccordionSummary
-            className={classes.header}
+            className={layoutClasses.accordionHeader}
             expandIcon={<ExpandMoreIcon />}
             aria-controls='taskDetails-content'
             id='taskDetails-header'>
-            <Typography className={classes.heading}>Previous Tasks</Typography>
+            <Typography className={layoutClasses.accordionHeading}>
+              Previous Tasks
+            </Typography>
           </AccordionSummary>
           <AccordionDetails style={{ padding: 0 }}>
             <PreviousTasks studioId={params.studioId} />
@@ -92,32 +90,30 @@ const WorkOrder = ({
         </Accordion>
       )}
       {workOrderStatus !== 'Completed' && (
-        <Accordion
-          classes={{ expanded: classes.expanded }}
-          square
-          defaultExpanded>
+        <Accordion square defaultExpanded>
           <AccordionSummary
-            className={classes.header}
+            className={layoutClasses.accordionHeader}
             expandIcon={<ExpandMoreIcon />}
             aria-controls='taskDetails-content'
             id='taskDetails-header'>
-            <Typography className={classes.heading}>Task Details</Typography>
+            <Typography className={layoutClasses.accordionHeading}>
+              Task Details
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <TaskDetails studioId={params.studioId} />
           </AccordionDetails>
         </Accordion>
       )}
-      <Accordion
-        classes={{ expanded: classes.expanded }}
-        square
-        defaultExpanded>
+      <Accordion square defaultExpanded>
         <AccordionSummary
-          className={classes.header}
+          className={layoutClasses.accordionHeader}
           expandIcon={<ExpandMoreIcon />}
           aria-controls='attachment-content'
           id='attachment-header'>
-          <Typography className={classes.heading}>Attachments</Typography>
+          <Typography className={layoutClasses.accordionHeading}>
+            Attachments
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <AttachmentPage studioId={params.studioId} />

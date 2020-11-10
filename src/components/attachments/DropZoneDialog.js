@@ -5,15 +5,16 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
 import Button from '@material-ui/core/Button';
 import { uploadFile } from '../../actions/workOrder';
 
-import { dropzoneStyles } from '../../styles/AttachmentStyles';
+import { componentStyles, spacingStyles } from '../../styles/styles';
 
 const DropZoneDialog = ({ uploadFile, studioId, workorderId, techId }) => {
-  const classes = dropzoneStyles();
+  const componentClasses = componentStyles();
+  const spacingClasses = spacingStyles();
   const [expanded, setExpanded] = useState(false);
   const [fileObjects, setFileObjects] = useState();
 
   return !expanded ? (
-    <div className={classes.btnBreak}>
+    <div className={componentClasses.btnBreak}>
       <Button
         style={{ width: '190px' }}
         variant='contained'
@@ -36,15 +37,15 @@ const DropZoneDialog = ({ uploadFile, studioId, workorderId, techId }) => {
           container: { spacing: 5, justify: 'center' },
           item: { xs: 2 },
         }}
-        previewGridClasses={{ item: classes.item }}
+        previewGridClasses={{ item: spacingClasses.marginTopS }}
       />
-      <div className={classes.btns}>
+      <div className={componentClasses.btnRight}>
         <Button
           onClick={() => {
             setExpanded(false);
             setFileObjects();
           }}
-          className={classes.btn}
+          className={spacingClasses.marginS}
           variant='contained'>
           Cancel
         </Button>
@@ -54,7 +55,7 @@ const DropZoneDialog = ({ uploadFile, studioId, workorderId, techId }) => {
             setExpanded(false);
             setFileObjects();
           }}
-          className={classes.btn}
+          className={spacingClasses.marginS}
           color='secondary'
           variant='contained'>
           Upload

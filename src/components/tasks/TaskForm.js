@@ -12,9 +12,10 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import { layoutStyles, spacingStyles } from '../../styles/styles';
+import clsx from 'clsx';
 
 const TaskForm = ({
-  classes,
   handleFormChange,
   techs,
   id,
@@ -23,18 +24,19 @@ const TaskForm = ({
   timeState,
   taskForm,
 }) => {
+  const layoutClasses = layoutStyles();
+  const spacingClasses = spacingStyles();
   return (
     <Fragment>
-      <Grid className={classes.lableGrid} item xs={12} sm={3}>
+      <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
         <Typography
           variant='subtitle1'
-          style={{ paddingTop: '10px' }}
-          className={classes.lable}>
+          className={clsx(layoutClasses.labelStyle, spacingClasses.marginTopS)}>
           Completed by:
         </Typography>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={12} sm={9}>
-        <FormControl className={classes.formControl}>
+      <Grid className={layoutClasses.detailCtr} item xs={12} sm={9}>
+        <FormControl className={layoutClasses.formControl}>
           <Select
             onChange={(e) => handleFormChange(e)}
             labelId='tech-select'
@@ -54,12 +56,14 @@ const TaskForm = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <Typography variant='subtitle1' className={classes.hourSelectLable}>
+      <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
+        <Typography
+          variant='subtitle1'
+          className={layoutClasses.lableStyleHourSelect}>
           Actual Hours:
         </Typography>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={4} sm={3}>
+      <Grid className={layoutClasses.detailCtr} item xs={4} sm={3}>
         <FormControl fullWidth>
           <InputLabel id='hour-select'>Hours</InputLabel>
           <Select
@@ -78,7 +82,7 @@ const TaskForm = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={4} sm={3}>
+      <Grid className={layoutClasses.detailCtr} item xs={4} sm={3}>
         <FormControl fullWidth>
           <InputLabel id='min-select'>Minutes</InputLabel>
           <Select
@@ -104,7 +108,7 @@ const TaskForm = ({
       </Grid>
       <Grid
         style={{ textAlign: 'center' }}
-        className={classes.detailGrid}
+        className={layoutClasses.detailCtr}
         item
         xs={4}
         sm={3}>
@@ -119,12 +123,12 @@ const TaskForm = ({
           label='Overtime'
         />
       </Grid>
-      <Grid className={classes.lableGrid} item xs={12} sm={3}>
-        <Typography variant='subtitle1' className={classes.lable}>
+      <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
+        <Typography variant='subtitle1' className={layoutClasses.labelStyle}>
           Task Description:
         </Typography>
       </Grid>
-      <Grid className={classes.detailGrid} item xs={12} sm={9}>
+      <Grid className={layoutClasses.detailCtr} item xs={12} sm={9}>
         <TextField
           fullWidth
           rows={6}
@@ -143,7 +147,6 @@ const TaskForm = ({
 };
 
 TaskForm.propTypes = {
-  classes: PropTypes.object.isRequired,
   handleFormChange: PropTypes.func.isRequired,
   techs: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,

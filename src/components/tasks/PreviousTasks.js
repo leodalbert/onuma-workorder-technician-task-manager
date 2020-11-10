@@ -14,13 +14,11 @@ import {
 
 import PreviousTaskRow from './PreviousTaskRow';
 import { getTaskCosts } from '../../actions/task';
-import { previousTaskStyles } from '../../styles/TaskStyles';
 
 const PreviousTasks = ({ tasks, techs, studioId, getTaskCosts, taskCosts }) => {
   useEffect(() => {
     getTaskCosts(studioId, tasks);
   }, [tasks, studioId, getTaskCosts]);
-  const classes = previousTaskStyles();
 
   const techName = (task) => {
     const tech = techs.filter(
@@ -34,7 +32,7 @@ const PreviousTasks = ({ tasks, techs, studioId, getTaskCosts, taskCosts }) => {
   };
   return (
     <TableContainer component={Paper}>
-      <Table size='small' className={classes.table} aria-label='task table'>
+      <Table size='small' aria-label='task table'>
         <TableHead>
           <TableRow>
             <TableCell style={{ minWidth: '200px' }} width='30%'>
@@ -78,8 +76,6 @@ const mapStateToProps = (state) => ({
   tasks: state.workOrder.current.tasks,
   techs: state.tech.techs,
   taskCosts: state.task.taskCosts,
-  // studioId: PropTypes.string.isRequired,
-  // getTaskCosts: PropTypes.func.isRequired,
 });
 
 export default connect(mapStateToProps, { getTaskCosts })(PreviousTasks);
