@@ -29,6 +29,7 @@ const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
         width: '90%',
         border: '1px solid lightgrey',
         margin: 'auto',
+        overflow: 'hidden',
       }}
       className='floorplan-component'>
       {!isLoaded && (
@@ -38,7 +39,7 @@ const FloorPlan = ({ studioId, siteId, buildingId, floorId, spaceId }) => {
       )}
       {scriptLoaded && floorId ? (
         <onuma-plan
-          style={{ height: '600px', width: '600px', background: 'lightgray' }}
+          style={{ height: '300px', width: '300px', background: 'lightgray' }}
           studio-id={studioId}
           site-id={siteId}
           building-id={buildingId}

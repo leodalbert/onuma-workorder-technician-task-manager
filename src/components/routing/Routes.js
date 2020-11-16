@@ -1,35 +1,50 @@
-import React, { Fragment } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import React, { Fragment, lazy, Suspense } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import Dashboard from '../layout/Dashboard';
-import WorkOrder from '../workOrderPage/WorkOrder';
-import NotFound from '../layout/NotFound';
-import NotFoundHome from '../layout/NotFoundHome';
 import Header from '../layout/Header';
+import StatusPageHeader from '../layout/StatusPageHeader';
+import Spinner from '../layout/Spinner';
+const WorkOrder = lazy(() => import('../workOrderPage/WorkOrder'));
+const Dashboard = lazy(() => import('../layout/Dashboard'));
+const WorkOrderStatusPage = lazy(() =>
+  import('../statusPage/WorkOrderStatusPage')
+);
+const NotFound = lazy(() => import('../layout/NotFound'));
 
-const HeaderWithRouter = withRouter(Header);
+// TODO - handle wrong link
 
 const Routes = () => {
   return (
     <Fragment>
       <section>
-        <HeaderWithRouter />
         <Switch>
           <Route
-            exact
-            path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
-            component={Dashboard}
-          />
-          <Route
-            exact
-            path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail`}
-            component={WorkOrder}
-          />
-          <Route
-            exact
             path={`${process.env.PUBLIC_URL}/:studioId/technicians`}
-            component={NotFoundHome}
+            component={Header}
           />
+          <Route
+            path={`${process.env.PUBLIC_URL}/:studioId/requester`}
+            component={StatusPageHeader}
+          />
+        </Switch>
+        <Switch>
+          <Suspense fallback={<Spinner />}>
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
+              component={Dashboard}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail`}
+              component={WorkOrder}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/:studioId/requester/workorder/:id/:requesterEmail`}
+              component={WorkOrderStatusPage}
+            />
+          </Suspense>
           <Route component={NotFound} />
         </Switch>
       </section>

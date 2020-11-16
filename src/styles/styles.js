@@ -181,6 +181,20 @@ export const layoutStyles = makeStyles(
         padding: '14px 16px',
       },
     },
+    statusCtrSpacing: {
+      margin: '20px 10%',
+      [theme.breakpoints.down('xs')]: {
+        margin: 0,
+      },
+    },
+    statusHeader: {
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.primary.main,
+      textAlign: 'left',
+      [theme.breakpoints.down('xs')]: {
+        textAlign: 'center',
+      },
+    },
     tableCell: {
       '& .MuiTableCell-root': {
         paddingLeft: '10px',
@@ -296,6 +310,12 @@ export const spacingStyles = makeStyles(
   (theme) => ({
     paddingS: {
       padding: theme.spacing(2),
+    },
+    paddingM: {
+      padding: theme.spacing(3),
+    },
+    paddingL: {
+      padding: theme.spacing(5),
     },
     paddingTopS: {
       paddingTop: theme.spacing(2),
