@@ -178,19 +178,9 @@ export const statusWorkOrderFieldGen1 = (workOrder) => {
 // function to generate list of fields status page pt 2
 
 export const statusWorkOrderFieldGen2 = (workOrder) => {
-  const {
-    status,
-    status_modification_date,
-    administrator_comment,
-    request_description,
-  } = workOrder;
+  const { status, status_modification_date, administrator_comment } = workOrder;
 
   let FIELDS = [];
-  request_description &&
-    FIELDS.push({
-      lable: 'Request description:',
-      detail: insertBreak(request_description.split('\r\n')),
-    });
   status &&
     FIELDS.push({
       lable: 'Workorder status:',
@@ -215,12 +205,15 @@ export const statusWorkOrderFieldGen2 = (workOrder) => {
 
 export const locationFieldGen = (workorder) => {
   const { floor, building, space, location_description } = workorder;
-
+  console.log(floor);
   return [
     building.number && `${building.number} - `,
     `${building.name}`,
-    !!floor && !!floor.name && <br key='1' />,
-    !!floor && !!floor.name && floor.name,
+    !!floor && <br key='1' />,
+    !!floor &&
+      (!!floor.name
+        ? `${floor.name}`
+        : `Floor ${floor.number >= 0 ? floor.number + 1 : floor.number}`),
     !!space && <br key='2' />,
     !!space && space.number && space.number,
     ' ',

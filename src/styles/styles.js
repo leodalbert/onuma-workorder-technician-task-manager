@@ -50,6 +50,7 @@ export const layoutStyles = makeStyles(
     detailCtr: {
       [theme.breakpoints.down('xs')]: {
         paddingTop: '0px !important',
+        textAlign: 'center',
       },
     },
     detailSelectCtr: {
@@ -79,19 +80,33 @@ export const layoutStyles = makeStyles(
       [theme.breakpoints.down('xs')]: {
         padding: '16px 6px',
       },
-      floorPlan: {
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
+    },
+    floorPlan: {
+      padding: theme.spacing(2),
+      color: theme.palette.text.secondary,
+    },
+    formControl: {
+      [theme.breakpoints.down('md')]: {
+        minWidth: 280,
       },
-      formControl: {
-        [theme.breakpoints.down('md')]: {
-          minWidth: 280,
-        },
-        [theme.breakpoints.up('lg')]: {
-          minWidth: 350,
-        },
+      [theme.breakpoints.up('lg')]: {
+        minWidth: 350,
       },
     },
+    formControlLocation: {
+      margin: 5,
+      width: 300,
+      [theme.breakpoints.down('md')]: {
+        width: '80%',
+        maxWidth: 350,
+      },
+      [theme.breakpoints.down('xs')]: {
+        width: '95%',
+        maxWidth: '95%',
+        textAlign: 'left',
+      },
+    },
+
     labelStyle: {
       padding: theme.spacing(1),
       fontWeight: 'bolder',
@@ -100,6 +115,18 @@ export const layoutStyles = makeStyles(
       },
       [theme.breakpoints.up('sm')]: {
         textAlign: 'right',
+      },
+      color: theme.palette.text.primary,
+    },
+    labelSelectStyle: {
+      padding: theme.spacing(1),
+      fontWeight: 'bolder',
+      [theme.breakpoints.down('xs')]: {
+        textAlign: 'left',
+      },
+      [theme.breakpoints.up('sm')]: {
+        textAlign: 'right',
+        paddingTop: theme.spacing(3),
       },
       color: theme.palette.text.primary,
     },

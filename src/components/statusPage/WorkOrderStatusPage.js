@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
+import _ from 'lodash';
 import {
   Paper,
   Grid,
@@ -17,11 +18,16 @@ import {
 } from '../../styles/styles';
 
 import Location from './Location';
+import RequestDescription from './RequestDescription';
 import FloorplanDev from '../workOrderPage/FloorplanDev';
 import OnumaFloorplan from '../workOrderPage/OnumaFloorplan';
 import { inDev } from '../../utils/helpers';
 
-import { getWorkOrderStatusInfo, setStudio } from '../../actions/status';
+import {
+  getWorkOrderStatusInfo,
+  setStudio,
+  updateWorkorder,
+} from '../../actions/status';
 import {
   StatusRequestDetailGrid1,
   StatusRequestDetailGrid2,
@@ -30,14 +36,28 @@ import Spinner from '../layout/Spinner';
 
 const WorkOrderStatusPage = ({
   match: { params },
-  workOrder: { loading, current, currentSpaceInfo, status },
+  workOrder: {
+    loading,
+    current,
+    current: { floor, building, space, location_description },
+    currentSpaceInfo,
+    status,
+  },
   currentSpaceInfo: { siteId, studioId, buildingId, floorId, spaceId },
   getWorkOrderStatusInfo,
   setStudio,
+  allSpaces,
+  updateWorkorder,
 }) => {
   const layoutClasses = layoutStyles();
   const spacingClasses = spacingStyles();
   const componentClasses = componentStyles();
+  const initialLocationState = { floor, building, space, location_description };
+
+  const [edit, setEdit] = useState(false);
+  const [newDescription, setNewDescription] = useState('');
+  const [topLocationState, setTopLocationState] = useState({});
+  console.log(topLocationState);
 
   useEffect(() => {
     setStudio(params.studioId, params.requesterEmail);
@@ -46,7 +66,29 @@ const WorkOrderStatusPage = ({
     getWorkOrderStatusInfo(params.id, params.studioId);
   }, [getWorkOrderStatusInfo, params.id, params.studioId]);
 
-  const [edit, setEdit] = useState(false);
+  const handleClick = () => {
+    if (edit) {
+      let updateObj = {};
+      if (!_.isEqual(initialLocationState, topLocationState)) {
+        updateObj.building = topLocationState.building.id;
+        updateObj.floor =
+          topLocationState.floor.id === '' ? null : topLocationState.floor.id;
+        updateObj.space =
+          topLocationState.space.id === '' ? null : topLocationState.space.id;
+        updateObj.location_description = topLocationState.location_description;
+      }
+      if (newDescription) {
+        updateObj.request_description = newDescription;
+      }
+      console.log(updateObj);
+      if (!_.isEmpty(updateObj)) {
+        updateWorkorder(params.studioId, params.id, updateObj);
+      }
+      setEdit(false);
+    } else {
+      setEdit(true);
+    }
+  };
 
   return loading ? (
     <Spinner />
@@ -70,7 +112,18 @@ const WorkOrderStatusPage = ({
               <Grid item container spacing={3}>
                 <StatusRequestDetailGrid1 workOrder={current} />
                 <Hidden mdDown>
-                  <Location workorder={current} edit={edit} />
+                  <Location
+                    workorder={current}
+                    edit={edit}
+                    allSpaces={allSpaces}
+                    setTopLocationState={setTopLocationState}
+                  />
+                  <RequestDescription
+                    workorder={current}
+                    edit={edit}
+                    newDescription={newDescription}
+                    setNewDescription={setNewDescription}
+                  />
                   <StatusRequestDetailGrid2 workOrder={current} />
                 </Hidden>
               </Grid>
@@ -116,7 +169,18 @@ const WorkOrderStatusPage = ({
             <Hidden lgUp>
               <Grid item container direction='column' xs={12} lg={7}>
                 <Grid item container spacing={3}>
-                  <Location workorder={current} edit={edit} />
+                  <Location
+                    workorder={current}
+                    edit={edit}
+                    allSpaces={allSpaces}
+                    setTopLocationState={setTopLocationState}
+                  />
+                  <RequestDescription
+                    workorder={current}
+                    edit={edit}
+                    newDescription={newDescription}
+                    setNewDescription={setNewDescription}
+                  />
                   <StatusRequestDetailGrid2 workOrder={current} />
                 </Grid>
               </Grid>
@@ -126,9 +190,14 @@ const WorkOrderStatusPage = ({
             <div className={componentClasses.btnBreak}>
               <Button
                 style={{ width: '190px' }}
+                disabled={
+                  edit &&
+                  !topLocationState.location_description &&
+                  !topLocationState.space.id
+                }
                 variant='contained'
-                color={edit ? 'secondary' : 'primary'}
-                onClick={() => setEdit(!edit)}>
+                color={edit ? 'secondary' : 'secondary'}
+                onClick={handleClick}>
                 {edit ? 'Save Changes' : 'Edit Details'}
               </Button>
             </div>
@@ -144,13 +213,20 @@ WorkOrderStatusPage.propTypes = {
   match: PropTypes.object,
   getWorkOrderStatusInfo: PropTypes.func.isRequired,
   setStudio: PropTypes.func.isRequired,
+  allSpaces: PropTypes.array,
+  updateWorkorder: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   workOrder: state.statusPage,
   currentSpaceInfo: state.statusPage.currentSpaceInfo,
+  allSpaces: state.statusPage.allSpaces,
 });
 
-export default connect(mapStateToProps, { getWorkOrderStatusInfo, setStudio })(
-  WorkOrderStatusPage
-);
+export default connect(mapStateToProps, {
+  getWorkOrderStatusInfo,
+  setStudio,
+  updateWorkorder,
+})(WorkOrderStatusPage);
+
+// #fdd835
