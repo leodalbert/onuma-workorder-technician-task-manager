@@ -4,6 +4,7 @@ import {
   SET_STUDIO,
   GET_ALL_SPACES,
   SET_STATUS_PAGE_LOADING,
+  SET_STATUS,
 } from '../actions/types';
 
 const initialState = {
@@ -57,6 +58,14 @@ export default function (state = initialState, action) {
         ...state,
         studio: payload.studio,
         email: payload.email,
+      };
+    case SET_STATUS:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          status: payload,
+        },
       };
     case SET_STATUS_PAGE_LOADING:
       return {

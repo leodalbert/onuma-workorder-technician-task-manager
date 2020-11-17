@@ -7,6 +7,7 @@ import {
   SET_STUDIO,
   GET_ALL_SPACES,
   SET_STATUS_PAGE_LOADING,
+  SET_STATUS,
 } from './types';
 
 // Set Loading
@@ -131,6 +132,28 @@ export const updateWorkorder = (studioId, workorderId, updatedObj) => async (
     dispatch({ type: SET_SPACE_INFO_STATUS, payload: buildingInfo });
 
     dispatch({ type: GET_WORKORDER_STATUS_INFO, payload: workorder });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Patch work order status Change
+export const setStatus = (workorderId, statusObj, studioId) => async (
+  dispatch
+) => {
+  try {
+    const res = await axios.patch(
+      `/${studioId}/api/items/workorder/${workorderId}?fields=status`,
+      statusObj
+    );
+    console.log(res);
+    dispatch({ type: SET_STATUS, payload: res.data.data.status });
   } catch (err) {
     dispatch({
       type: ERROR,

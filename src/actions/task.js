@@ -77,7 +77,6 @@ export const addNewCost = (cost, taskId, studioId) => async (dispatch) => {
     dispatch(updateWorkorderTask(studioId, taskId));
     dispatch({ type: ADD_COST, payload: res.data.data });
   } catch (err) {
-    console.log(err);
     dispatch({
       type: ERROR,
       payload: {

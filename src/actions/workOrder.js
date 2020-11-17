@@ -273,7 +273,6 @@ export const sendCommentToRequestor = (
         administrator_comment: comment,
       }
     );
-    console.log(res.data.data.administrator_comment);
     dispatch({
       type: SEND_COMMENT_TO_REQUESTOR,
       payload: res.data.data.administrator_comment,

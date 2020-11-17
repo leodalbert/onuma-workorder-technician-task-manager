@@ -28,7 +28,6 @@ const DropZoneDialog = ({ uploadFile, studioId, workorderId, techId }) => {
       <DropzoneAreaBase
         onAdd={(fileObjs) => setFileObjects(fileObjs)}
         onDelete={() => setFileObjects()}
-        onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
         fileObjects={fileObjects}
         filesLimit={1}
         showFileNames

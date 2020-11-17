@@ -205,7 +205,6 @@ export const statusWorkOrderFieldGen2 = (workOrder) => {
 
 export const locationFieldGen = (workorder) => {
   const { floor, building, space, location_description } = workorder;
-  console.log(floor);
   return [
     building.number && `${building.number} - `,
     `${building.name}`,

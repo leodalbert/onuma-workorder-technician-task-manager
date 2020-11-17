@@ -122,9 +122,7 @@ export default function (state = initialState, action) {
         current: {
           ...state.current,
           tasks: state.current.tasks.map((task) => {
-            console.log(task);
             if (task.id === payload.id) {
-              console.log('this one: ', task);
               return payload;
             } else {
               return task;

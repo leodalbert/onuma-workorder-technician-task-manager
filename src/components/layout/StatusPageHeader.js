@@ -19,7 +19,6 @@ const StatusPageHeader = ({ text, email, studio }) => {
     );
     if (newWindow) newWindow.opener = null;
   };
-  console.log(studio);
   return (
     <div>
       <AppBar position='static'>

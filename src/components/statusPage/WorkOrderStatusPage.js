@@ -17,6 +17,7 @@ import {
   componentStyles,
 } from '../../styles/styles';
 
+import ConfirmCompleted from './ConfirmCompleted';
 import Location from './Location';
 import RequestDescription from './RequestDescription';
 import FloorplanDev from '../workOrderPage/FloorplanDev';
@@ -39,9 +40,7 @@ const WorkOrderStatusPage = ({
   workOrder: {
     loading,
     current,
-    current: { floor, building, space, location_description },
-    currentSpaceInfo,
-    status,
+    current: { floor, building, space, location_description, status },
   },
   currentSpaceInfo: { siteId, studioId, buildingId, floorId, spaceId },
   getWorkOrderStatusInfo,
@@ -57,7 +56,6 @@ const WorkOrderStatusPage = ({
   const [edit, setEdit] = useState(false);
   const [newDescription, setNewDescription] = useState('');
   const [topLocationState, setTopLocationState] = useState({});
-  console.log(topLocationState);
 
   useEffect(() => {
     setStudio(params.studioId, params.requesterEmail);
@@ -80,7 +78,6 @@ const WorkOrderStatusPage = ({
       if (newDescription) {
         updateObj.request_description = newDescription;
       }
-      console.log(updateObj);
       if (!_.isEmpty(updateObj)) {
         updateWorkorder(params.studioId, params.id, updateObj);
       }
@@ -108,6 +105,15 @@ const WorkOrderStatusPage = ({
             item
             container
             xs={12}>
+            {status === 'Completed' && (
+              <Grid item container direction='column' xs={12}>
+                <ConfirmCompleted
+                  studioId={params.studioId}
+                  workorderId={params.id}
+                />
+                <Divider />
+              </Grid>
+            )}
             <Grid item container direction='column' xs={12} lg={7}>
               <Grid item container spacing={3}>
                 <StatusRequestDetailGrid1 workOrder={current} />
@@ -186,22 +192,29 @@ const WorkOrderStatusPage = ({
               </Grid>
             </Hidden>
           </Grid>
-          <Grid item xs={12}>
-            <div className={componentClasses.btnBreak}>
-              <Button
-                style={{ width: '190px' }}
-                disabled={
-                  edit &&
-                  !topLocationState.location_description &&
-                  !topLocationState.space.id
-                }
-                variant='contained'
-                color={edit ? 'secondary' : 'secondary'}
-                onClick={handleClick}>
-                {edit ? 'Save Changes' : 'Edit Details'}
-              </Button>
-            </div>
-          </Grid>
+          {status !== 'Completed' && status !== 'Completion Confirmed' && (
+            <Grid item xs={12}>
+              <div className={componentClasses.btnBreak}>
+                <Button
+                  className={componentClasses.btnWidth}
+                  style={
+                    edit
+                      ? { backgroundColor: '#fdd835' }
+                      : { backgroundColor: '#d3e6df' }
+                  }
+                  disabled={
+                    edit &&
+                    !topLocationState.location_description &&
+                    !topLocationState.space.id
+                  }
+                  variant='contained'
+                  color={edit ? 'inherit' : 'secondary'}
+                  onClick={handleClick}>
+                  {edit ? 'Save Changes' : 'Edit Details'}
+                </Button>
+              </div>
+            </Grid>
+          )}
         </Grid>
       </Paper>
     </div>

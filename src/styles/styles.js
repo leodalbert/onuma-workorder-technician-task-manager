@@ -298,6 +298,10 @@ export const componentStyles = makeStyles(
       top: theme.spacing(1),
       color: theme.palette.grey[500],
     },
+    btnCompletion: {
+      width: 100,
+      margin: '0px 10px',
+    },
     btnGroup: {
       marginBottom: theme.spacing(2),
       color: theme.palette.text.primary,
@@ -314,6 +318,15 @@ export const componentStyles = makeStyles(
     },
     btnWidth: {
       width: '190px',
+    },
+    declineTextFormCtrl: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(5),
+      width: '40%',
+      minWidth: '350px',
+      [theme.breakpoints.down('xs')]: {
+        minWidth: '95%',
+      },
     },
     saveTextBreak: {
       textAlign: 'center',
