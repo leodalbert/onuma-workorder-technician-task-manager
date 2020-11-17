@@ -6,6 +6,7 @@ import StatusPageHeader from '../layout/StatusPageHeader';
 import Spinner from '../layout/Spinner';
 const WorkOrder = lazy(() => import('../workOrderPage/WorkOrder'));
 const Dashboard = lazy(() => import('../layout/Dashboard'));
+const RequesterDashboard = lazy(() => import('../layout/RequesterDashboard'));
 const WorkOrderStatusPage = lazy(() =>
   import('../statusPage/WorkOrderStatusPage')
 );
@@ -43,6 +44,11 @@ const Routes = () => {
               exact
               path={`${process.env.PUBLIC_URL}/:studioId/requester/workorder/:id/:requesterEmail`}
               component={WorkOrderStatusPage}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/:studioId/requester/:requesterEmail`}
+              component={RequesterDashboard}
             />
           </Suspense>
           <Route component={NotFound} />

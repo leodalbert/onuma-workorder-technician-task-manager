@@ -5,6 +5,8 @@ import {
   GET_ALL_SPACES,
   SET_STATUS_PAGE_LOADING,
   SET_STATUS,
+  GET_REQUESTER_WORK_ORDERS,
+  CLEAR_REQUESTER_CURRENT,
 } from '../actions/types';
 
 const initialState = {
@@ -39,6 +41,13 @@ export default function (state = initialState, action) {
         ...state,
         allSpaces: payload,
       };
+    case GET_REQUESTER_WORK_ORDERS: {
+      return {
+        ...state,
+        workOrders: payload,
+        loading: false,
+      };
+    }
     case GET_WORKORDER_STATUS_INFO:
       return {
         ...state,
@@ -71,6 +80,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case CLEAR_REQUESTER_CURRENT:
+      return {
+        ...state,
+        current: initialState.current,
+        currentSpaceInfo: initialState.currentSpaceInfo,
+        allSpaces: initialState.allSpaces,
       };
     default:
       return state;

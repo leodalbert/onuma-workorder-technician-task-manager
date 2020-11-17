@@ -33,7 +33,8 @@ const StatusPageHeader = ({ text, email, studio }) => {
               }`}
               variant='h6'
               className={layoutClasses.navbarTitle}>
-              {text} {email && `- ${email}`}
+              {text}
+              {email}
             </Typography>
           </div>
 
@@ -57,7 +58,7 @@ StatusPageHeader.propTypes = {
 };
 
 StatusPageHeader.defaultProps = {
-  text: ['Request Status'],
+  text: ['Work order requests by '],
 };
 
 const mapStateToProps = (state) => ({

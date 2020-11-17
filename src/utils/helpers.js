@@ -406,7 +406,8 @@ export const getVisibleWorkorders = (workorders, filter) => {
     if (filter === 'completed') {
       return (
         workorder.status === 'Completed' ||
-        workorder.status === 'Completion Confirmed'
+        workorder.status === 'Completion Confirmed' ||
+        workorder.status === 'Completion Declined'
       );
     }
     return workorders;

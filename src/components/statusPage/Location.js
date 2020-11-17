@@ -24,7 +24,10 @@ const Location = ({
   allSpaces,
   setTopLocationState,
 }) => {
-  const initialLocationState = { floor, building, space, location_description };
+  let initialLocationState = { floor, building, space, location_description };
+  if (initialLocationState.location_description === null) {
+    initialLocationState.location_description = '';
+  }
   const layoutClasses = layoutStyles();
   const spaceDetails = locationFieldGen(workorder);
   const [locationState, setLocationState] = useState(initialLocationState);
@@ -32,6 +35,7 @@ const Location = ({
   useEffect(() => {
     setTopLocationState(locationState);
   }, [locationState, setTopLocationState]);
+
   const handleChange = (e) => {
     if (e.target.name === 'building') {
       setLocationState({

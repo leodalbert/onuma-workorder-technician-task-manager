@@ -81,6 +81,7 @@ const WorkOrderStatusPage = ({
       if (!_.isEmpty(updateObj)) {
         updateWorkorder(params.studioId, params.id, updateObj);
       }
+      setNewDescription('');
       setEdit(false);
     } else {
       setEdit(true);

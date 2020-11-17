@@ -23,6 +23,7 @@ const SummaryTable = ({
   setLoading,
   techEmail,
   techId,
+  requesterPage,
 }) => {
   const layoutClasses = layoutStyles();
   const [order, setOrder] = useState('desc');
@@ -117,9 +118,11 @@ const SummaryTable = ({
           <TableFooter>
             <TableRow>
               <TableCell style={{ borderBottom: 'none' }} colSpan={1}>
-                <Typography color='textSecondary'>
-                  * You are a collaborator
-                </Typography>
+                {!requesterPage && (
+                  <Typography color='textSecondary'>
+                    * You are a collaborator
+                  </Typography>
+                )}
               </TableCell>
 
               <TablePagination
@@ -140,12 +143,17 @@ const SummaryTable = ({
   );
 };
 
+SummaryTable.defaultProps = {
+  requesterPage: false,
+};
+
 SummaryTable.propTypes = {
   workOrders: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
   setLoading: PropTypes.func.isRequired,
-  techEmail: PropTypes.string.isRequired,
+  techEmail: PropTypes.string,
   techId: PropTypes.number,
+  requesterPage: PropTypes.bool.isRequired,
 };
 
 export default withRouter(SummaryTable);

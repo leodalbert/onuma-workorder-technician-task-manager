@@ -8,6 +8,8 @@ import {
   GET_ALL_SPACES,
   SET_STATUS_PAGE_LOADING,
   SET_STATUS,
+  GET_REQUESTER_WORK_ORDERS,
+  CLEAR_REQUESTER_CURRENT,
 } from './types';
 
 // Set Loading
@@ -165,7 +167,39 @@ export const setStatus = (workorderId, statusObj, studioId) => async (
   }
 };
 
+// Get all work orders by request_email
+export const getAllWorkOrderRequestsByRequester = (
+  requestEmail,
+  studioId
+) => async (dispatch) => {
+  dispatch({ type: SET_STATUS_PAGE_LOADING });
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/workorder?fields=id, request_number,collaborators.collaborator, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status&filter[request_email]=${requestEmail}`
+    );
+    dispatch({ type: GET_REQUESTER_WORK_ORDERS, payload: res.data.data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
 // Set Stuido and email to state from url params
 export const setStudio = (studio, email) => (dispatch) => {
   dispatch({ type: SET_STUDIO, payload: { studio, email } });
+};
+
+// Clear current state for requester
+export const clearRequesterState = () => (dispatch) => {
+  dispatch({ type: CLEAR_REQUESTER_CURRENT });
+};
+
+// set Loading
+export const setRequesterLoading = () => (dispatch) => {
+  dispatch({ type: SET_STATUS_PAGE_LOADING });
 };
