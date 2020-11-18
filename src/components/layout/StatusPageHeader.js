@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Typography, Toolbar, AppBar } from '@material-ui/core';
+import { Typography, Toolbar, AppBar, IconButton } from '@material-ui/core';
 import { layoutStyles } from '../../styles/styles';
 
 import logo from './BIM_GENIE_GREEN_100p.jpg';
+import HelpIcon from './HelpIcon';
 
 const StatusPageHeader = ({ text, email, studio }) => {
   const layoutClasses = layoutStyles();
@@ -38,13 +39,13 @@ const StatusPageHeader = ({ text, email, studio }) => {
             </Typography>
           </div>
 
-          <Button
+          <IconButton
             onClick={() => {
               openInPopup();
             }}
             color='inherit'>
-            Get in touch
-          </Button>
+            <HelpIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

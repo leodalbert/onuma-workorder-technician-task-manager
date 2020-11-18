@@ -2,10 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Hidden, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
+import {
+  Hidden,
+  Button,
+  IconButton,
+  Typography,
+  Toolbar,
+  AppBar,
+} from '@material-ui/core';
 import { layoutStyles } from '../../styles/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
+import HelpIcon from './HelpIcon';
 import logo from './BIM_GENIE_GREEN_100p.jpg';
 
 const Header = ({
@@ -61,13 +69,13 @@ const Header = ({
                 Close <CloseIcon />
               </Button>
             ) : (
-              <Button
+              <IconButton
                 onClick={() => {
                   openInPopup();
                 }}
                 color='inherit'>
-                Get in touch
-              </Button>
+                <HelpIcon />
+              </IconButton>
             )}
           </Hidden>
         </Toolbar>

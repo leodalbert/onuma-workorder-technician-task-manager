@@ -42,7 +42,7 @@ const WorkOrderStatusPage = ({
     current,
     current: { floor, building, space, location_description, status },
   },
-  currentSpaceInfo: { siteId, studioId, buildingId, floorId, spaceId },
+  currentSpaceInfo: { siteId, buildingId, floorId, spaceId },
   getWorkOrderStatusInfo,
   setStudio,
   allSpaces,
@@ -109,8 +109,8 @@ const WorkOrderStatusPage = ({
             {status === 'Completed' && (
               <Grid item container direction='column' xs={12}>
                 <ConfirmCompleted
-                  studioId={params.studioId}
-                  workorderId={params.id}
+                  studioId={Number(params.studioId)}
+                  workorderId={Number(params.id)}
                 />
                 <Divider />
               </Grid>
@@ -151,7 +151,7 @@ const WorkOrderStatusPage = ({
                   )}>
                   <div className={layoutClasses.floorPlan}>
                     <FloorplanDev
-                      studioId={studioId}
+                      studioId={params.studioId}
                       siteId={siteId}
                       buildingId={buildingId}
                       floorId={floorId}
@@ -163,7 +163,7 @@ const WorkOrderStatusPage = ({
                 <Grid item>
                   <div className={layoutClasses.floorPlan}>
                     <OnumaFloorplan
-                      studioId={studioId}
+                      studioId={params.studioId}
                       siteId={siteId}
                       buildingId={buildingId}
                       floorId={floorId}

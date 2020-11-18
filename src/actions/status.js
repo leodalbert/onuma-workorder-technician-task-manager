@@ -150,12 +150,11 @@ export const setStatus = (workorderId, statusObj, studioId) => async (
   dispatch
 ) => {
   try {
-    const res = await axios.patch(
+    dispatch({ type: SET_STATUS, payload: statusObj.status });
+    await axios.patch(
       `/${studioId}/api/items/workorder/${workorderId}?fields=status`,
       statusObj
     );
-    console.log(res);
-    dispatch({ type: SET_STATUS, payload: res.data.data.status });
   } catch (err) {
     dispatch({
       type: ERROR,

@@ -32,7 +32,9 @@ const ConfirmCompleted = ({ setStatus, studioId, workorderId }) => {
   };
 
   const handleConfirm = () => {
-    setStatus(workorderId, { status: 'Completion Confirmed' }, studioId);
+    showDeclineText
+      ? setShowDeclineText(false)
+      : setStatus(workorderId, { status: 'Completion Confirmed' }, studioId);
   };
 
   return (
@@ -72,9 +74,9 @@ const ConfirmCompleted = ({ setStatus, studioId, workorderId }) => {
             // disabled={showDeclineText}
             onClick={handleConfirm}
             className={componentClasses.btnCompletion}
-            color='secondary'
+            color={showDeclineText ? 'primary' : 'secondary'}
             variant='contained'>
-            Confirm
+            {showDeclineText ? 'Back' : 'Confirm'}
           </Button>
         </Grid>
       </Grid>
