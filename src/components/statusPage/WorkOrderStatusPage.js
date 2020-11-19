@@ -23,6 +23,7 @@ import RequestDescription from './RequestDescription';
 import FloorplanDev from '../workOrderPage/FloorplanDev';
 import OnumaFloorplan from '../workOrderPage/OnumaFloorplan';
 import { inDev } from '../../utils/helpers';
+import { logout } from '../../actions/auth';
 
 import {
   getWorkOrderStatusInfo,
@@ -40,13 +41,24 @@ const WorkOrderStatusPage = ({
   workOrder: {
     loading,
     current,
-    current: { floor, building, space, location_description, status },
+    current: {
+      floor,
+      building,
+      space,
+      location_description,
+      status,
+      request_email,
+    },
   },
   currentSpaceInfo: { siteId, buildingId, floorId, spaceId },
   getWorkOrderStatusInfo,
   setStudio,
   allSpaces,
   updateWorkorder,
+  requestCc,
+  requestEmail,
+  authUser,
+  logout,
 }) => {
   const layoutClasses = layoutStyles();
   const spacingClasses = spacingStyles();
@@ -63,6 +75,16 @@ const WorkOrderStatusPage = ({
   useEffect(() => {
     getWorkOrderStatusInfo(params.id, params.studioId);
   }, [getWorkOrderStatusInfo, params.id, params.studioId]);
+
+  useEffect(() => {
+    if (
+      !loading &&
+      !requestCc.includes(authUser) &&
+      authUser !== requestEmail
+    ) {
+      logout();
+    }
+  }, [loading, authUser, requestCc, requestEmail, logout]);
 
   const handleClick = () => {
     if (edit) {
@@ -94,7 +116,9 @@ const WorkOrderStatusPage = ({
     <div className={layoutClasses.statusCtrSpacing}>
       <Paper elevation={2} className={layoutClasses.root}>
         <Grid item xs={12} className={layoutClasses.statusHeader}>
-          <Typography variant='h6'>Work Order Request</Typography>
+          <Typography variant='h6'>
+            Work order request by {request_email}
+          </Typography>
         </Grid>
         <Divider />
         <Grid item className={spacingClasses.paddingM}>
@@ -229,18 +253,28 @@ WorkOrderStatusPage.propTypes = {
   setStudio: PropTypes.func.isRequired,
   allSpaces: PropTypes.array,
   updateWorkorder: PropTypes.func.isRequired,
+  requestEmail: PropTypes.string,
+  requestCc: PropTypes.array,
+  logout: PropTypes.func.isRequired,
+  authUser: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   workOrder: state.statusPage,
   currentSpaceInfo: state.statusPage.currentSpaceInfo,
   allSpaces: state.statusPage.allSpaces,
+  requestEmail: state.workOrder.current.request_email,
+  authUser: state.auth.user,
+  requestCc: state.statusPage.current.request_email_cc
+    .split(',')
+    .map((item) => item.trim()),
 });
 
 export default connect(mapStateToProps, {
   getWorkOrderStatusInfo,
   setStudio,
   updateWorkorder,
+  logout,
 })(WorkOrderStatusPage);
 
 // #fdd835

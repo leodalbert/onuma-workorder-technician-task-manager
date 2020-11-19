@@ -20,6 +20,7 @@ const initialState = {
       id: undefined,
     },
     request_email: '',
+    request_email_cc: '',
   },
   currentSpaceInfo: {
     siteId: undefined,
