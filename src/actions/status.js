@@ -9,6 +9,7 @@ import {
   SET_STATUS_PAGE_LOADING,
   SET_STATUS,
   GET_REQUESTER_WORK_ORDERS,
+  GET_REQUESTER_CC_WORK_ORDERS,
   CLEAR_REQUESTER_CURRENT,
 } from './types';
 
@@ -166,6 +167,26 @@ export const setStatus = (workorderId, statusObj, studioId) => async (
   }
 };
 
+// Get all work orders by request_email_cc
+export const getAllWorkOrderRequestsByRequesterCC = (
+  requestEmail,
+  studioId
+) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/workorder?fields=id, request_number,request_email,collaborators.collaborator, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status&filter[request_email_cc][contains]=${requestEmail}`
+    );
+    dispatch({ type: GET_REQUESTER_CC_WORK_ORDERS, payload: res.data.data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
 // Get all work orders by request_email
 export const getAllWorkOrderRequestsByRequester = (
   requestEmail,
@@ -174,9 +195,10 @@ export const getAllWorkOrderRequestsByRequester = (
   dispatch({ type: SET_STATUS_PAGE_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id, request_number,collaborators.collaborator, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status&filter[request_email]=${requestEmail}`
+      `/${studioId}/api/items/workorder?fields=id, request_number,request_email,collaborators.collaborator, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status&filter[request_email]=${requestEmail}`
     );
     dispatch({ type: GET_REQUESTER_WORK_ORDERS, payload: res.data.data });
+    dispatch(getAllWorkOrderRequestsByRequesterCC(requestEmail, studioId));
   } catch (err) {
     dispatch({
       type: ERROR,

@@ -24,6 +24,7 @@ const SummaryTable = ({
   techEmail,
   techId,
   requesterPage,
+  requesterEmail,
 }) => {
   const layoutClasses = layoutStyles();
   const [order, setOrder] = useState('desc');
@@ -90,6 +91,11 @@ const SummaryTable = ({
                       {techId && row.assigned_technician.id !== techId && (
                         <span>*&nbsp;</span>
                       )}
+                      {requesterEmail &&
+                        row.request_email !== requesterEmail && (
+                          <span>*&nbsp;</span>
+                        )}
+
                       {row.status}
                     </TableCell>
                     <TableCell
@@ -118,11 +124,10 @@ const SummaryTable = ({
           <TableFooter>
             <TableRow>
               <TableCell style={{ borderBottom: 'none' }} colSpan={1}>
-                {!requesterPage && (
-                  <Typography color='textSecondary'>
-                    * You are a collaborator
-                  </Typography>
-                )}
+                <Typography color='textSecondary'>
+                  * You are{' '}
+                  {requesterPage ? "CC'd on request" : 'a collaborator'}
+                </Typography>
               </TableCell>
 
               <TablePagination
@@ -145,6 +150,7 @@ const SummaryTable = ({
 
 SummaryTable.defaultProps = {
   requesterPage: false,
+  requesterEmail: '',
 };
 
 SummaryTable.propTypes = {
@@ -154,6 +160,7 @@ SummaryTable.propTypes = {
   techEmail: PropTypes.string,
   techId: PropTypes.number,
   requesterPage: PropTypes.bool.isRequired,
+  requesterEmail: PropTypes.string.isRequired,
 };
 
 export default withRouter(SummaryTable);

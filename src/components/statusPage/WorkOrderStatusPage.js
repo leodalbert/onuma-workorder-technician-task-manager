@@ -263,7 +263,7 @@ const mapStateToProps = (state) => ({
   workOrder: state.statusPage,
   currentSpaceInfo: state.statusPage.currentSpaceInfo,
   allSpaces: state.statusPage.allSpaces,
-  requestEmail: state.workOrder.current.request_email,
+  requestEmail: state.statusPage.current.request_email,
   authUser: state.auth.user,
   requestCc: state.statusPage.current.request_email_cc
     .split(',')

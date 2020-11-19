@@ -57,6 +57,7 @@ const RequesterDashboard = ({
           requesterPage={true}
           techEmail={params.requesterEmail}
           //   techId={techId}
+          requesterEmail={params.requesterEmail}
         />
       </Container>
     </Fragment>

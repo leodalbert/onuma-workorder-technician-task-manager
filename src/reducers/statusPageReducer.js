@@ -6,6 +6,7 @@ import {
   SET_STATUS_PAGE_LOADING,
   SET_STATUS,
   GET_REQUESTER_WORK_ORDERS,
+  GET_REQUESTER_CC_WORK_ORDERS,
   CLEAR_REQUESTER_CURRENT,
 } from '../actions/types';
 
@@ -48,6 +49,12 @@ export default function (state = initialState, action) {
         ...state,
         workOrders: payload,
         loading: false,
+      };
+    }
+    case GET_REQUESTER_CC_WORK_ORDERS: {
+      return {
+        ...state,
+        workOrders: [...state.workOrders, ...payload],
       };
     }
     case GET_WORKORDER_STATUS_INFO:
