@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Hidden,
   Button,
   IconButton,
   Typography,
@@ -47,7 +46,7 @@ const Header = ({
         <Toolbar classes={{ root: layoutClasses.navbarContainer }}>
           <div className={layoutClasses.navbarTitleContainer}>
             <img src={logo} alt='logo' className={layoutClasses.navbarLogo} />
-            {isWorkorder && (
+            {isWorkorder && !dialogHeader && (
               <IconButton
                 color='inherit'
                 component={Link}
@@ -69,30 +68,29 @@ const Header = ({
               }`}
               variant='h6'
               className={layoutClasses.navbarTitle}>
-              {text} {!dialogHeader && name && `- ${name}`}
+              {dialogHeader && text} {!dialogHeader && name && name}
             </Typography>
           </div>
-          {isMobile && (
-            <Button onClick={handleClose} color='inherit'>
-              <CloseIcon />
-            </Button>
-          )}
-
-          <Hidden xsDown>
-            {dialogHeader ? (
+          {dialogHeader &&
+            (isMobile ? (
+              <Button onClick={handleClose} color='inherit'>
+                <CloseIcon />
+              </Button>
+            ) : (
               <Button onClick={handleClose} color='inherit'>
                 Close <CloseIcon />
               </Button>
-            ) : (
-              <IconButton
-                onClick={() => {
-                  openInPopup();
-                }}
-                color='inherit'>
-                <HelpIcon />
-              </IconButton>
-            )}
-          </Hidden>
+            ))}
+
+          {!dialogHeader && (
+            <IconButton
+              onClick={() => {
+                openInPopup();
+              }}
+              color='inherit'>
+              <HelpIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
     </div>
