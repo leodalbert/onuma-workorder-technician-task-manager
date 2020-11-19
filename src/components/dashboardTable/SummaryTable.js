@@ -132,7 +132,7 @@ const SummaryTable = ({
 
               <TablePagination
                 colSpan={4}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[10, 25, 50]}
                 component='td'
                 count={workOrders.length}
                 rowsPerPage={rowsPerPage}
