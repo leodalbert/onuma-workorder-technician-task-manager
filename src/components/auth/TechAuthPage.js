@@ -7,7 +7,7 @@ import { getWorkOrderTech } from '../../actions/workOrder';
 import { login, logout } from '../../actions/auth';
 import { Redirect } from 'react-router-dom';
 
-const AuthPage = ({
+const TechAuthPage = ({
   match: { params },
   getCurrentTech,
   getWorkOrderTech,
@@ -61,7 +61,7 @@ const AuthPage = ({
   );
 };
 
-AuthPage.propTypes = {
+TechAuthPage.propTypes = {
   match: PropTypes.object.isRequired,
   getCurrentTech: PropTypes.func.isRequired,
   getWorkOrderTech: PropTypes.func.isRequired,
@@ -92,4 +92,4 @@ export default connect(mapStateToProps, {
   getWorkOrderTech,
   login,
   logout,
-})(AuthPage);
+})(TechAuthPage);

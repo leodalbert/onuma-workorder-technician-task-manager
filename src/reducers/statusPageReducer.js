@@ -19,6 +19,7 @@ const initialState = {
     assigned_technician: {
       id: undefined,
     },
+    request_email: '',
   },
   currentSpaceInfo: {
     siteId: undefined,

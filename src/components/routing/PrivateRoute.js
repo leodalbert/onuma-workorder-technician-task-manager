@@ -11,6 +11,7 @@ export const PrivateRoute = ({
   component: Component,
   ...rest
 }) => {
+  // TODO refractor auth logic to this file
   const email = useLocation().pathname.split('/').pop();
   if (!isAuthenticated) {
     const cookie = Cookies.get('tech');

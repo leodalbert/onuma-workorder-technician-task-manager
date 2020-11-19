@@ -61,7 +61,7 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
 export const getWorkOrder = (workorderId, studioId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder/${workorderId}?fields=*,*.*&fields=id,status,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.collaborator,collaborators.id,assigned_trade,collaborators.collaborator.email, collaborators.collaborator.id`
+      `/${studioId}/api/items/workorder/${workorderId}?fields=*,*.*&fields=id,status,token,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.collaborator,collaborators.id,assigned_trade,collaborators.collaborator.email, collaborators.collaborator.id,request_email_cc`
     );
 
     // create object with buidling info if availible

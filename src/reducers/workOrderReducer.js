@@ -32,6 +32,8 @@ const initialState = {
       id: undefined,
       email: '',
     },
+    token: '',
+    request_email_cc: '',
   },
   currentFiles: [],
   currentSpaceInfo: {
