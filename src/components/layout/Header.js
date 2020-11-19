@@ -29,7 +29,6 @@ const Header = ({
   const isWorkorder = !(
     useLocation().pathname.split('/').slice(-2)[0] === 'technicians'
   );
-  console.log(isWorkorder);
   const openInPopup = () => {
     const newWindow = window.open(
       `https://system.onuma.com/${studio}/bugs?url=${encodeURIComponent(

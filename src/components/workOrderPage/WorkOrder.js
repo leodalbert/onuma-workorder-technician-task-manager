@@ -58,7 +58,10 @@ const WorkOrder = ({
       !collaboratorEmails.includes(authUser) &&
       authUser !== current.assigned_technician.email
     ) {
-      logout();
+      console.log(collaboratorEmails);
+      console.log(authUser);
+      console.log(current.assigned_technician.email);
+      // logout();
     }
   }, [
     loading,
