@@ -25,8 +25,15 @@ const Location = ({
   setTopLocationState,
 }) => {
   let initialLocationState = { floor, building, space, location_description };
+
   if (initialLocationState.location_description === null) {
     initialLocationState.location_description = '';
+  }
+  if (initialLocationState.space === null) {
+    initialLocationState.space = '';
+  }
+  if (initialLocationState.floor === null) {
+    initialLocationState.floor = '';
   }
   const layoutClasses = layoutStyles();
   const spaceDetails = locationFieldGen(workorder);

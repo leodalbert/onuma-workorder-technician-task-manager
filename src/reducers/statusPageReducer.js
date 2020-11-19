@@ -60,7 +60,7 @@ export default function (state = initialState, action) {
     case GET_WORKORDER_STATUS_INFO:
       return {
         ...state,
-        current: payload,
+        current: { ...state.current, ...payload },
         loading: false,
       };
     case SET_SPACE_INFO_STATUS:
