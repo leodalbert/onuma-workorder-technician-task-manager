@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Hidden,
   Button,
@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { layoutStyles } from '../../styles/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulletedRounded';
 
 import HelpIcon from './HelpIcon';
 import logo from './BIM_GENIE_GREEN_100p.jpg';
@@ -26,6 +27,10 @@ const Header = ({
   isMobile,
 }) => {
   const layoutClasses = layoutStyles();
+  const isWorkorder = !(
+    useLocation().pathname.split('/').slice(-2)[0] === 'technicians'
+  );
+  console.log(isWorkorder);
   const openInPopup = () => {
     const newWindow = window.open(
       `https://system.onuma.com/${studio}/bugs?url=${encodeURIComponent(
@@ -42,6 +47,16 @@ const Header = ({
         <Toolbar classes={{ root: layoutClasses.navbarContainer }}>
           <div className={layoutClasses.navbarTitleContainer}>
             <img src={logo} alt='logo' className={layoutClasses.navbarLogo} />
+            {isWorkorder && (
+              <IconButton
+                color='inherit'
+                component={Link}
+                to={`${process.env.PUBLIC_URL}/${studio}/technicians/${
+                  email && email
+                }`}>
+                <FormatListBulletedRoundedIcon style={{ fontSize: 40 }} />
+              </IconButton>
+            )}
             <Typography
               style={
                 dialogHeader

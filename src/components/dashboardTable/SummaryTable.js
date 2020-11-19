@@ -82,7 +82,7 @@ const SummaryTable = ({
                     tabIndex={-1}
                     key={row.id}>
                     <TableCell
-                      style={{ paddingRight: '10px' }}
+                      style={{ paddingRight: '10px', fontWeight: 'bolder' }}
                       id={labelId}
                       align='left'>
                       {dayjs(row.request_date).format('MM/DD/YYYY')}
