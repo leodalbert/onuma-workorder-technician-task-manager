@@ -130,7 +130,7 @@ const WorkOrderStatusPage = ({
             item
             container
             xs={12}>
-            {status === 'Completed' && (
+            {status === 'Completed' && authUser === requestEmail && (
               <Grid item container direction='column' xs={12}>
                 <ConfirmCompleted
                   studioId={Number(params.studioId)}
@@ -217,29 +217,31 @@ const WorkOrderStatusPage = ({
               </Grid>
             </Hidden>
           </Grid>
-          {status !== 'Completed' && status !== 'Completion Confirmed' && (
-            <Grid item xs={12}>
-              <div className={componentClasses.btnBreak}>
-                <Button
-                  className={componentClasses.btnWidth}
-                  style={
-                    edit
-                      ? { backgroundColor: '#fdd835' }
-                      : { backgroundColor: '#d3e6df' }
-                  }
-                  disabled={
-                    edit &&
-                    !topLocationState.location_description &&
-                    !topLocationState.space.id
-                  }
-                  variant='contained'
-                  color={edit ? 'inherit' : 'secondary'}
-                  onClick={handleClick}>
-                  {edit ? 'Save Changes' : 'Edit Details'}
-                </Button>
-              </div>
-            </Grid>
-          )}
+          {status !== 'Completed' &&
+            status !== 'Completion Confirmed' &&
+            authUser === requestEmail && (
+              <Grid item xs={12}>
+                <div className={componentClasses.btnBreak}>
+                  <Button
+                    className={componentClasses.btnWidth}
+                    style={
+                      edit
+                        ? { backgroundColor: '#fdd835' }
+                        : { backgroundColor: '#d3e6df' }
+                    }
+                    disabled={
+                      edit &&
+                      !topLocationState.location_description &&
+                      !topLocationState.space.id
+                    }
+                    variant='contained'
+                    color={edit ? 'inherit' : 'secondary'}
+                    onClick={handleClick}>
+                    {edit ? 'Save Changes' : 'Edit Details'}
+                  </Button>
+                </div>
+              </Grid>
+            )}
         </Grid>
       </Paper>
     </div>
