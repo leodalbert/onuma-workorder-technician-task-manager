@@ -4,6 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import Header from '../layout/Header';
 import StatusPageHeader from '../layout/StatusPageHeader';
 import Spinner from '../layout/Spinner';
+import PrivateRoute from './PrivateRoute';
+// import NotFound from '../layout/NotFound';
+const AuthPage = lazy(() => import('../auth/AuthPage'));
 const WorkOrder = lazy(() => import('../workOrderPage/WorkOrder'));
 const Dashboard = lazy(() => import('../layout/Dashboard'));
 const RequesterDashboard = lazy(() => import('../layout/RequesterDashboard'));
@@ -30,15 +33,20 @@ const Routes = () => {
         </Switch>
         <Switch>
           <Suspense fallback={<Spinner />}>
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
               component={Dashboard}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail`}
               component={WorkOrder}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/:studioId/technicians/auth/:id/:techEmail/:token`}
+              component={AuthPage}
             />
             <Route
               exact

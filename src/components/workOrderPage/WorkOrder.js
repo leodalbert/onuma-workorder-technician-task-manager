@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getCurrentTech, getTechs } from '../../actions/tech';
+import { logout } from '../../actions/auth';
 
 const WorkOrder = ({
   getWorkOrder,
@@ -30,6 +31,9 @@ const WorkOrder = ({
   tasks,
   siteGroup,
   workOrderStatus,
+  authUser,
+  logout,
+  collaboratorEmails,
   workOrder: {
     loading,
     current,
@@ -48,9 +52,23 @@ const WorkOrder = ({
   useEffect(() => {
     siteGroup && getTechs(params.studioId, siteGroup);
   }, [siteGroup, getTechs, params.studioId]);
+  useEffect(() => {
+    if (
+      !loading &&
+      !collaboratorEmails.includes(authUser) &&
+      authUser !== current.assigned_technician.email
+    ) {
+      logout();
+    }
+  }, [
+    loading,
+    authUser,
+    collaboratorEmails,
+    current.assigned_technician.email,
+    logout,
+  ]);
 
   const layoutClasses = layoutStyles();
-
   return loading ? (
     <Spinner />
   ) : (
@@ -131,6 +149,8 @@ WorkOrder.propTypes = {
   components: PropTypes.array.isRequired,
   getTechs: PropTypes.func.isRequired,
   siteGroup: PropTypes.number,
+  authUser: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -139,6 +159,10 @@ const mapStateToProps = (state) => ({
   components: state.component.components,
   tasks: state.workOrder.current.tasks,
   siteGroup: state.tech.siteGroup,
+  authUser: state.auth.user,
+  collaboratorEmails: state.workOrder.current.collaborators.map(
+    (collaborator) => collaborator.collaborator.email
+  ),
 });
 
 export default connect(mapStateToProps, {
@@ -146,4 +170,5 @@ export default connect(mapStateToProps, {
   getCurrentTech,
   getSpaceComponents,
   getTechs,
+  logout,
 })(WorkOrder);

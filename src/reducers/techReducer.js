@@ -8,6 +8,7 @@ const initialState = {
   name: '',
   id: undefined,
   studio: undefined,
+  token: undefined,
 };
 
 export default function (state = initialState, action) {
@@ -26,6 +27,7 @@ export default function (state = initialState, action) {
         email: payload.email,
         name: payload.first_name + ' ' + payload.last_name,
         studio: payload.studioId,
+        token: payload.token,
         siteGroup: Number(payload.site_group.id),
         id: Number(payload.id),
       };

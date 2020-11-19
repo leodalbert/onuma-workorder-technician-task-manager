@@ -54,7 +54,7 @@ const AssignedTo = ({
             <List dense className={spacingClasses.noPadding}>
               {collaborators.map((collaborator) => {
                 let tech = techs.filter(
-                  (tech) => tech.id === collaborator.collaborator
+                  (tech) => tech.id === collaborator.collaborator.id
                 );
                 return (
                   <ListItem key={tech[0].id}>

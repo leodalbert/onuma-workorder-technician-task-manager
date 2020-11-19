@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   GET_TECHS_WORK_ORDERS,
   GET_WORK_ORDER,
+  GET_WORK_ORDER_TECH,
   ERROR,
   SET_LOADING,
   CLEAR_CURRENT,
@@ -60,7 +61,7 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
 export const getWorkOrder = (workorderId, studioId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder/${workorderId}?fields=*,*.*&fields=id,status,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.collaborator,collaborators.id,assigned_trade`
+      `/${studioId}/api/items/workorder/${workorderId}?fields=*,*.*&fields=id,status,request_number,building.id,building.site,building.number,building.name,floor.name,floor.id,floor.number,space.id,space.number,space.name,submitted_by,request_email,assigned_priority,request_date,request_description,components.component,components.id,tasks.*,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,location_description,request_telephone,due_date,administrator_to_technician_comment,administrator_comment,collaborators.collaborator,collaborators.id,assigned_trade,collaborators.collaborator.email, collaborators.collaborator.id`
     );
 
     // create object with buidling info if availible
@@ -82,6 +83,24 @@ export const getWorkOrder = (workorderId, studioId) => async (dispatch) => {
 
     dispatch(getWorkorderFiles(workorderId, studioId));
     dispatch({ type: GET_WORK_ORDER, payload: res.data.data });
+  } catch (err) {
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.error.message,
+        status: err.response.data.error.code,
+      },
+    });
+  }
+};
+
+// Get Work order tech for auth
+export const getWorkOrderTech = (workorderId, studioId) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `/${studioId}/api/items/workorder/${workorderId}?fields=assigned_technician.email,collaborators.collaborator.email,collaborators.collaborator.token`
+    );
+    dispatch({ type: GET_WORK_ORDER_TECH, payload: res.data.data });
   } catch (err) {
     dispatch({
       type: ERROR,

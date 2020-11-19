@@ -4,6 +4,7 @@ import techReducer from './techReducer';
 import componentReducer from './componentReducer';
 import taskReducer from './taskReducer';
 import statusPageReducer from './statusPageReducer';
+import authReducer from './authReducer';
 
 export default combineReducers({
   workOrder: workOrderReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   component: componentReducer,
   task: taskReducer,
   statusPage: statusPageReducer,
+  auth: authReducer,
 });

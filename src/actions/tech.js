@@ -25,9 +25,19 @@ export const getCurrentTech = (techEmail, studioId) => async (dispatch) => {
     const res = await axios.get(
       `/${studioId}/api/items/technician?fields=*,*.*&filter[email]=${techEmail}`
     );
-    let payload = res.data.data[0];
-    payload.studioId = Number(studioId);
-    dispatch({ type: CURRENT_TECH, payload });
+    if (res.data.data.length === 0) {
+      dispatch({
+        type: ERROR,
+        payload: {
+          msg: `No technician found with email address: ${techEmail}`,
+          status: 404,
+        },
+      });
+    } else {
+      let payload = res.data.data[0];
+      payload.studioId = Number(studioId);
+      dispatch({ type: CURRENT_TECH, payload });
+    }
   } catch (err) {
     dispatch({
       type: ERROR,

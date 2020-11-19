@@ -16,6 +16,7 @@ import {
   ADD_WORKORDER_FILE,
   SEND_COMMENT_TO_REQUESTOR,
   DELETE_ATTACHMENT,
+  GET_WORK_ORDER_TECH,
 } from '../actions/types';
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
     status: 'Assigned',
     assigned_technician: {
       id: undefined,
+      email: '',
     },
   },
   currentFiles: [],
@@ -58,6 +60,18 @@ export default function (state = initialState, action) {
         ...state,
         current: payload,
         loading: false,
+      };
+    case GET_WORK_ORDER_TECH:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          assigned_technician: {
+            id: undefined,
+            email: payload.assigned_technician.email,
+          },
+          collaborators: payload.collaborators,
+        },
       };
     case SEND_COMMENT_TO_REQUESTOR:
       return {
