@@ -5,7 +5,6 @@ import Header from '../layout/Header';
 import StatusPageHeader from '../layout/StatusPageHeader';
 import Spinner from '../layout/Spinner';
 import PrivateRoute from './PrivateRoute';
-// import NotFound from '../layout/NotFound';
 const TechAuthPage = lazy(() => import('../auth/TechAuthPage'));
 const RequesterAuthPage = lazy(() => import('../auth/RequesterAuthPage'));
 const WorkOrder = lazy(() => import('../workOrderPage/WorkOrder'));
@@ -15,8 +14,6 @@ const WorkOrderStatusPage = lazy(() =>
   import('../statusPage/WorkOrderStatusPage')
 );
 const NotFound = lazy(() => import('../layout/NotFound'));
-
-// TODO - handle wrong link
 
 const Routes = () => {
   return (
@@ -35,7 +32,7 @@ const Routes = () => {
         <Suspense fallback={<Spinner />}>
           <Switch>
             <PrivateRoute
-              exact
+              exacts
               path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
               component={Dashboard}
             />
