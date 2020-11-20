@@ -32,7 +32,7 @@ const Routes = () => {
         <Suspense fallback={<Spinner />}>
           <Switch>
             <PrivateRoute
-              exacts
+              exact
               path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
               component={Dashboard}
             />
