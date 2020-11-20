@@ -67,6 +67,12 @@ const ComponentSearchDialog = ({
     searchComponents(searchField, building.id, studioId);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      handleSearch();
+    }
+  };
+
   const handleOpenComponentDialog = (component) => {
     fillComponentDialog(component.component);
     setOpenDetailDialog(true);
@@ -129,6 +135,7 @@ const ComponentSearchDialog = ({
               id='component_serach_field'
               onChange={(e) => setSearchField(e.target.value)}
               value={searchField}
+              onKeyDown={handleKeyDown}
               label={
                 isDesktop
                   ? 'Name / Barcode / Manufacturer / Model Number / etc...'

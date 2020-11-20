@@ -36,6 +36,10 @@ const RequestDetails = ({
   const spacingClasses = spacingStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
   const [openSearchDailog, setOpenSearchDialog] = useState(false);
+
+  const handleOpenSearchDialog = () => {
+    setOpenSearchDialog(true);
+  };
   return (
     <div className={layoutClasses.root}>
       <Grid item container xs={12}>
@@ -139,7 +143,7 @@ const RequestDetails = ({
                 placement='bottom'>
                 <Button
                   className={componentClasses.btnWidth}
-                  onClick={() => setOpenSearchDialog(true)}
+                  onClick={handleOpenSearchDialog}
                   variant='contained'
                   color='secondary'>
                   Search components
