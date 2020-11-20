@@ -32,8 +32,8 @@ const Routes = () => {
             component={StatusPageHeader}
           />
         </Switch>
-        <Switch>
-          <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/:studioId/technicians/:techEmail`}
@@ -64,9 +64,9 @@ const Routes = () => {
               path={`${process.env.PUBLIC_URL}/:studioId/requester/:requesterEmail`}
               component={RequesterDashboard}
             />
-          </Suspense>
-          <Route component={NotFound} />
-        </Switch>
+            <Route component={NotFound} />
+          </Switch>
+        </Suspense>
       </section>
     </Fragment>
   );

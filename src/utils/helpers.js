@@ -44,10 +44,10 @@ export const workOrderFieldGen1 = (workOrder) => {
 
   let FIELDS = [];
   request_number &&
-    FIELDS.push({ lable: 'Request Number:', detail: request_number });
+    FIELDS.push({ lable: 'Request number:', detail: request_number });
   request_date &&
     FIELDS.push({
-      lable: 'Request Date:',
+      lable: 'Request date:',
       detail: dayjs(request_date).format('MM/DD/YYYY h:m A'),
     });
   assigned_priority &&
@@ -58,14 +58,14 @@ export const workOrderFieldGen1 = (workOrder) => {
     });
   due_date &&
     FIELDS.push({
-      lable: 'Due Date:',
+      lable: 'Due date:',
       detail: dayjs(due_date).format('MM/DD/YYYY'),
       detailColor: 'detailRed',
     });
 
   request_email &&
     FIELDS.push({
-      lable: 'Submited By:',
+      lable: 'Submited by:',
       detail: insertBreak([
         <a
           key={request_email}
@@ -89,7 +89,7 @@ export const workOrderFieldGen1 = (workOrder) => {
     });
   assigned_trade &&
     FIELDS.push({
-      lable: 'Assigned Trade:',
+      lable: 'Assigned trade:',
       detail: assigned_trade,
     });
 
@@ -129,13 +129,13 @@ export const workOrderFieldGen2 = (workOrder) => {
     });
   request_description &&
     FIELDS.push({
-      lable: 'Request Description:',
+      lable: 'Request description:',
       detail: insertBreak(request_description.split('\r\n')),
     });
 
   administrator_to_technician_comment &&
     FIELDS.push({
-      lable: 'Administrator Comments:',
+      lable: 'Administrator comments:',
       detail: administrator_to_technician_comment,
     });
 
@@ -154,10 +154,10 @@ export const statusWorkOrderFieldGen1 = (workOrder) => {
 
   let FIELDS = [];
   request_number &&
-    FIELDS.push({ lable: 'Request Number:', detail: request_number });
+    FIELDS.push({ lable: 'Request number:', detail: request_number });
   request_date &&
     FIELDS.push({
-      lable: 'Request Date:',
+      lable: 'Request date:',
       detail: dayjs(request_date).format('MM/DD/YYYY h:m A'),
     });
   assigned_priority &&
@@ -168,7 +168,7 @@ export const statusWorkOrderFieldGen1 = (workOrder) => {
     });
   due_date &&
     FIELDS.push({
-      lable: 'Due Date:',
+      lable: 'Due date:',
       detail: dayjs(due_date).format('MM/DD/YYYY'),
       detailColor: 'detailRed',
     });
