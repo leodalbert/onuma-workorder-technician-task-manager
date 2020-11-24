@@ -81,9 +81,10 @@ export const getWorkOrderComponentDetails = (
 ) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/component/${componentId}?fields=id,component_type.model_number,component_type.description,component_type.name,component_type.manufacturer,component_type.parts_warranty_guarantor,component_type.parts_warranty_duration,component_type.labour_warranty_guarantor,component_type.labour_warranty_duration,component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date,space.space.name,space.id,space.space.floor.name,space.space.floor.number,space.space.number,component_type.attributes,attributes,`
+      `/${studioId}/api/items/component/${componentId}?fields=id,component_type.model_number,component_type.description,component_type.name,component_type.manufacturer,component_type.parts_warranty_guarantor,component_type.parts_warranty_duration,component_type.labour_warranty_guarantor,component_type.labour_warranty_duration,component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date,space_component.space.name,space_component.id,space_component.space.floor.name,space_component.space.floor.number,space_component.space.number,component_type.attributes,attributes,`
     );
     let data = res.data.data;
+    data.space = data.space_component;
     data.instanceId = instanceId;
     dispatch({ type: SET_COMPONENT_LOADING, payload: false });
     dispatch({ type: GET_WORK_ORDER_COMPONENTS, payload: data });
@@ -195,3 +196,7 @@ export const clearComponentDialog = () => (dispatch) => {
 export const clearSearchState = () => (dispatch) => {
   dispatch({ type: CLEAR_SEARCH_STATE });
 };
+
+// id, component_type.model_number, component_type.description, component_type.name, component_type.manufacturer, component_type.parts_warranty_guarantor, component_type.parts_warranty_duration, component_type.labour_warranty_guarantor, component_type.labour_warranty_duration, component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date, space_component.id, space.space
+
+// id,component_type.model_number,component_type.description,component_type.name,component_type.manufacturer,component_type.parts_warranty_guarantor,component_type.parts_warranty_duration,component_type.labour_warranty_guarantor,component_type.labour_warranty_duration,component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date,space_component.space.name,space_component.id,space_component.space.floor.name,space_component.space.floor.number,space_component.space.number,component_type.attributes,attributes
