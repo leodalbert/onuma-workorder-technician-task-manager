@@ -169,9 +169,17 @@ export const searchComponents = (searchParam, buildingId, studioId) => async (
   dispatch({ type: SEARCH_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/space_component?fields=id,component.name,component.id, component.barcode, component.component_type.manufacturer,component.instance_name, component.component_type.name,component.component_type.model_number,component.serial_number, component.space.space.name,component.space.space.number,component.space.space.floor.name, component.space.space.floor.number&filter[space.floor.building.id][eq]=${buildingId}&filter[component.name][contains]=${searchParam}&filter[component.component_type][contains]=${searchParam}&filter[component.component_type][logical]=or&filter[component.barcode][contains]=${searchParam}&filter[component.barcode][logical]=or&filter[component.serial_number][contains]=${searchParam}&filter[component.serial_number][logical]=or&filter[component.instance_name][contains]=${searchParam}&filter[component.instance_name][logical]=or`
+      `/${studioId}/api/items/space_component?fields=id,component.name,component.id, component.barcode, component.component_type.manufacturer,component.instance_name, component.component_type.name,component.component_type.model_number,component.serial_number, component.space_component.space.name,component.space_component.space.number,component.space_component.space.floor.name, component.space_component.space.floor.number&filter[space.floor.building.id][eq]=${buildingId}&filter[component.name][contains]=${searchParam}&filter[component.component_type][contains]=${searchParam}&filter[component.component_type][logical]=or&filter[component.barcode][contains]=${searchParam}&filter[component.barcode][logical]=or&filter[component.serial_number][contains]=${searchParam}&filter[component.serial_number][logical]=or&filter[component.instance_name][contains]=${searchParam}&filter[component.instance_name][logical]=or`
     );
-    dispatch({ type: SEARCH_COMPONENTS, payload: res.data.data });
+
+    // refactor data from backend change
+    let data = res.data.data;
+    data.map(
+      (component) =>
+        (component.component.space = component.component.space_component)
+    );
+
+    dispatch({ type: SEARCH_COMPONENTS, payload: data });
   } catch (err) {
     dispatch({
       type: ERROR,
@@ -200,3 +208,17 @@ export const clearSearchState = () => (dispatch) => {
 // id, component_type.model_number, component_type.description, component_type.name, component_type.manufacturer, component_type.parts_warranty_guarantor, component_type.parts_warranty_duration, component_type.labour_warranty_guarantor, component_type.labour_warranty_duration, component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date, space_component.id, space.space
 
 // id,component_type.model_number,component_type.description,component_type.name,component_type.manufacturer,component_type.parts_warranty_guarantor,component_type.parts_warranty_duration,component_type.labour_warranty_guarantor,component_type.labour_warranty_duration,component_type.warranty_duration_unit,component_type.category,name,instance_name,description,serial_number,barcode,installation_date,warranty_start_date,space_component.space.name,space_component.id,space_component.space.floor.name,space_component.space.floor.number,space_component.space.number,component_type.attributes,attributes
+
+// id,
+//   component.name,
+//   component.id,
+//   component.barcode,
+//   component.component_type.manufacturer,
+//   component.instance_name,
+//   component.component_type.name,
+//   component.component_type.model_number,
+//   component.serial_number,
+//   component.space_component.space.name,
+//   component.space_component.space.number,
+//   component.space_component.space.floor.name,
+//   component.space_component.space.floor.number;
