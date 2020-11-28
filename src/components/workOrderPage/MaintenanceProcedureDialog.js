@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import {
@@ -12,6 +13,7 @@ import {
   TableRow,
   TableCell,
   TableContainer,
+  Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -61,7 +63,14 @@ const MaintenanceProcedureDialog = ({
                     style={{ padding: '12px 10px' }}
                     component='th'
                     scope='row'>
-                    {procedure.description}
+                    <Typography
+                      component={procedure.file ? 'a' : ''}
+                      style={procedure.file ? { color: '#0645AD' } : {}}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      href={procedure.file}>
+                      {procedure.description}
+                    </Typography>
                   </TableCell>
                 </StyledTableRow>
               ))}
