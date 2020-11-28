@@ -63,8 +63,10 @@ export default function (state = initialState, action) {
     case GET_WORK_ORDER:
       return {
         ...state,
-        current: payload,
-
+        current: {
+          ...payload,
+          maintenance_procedures: payload.maintenance_procedures || [],
+        },
         loading: false,
       };
     case GET_WORK_ORDER_TECH:
