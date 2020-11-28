@@ -31,7 +31,7 @@ const Header = ({
   );
   const openInPopup = () => {
     const newWindow = window.open(
-      `https://system.onuma.com/${studio}/bugs?url=${encodeURIComponent(
+      `https://system.onuma.com/${studio}/get-in-touch?url=${encodeURIComponent(
         window.location.href
       )}`,
       'window',
