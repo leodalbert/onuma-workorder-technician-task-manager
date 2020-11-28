@@ -268,8 +268,10 @@ const mapStateToProps = (state) => ({
   requestEmail: state.statusPage.current.request_email,
   authUser: state.auth.user,
   requestCc: state.statusPage.current.request_email_cc
-    .split(',')
-    .map((item) => item.trim()),
+    ? state.workOrder.current.request_email_cc
+        .split(',')
+        .map((item) => item.trim())
+    : [],
 });
 
 export default connect(mapStateToProps, {

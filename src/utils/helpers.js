@@ -28,7 +28,7 @@ export const insertBreak = (arr) => {
 
 // function to generate list of fields workorder page pt 1
 
-export const workOrderFieldGen1 = (workOrder) => {
+export const workOrderRequestFieldGen = (workOrder) => {
   const {
     request_number,
     request_date,
@@ -40,6 +40,7 @@ export const workOrderFieldGen1 = (workOrder) => {
     request_telephone,
     due_date,
     assigned_trade,
+    maintenance_procedure_description,
   } = workOrder;
 
   let FIELDS = [];
@@ -92,21 +93,43 @@ export const workOrderFieldGen1 = (workOrder) => {
       lable: 'Assigned trade:',
       detail: assigned_trade,
     });
+  maintenance_procedure_description &&
+    FIELDS.push({
+      lable: 'PM description',
+      detail: maintenance_procedure_description,
+    });
 
   return FIELDS;
 };
 
 // function to generate list of fields workorder page pt 2
 
-export const workOrderFieldGen2 = (workOrder) => {
+export const workOrderCommentFieldGen = (workOrder) => {
   const {
-    building,
-    floor,
-    space,
     request_description,
-    location_description,
     administrator_to_technician_comment,
   } = workOrder;
+
+  let FIELDS = [];
+  request_description &&
+    FIELDS.push({
+      lable: 'Request description:',
+      detail: insertBreak(request_description.split('\r\n')),
+    });
+
+  administrator_to_technician_comment &&
+    FIELDS.push({
+      lable: 'Administrator comments:',
+      detail: administrator_to_technician_comment,
+    });
+
+  return FIELDS;
+};
+
+// function to generate list of fields workorder page pt 2
+
+export const workOrderLocationFieldGen = (workOrder) => {
+  const { building, floor, space, location_description } = workOrder;
 
   let FIELDS = [];
   (building.number || building.name) &&
@@ -126,17 +149,6 @@ export const workOrderFieldGen2 = (workOrder) => {
         location_description && <br key='3' />,
         location_description && location_description,
       ],
-    });
-  request_description &&
-    FIELDS.push({
-      lable: 'Request description:',
-      detail: insertBreak(request_description.split('\r\n')),
-    });
-
-  administrator_to_technician_comment &&
-    FIELDS.push({
-      lable: 'Administrator comments:',
-      detail: administrator_to_technician_comment,
     });
 
   return FIELDS;

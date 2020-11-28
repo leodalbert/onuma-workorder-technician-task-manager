@@ -67,8 +67,10 @@ const mapStateToProps = (state) => ({
   workorderToken: state.workOrder.current.token,
   requestEmail: state.workOrder.current.request_email,
   requestCc: state.workOrder.current.request_email_cc
-    .split(',')
-    .map((item) => item.trim()),
+    ? state.workOrder.current.request_email_cc
+        .split(',')
+        .map((item) => item.trim())
+    : [],
   isAuthenticated: state.auth.isAuthenticated,
   authLoading: state.auth.authLoading,
 });

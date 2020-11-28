@@ -16,8 +16,14 @@ import {
   spacingStyles,
 } from '../../styles/styles';
 
-import { RequestDetailGrid1, RequestDetailGrid2 } from './RequestDetailGrid';
+import {
+  RequestNumberGrid,
+  RequestCommentGrid,
+  RequestLocationGrid,
+  RequestPmGrid,
+} from './RequestDetailGrid';
 import Components from '../components/Components';
+import MaintenanceProcedureDialog from './MaintenanceProcedureDialog';
 import { sendCommentToRequestor } from '../../actions/workOrder';
 import FloorplanDev from './FloorplanDev';
 import OnumaFloorplan from './OnumaFloorplan';
@@ -36,18 +42,25 @@ const RequestDetails = ({
   const spacingClasses = spacingStyles();
   const [comment, setComment] = useState(workOrder.administrator_comment);
   const [openSearchDailog, setOpenSearchDialog] = useState(false);
+  const [openPmDialog, setOpenPmDialog] = useState(false);
 
   const handleOpenSearchDialog = () => {
     setOpenSearchDialog(true);
   };
+
   return (
     <div className={layoutClasses.root}>
       <Grid item container xs={12}>
         <Grid item container direction='column' xs={12} lg={7}>
           <Grid item container spacing={3}>
-            <RequestDetailGrid1 workOrder={workOrder} />
+            <RequestNumberGrid workOrder={workOrder} />
             <Hidden mdDown>
-              <RequestDetailGrid2 workOrder={workOrder} />
+              <RequestLocationGrid workOrder={workOrder} />
+              <RequestPmGrid
+                workOrder={workOrder}
+                setOpenPmDialog={setOpenPmDialog}
+              />
+              <RequestCommentGrid workOrder={workOrder} />
             </Hidden>
           </Grid>
         </Grid>
@@ -81,7 +94,12 @@ const RequestDetails = ({
         <Hidden lgUp>
           <Grid item container direction='column' xs={12} lg={7}>
             <Grid item container spacing={3}>
-              <RequestDetailGrid2 workOrder={workOrder} />
+              <RequestLocationGrid workOrder={workOrder} />
+              <RequestPmGrid
+                workOrder={workOrder}
+                setOpenPmDialog={setOpenPmDialog}
+              />
+              <RequestCommentGrid workOrder={workOrder} />
             </Grid>
           </Grid>
         </Hidden>
@@ -97,7 +115,7 @@ const RequestDetails = ({
                 fullWidth
                 rows={4}
                 variant='outlined'
-                value={comment}
+                value={comment ? comment : ''}
                 onChange={(e) => setComment(e.target.value)}
                 FormHelperTextProps={{
                   className: layoutClasses.commentFieldHelperText,
@@ -163,6 +181,12 @@ const RequestDetails = ({
           </Grid>
         </Grid>
       </Grid>
+      <MaintenanceProcedureDialog
+        open={openPmDialog}
+        name={workOrder.maintenance_procedure_name || 'Maintenance procedure'}
+        setOpenPmDialog={setOpenPmDialog}
+        procedure={workOrder.maintenance_procedures}
+      />
     </div>
   );
 };

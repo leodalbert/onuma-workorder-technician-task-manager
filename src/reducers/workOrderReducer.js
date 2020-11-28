@@ -32,6 +32,9 @@ const initialState = {
       id: undefined,
       email: '',
     },
+    maintenance_procedure_name: '',
+    preventive_maintenance_description: '',
+    maintenance_procedures: [],
     token: '',
     request_email_cc: '',
   },
@@ -61,6 +64,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         current: payload,
+
         loading: false,
       };
     case GET_WORK_ORDER_TECH:
