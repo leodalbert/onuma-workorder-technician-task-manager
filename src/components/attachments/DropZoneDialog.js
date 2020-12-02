@@ -30,6 +30,7 @@ const DropZoneDialog = ({ uploadFile, studioId, workorderId, techId }) => {
         onDelete={() => setFileObjects()}
         fileObjects={fileObjects}
         filesLimit={1}
+        maxFileSize={20000000}
         showFileNames
         showAlerts={['error', 'info']}
         previewGridProps={{

@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCurrentTech } from '../../actions/tech';
-import { getWorkOrder } from '../../actions/workOrder';
 import { getWorkOrderStatusInfo } from '../../actions/status';
 import { login, logout } from '../../actions/auth';
 import { Redirect } from 'react-router-dom';
 
 const RequesterAuthPage = ({
   match: { params },
-  getWorkOrder,
   getWorkOrderStatusInfo,
   login,
   logout,
@@ -79,7 +77,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getCurrentTech,
-  getWorkOrder,
   login,
   logout,
   getWorkOrderStatusInfo,

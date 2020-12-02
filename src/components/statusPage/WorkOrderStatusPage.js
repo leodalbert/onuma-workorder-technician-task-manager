@@ -268,7 +268,7 @@ const mapStateToProps = (state) => ({
   requestEmail: state.statusPage.current.request_email,
   authUser: state.auth.user,
   requestCc: state.statusPage.current.request_email_cc
-    ? state.workOrder.current.request_email_cc
+    ? state.statusPage.current.request_email_cc
         .split(',')
         .map((item) => item.trim())
     : [],
