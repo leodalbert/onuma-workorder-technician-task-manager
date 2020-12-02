@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCurrentTech } from '../../actions/tech';
 import { getWorkOrder } from '../../actions/workOrder';
+import { getWorkOrderStatusInfo } from '../../actions/status';
 import { login, logout } from '../../actions/auth';
 import { Redirect } from 'react-router-dom';
 
 const RequesterAuthPage = ({
   match: { params },
   getWorkOrder,
+  getWorkOrderStatusInfo,
   login,
   logout,
   isAuthenticated,
@@ -19,8 +21,8 @@ const RequesterAuthPage = ({
   requestEmail,
 }) => {
   useEffect(() => {
-    getWorkOrder(params.id, params.studioId);
-  }, [getWorkOrder, params.id, params.studioId]);
+    getWorkOrderStatusInfo(params.id, params.studioId);
+  }, [getWorkOrderStatusInfo, params.id, params.studioId]);
 
   useEffect(() => {
     if (!isAuthenticated && workorderToken) {
@@ -64,10 +66,10 @@ RequesterAuthPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  workorderToken: state.workOrder.current.token,
-  requestEmail: state.workOrder.current.request_email,
-  requestCc: state.workOrder.current.request_email_cc
-    ? state.workOrder.current.request_email_cc
+  workorderToken: state.statusPage.current.token,
+  requestEmail: state.statusPage.current.request_email,
+  requestCc: state.statusPage.current.request_email_cc
+    ? state.statusPage.current.request_email_cc
         .split(',')
         .map((item) => item.trim())
     : [],
@@ -80,6 +82,7 @@ export default connect(mapStateToProps, {
   getWorkOrder,
   login,
   logout,
+  getWorkOrderStatusInfo,
 })(RequesterAuthPage);
 
 // thomasdalbert@gmail.com, thomas@dalbert.us

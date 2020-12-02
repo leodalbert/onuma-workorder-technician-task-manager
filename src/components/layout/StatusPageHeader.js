@@ -9,7 +9,7 @@ import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulleted
 import logo from './BIM_GENIE_GREEN_100p.jpg';
 import HelpIcon from './HelpIcon';
 
-const StatusPageHeader = ({ text, email, studio }) => {
+const StatusPageHeader = ({ text, email, studio, token }) => {
   const layoutClasses = layoutStyles();
   const isWorkorder = !(
     useLocation().pathname.split('/').slice(-2)[0] === 'requester'
@@ -18,7 +18,7 @@ const StatusPageHeader = ({ text, email, studio }) => {
     const newWindow = window.open(
       `https://system.onuma.com/${studio}/get-in-touch?url=${encodeURIComponent(
         window.location.href
-      )}`,
+      )}/${token}`,
       'window',
       'toolbar=no, menubar=no, resizable=no, width=400,height=500, top=300, left=300'
     );
@@ -69,6 +69,7 @@ StatusPageHeader.propTypes = {
   text: PropTypes.array.isRequired,
   studio: PropTypes.number,
   email: PropTypes.string,
+  token: PropTypes.string,
 };
 
 StatusPageHeader.defaultProps = {
@@ -78,6 +79,7 @@ StatusPageHeader.defaultProps = {
 const mapStateToProps = (state) => ({
   studio: Number(state.statusPage.studio),
   email: state.statusPage.email,
+  token: state.statusPage.current.token,
 });
 
 export default connect(mapStateToProps)(StatusPageHeader);

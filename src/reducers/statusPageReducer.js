@@ -22,6 +22,7 @@ const initialState = {
     },
     request_email: '',
     request_email_cc: '',
+    token: '',
   },
   currentSpaceInfo: {
     siteId: undefined,

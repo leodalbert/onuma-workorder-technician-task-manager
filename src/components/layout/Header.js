@@ -24,6 +24,7 @@ const Header = ({
   dialogHeader,
   handleClose,
   isMobile,
+  token,
 }) => {
   const layoutClasses = layoutStyles();
   const isWorkorder = !(
@@ -33,7 +34,7 @@ const Header = ({
     const newWindow = window.open(
       `https://system.onuma.com/${studio}/get-in-touch?url=${encodeURIComponent(
         window.location.href
-      )}`,
+      )}/${token}`,
       'window',
       'toolbar=no, menubar=no, resizable=no, width=400,height=500, top=300, left=300'
     );
@@ -102,6 +103,7 @@ Header.propTypes = {
   text: PropTypes.array.isRequired,
   dialogHeader: PropTypes.bool.isRequired,
   handleClose: PropTypes.func,
+  token: PropTypes.string,
 };
 
 Header.defaultProps = {
@@ -114,6 +116,7 @@ const mapStateToProps = (state) => ({
   email: state.tech.email,
   name: state.tech.name,
   studio: state.tech.studio,
+  token: state.tech.token,
 });
 
 export default connect(mapStateToProps)(Header);
