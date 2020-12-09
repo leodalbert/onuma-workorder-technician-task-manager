@@ -51,6 +51,7 @@ const TaskDetails = ({
   removeCollaborator,
   addCollaborator,
   workOrderTech,
+  visCollaborators,
 }) => {
   const layoutClasses = layoutStyles();
   const componentClasses = componentStyles();
@@ -164,6 +165,7 @@ const TaskDetails = ({
             studioId={studioId}
             currentTechId={currentTechId}
             workOrderId={workOrderId}
+            visCollaborators={visCollaborators}
           />
           <TaskForm
             handleFormChange={handleFormChange}
@@ -260,6 +262,11 @@ const mapStateToProps = (state) => ({
   workOrderTech: state.workOrder.current.assigned_technician,
   collaborators: state.workOrder.current.collaborators,
   techs: state.tech.techs,
+  visCollaborators: state.tech.techs.filter((tech) => {
+    return state.workOrder.current.collaborators.some((collaborator) => {
+      return collaborator.collaborator.id === tech.id;
+    });
+  }),
 });
 
 export default connect(mapStateToProps, {

@@ -26,6 +26,7 @@ const AssignedTo = ({
   currentTechId,
   workOrderId,
   workOrderTechId,
+  visCollaborators,
 }) => {
   const layoutClasses = layoutStyles();
   const componentClasses = componentStyles();
@@ -35,6 +36,7 @@ const AssignedTo = ({
     setCollaboratorDialog(false);
     handleAddCollaborator(selectedTechId);
   };
+
   return (
     <Fragment>
       <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
@@ -53,7 +55,7 @@ const AssignedTo = ({
             </Typography>
             <List dense className={spacingClasses.noPadding}>
               {collaborators.map((collaborator) => {
-                let tech = techs.filter(
+                let tech = visCollaborators.filter(
                   (tech) => tech.id === collaborator.collaborator.id
                 );
                 return (
@@ -114,6 +116,7 @@ AssignedTo.propTypes = {
   removeCollaborator: PropTypes.func.isRequired,
   handleAddCollaborator: PropTypes.func.isRequired,
   currentTechId: PropTypes.number,
+  visCollaborators: PropTypes.array,
 };
 
 export default AssignedTo;

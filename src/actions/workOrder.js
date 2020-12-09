@@ -165,7 +165,15 @@ export const addCollaborator = (workorderId, techId, studioId) => async (
         collaborator: { id: techId },
       }
     );
-    dispatch({ type: ADD_COLLABORATOR, payload: res.data.data });
+    const data = res.data.data;
+    let payload = {
+      id: data.id,
+      collaborator: {
+        id: data.collaborator,
+      },
+    };
+
+    dispatch({ type: ADD_COLLABORATOR, payload });
   } catch (err) {
     dispatch({
       type: ERROR,
