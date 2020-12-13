@@ -36,8 +36,12 @@ const Location = ({
     initialLocationState.floor = '';
   }
   const layoutClasses = layoutStyles();
-  const spaceDetails = locationFieldGen(workorder);
   const [locationState, setLocationState] = useState(initialLocationState);
+  let spaceDetails;
+
+  if (workorder.building) {
+    spaceDetails = locationFieldGen(workorder);
+  }
 
   useEffect(() => {
     setTopLocationState(locationState);
@@ -71,7 +75,6 @@ const Location = ({
       });
     }
   };
-
   return (
     <Fragment>
       <Grid className={layoutClasses.labelCtr} item xs={12} sm={4} lg={5}>

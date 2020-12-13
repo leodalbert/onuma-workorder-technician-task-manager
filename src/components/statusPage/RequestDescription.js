@@ -28,7 +28,8 @@ const RequestDescription = ({
       </Grid>
       <Grid className={layoutClasses.detailCtr} item xs={12} sm={8} lg={7}>
         <Typography variant='body1' className={layoutClasses.detailStyle}>
-          {insertBreak(request_description.split('\r\n'))}
+          {request_description &&
+            insertBreak(request_description.split('\r\n'))}
         </Typography>
         <Collapse in={edit}>
           <FormControl fullWidth className={spacingClasses.paddingTopS}>

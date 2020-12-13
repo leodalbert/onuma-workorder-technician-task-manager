@@ -29,6 +29,7 @@ import {
   getWorkOrderStatusInfo,
   setStudio,
   updateWorkorder,
+  setRequesterLoading,
 } from '../../actions/status';
 import {
   StatusRequestDetailGrid1,
@@ -59,6 +60,7 @@ const WorkOrderStatusPage = ({
   requestEmail,
   authUser,
   logout,
+  setRequesterLoading,
 }) => {
   const layoutClasses = layoutStyles();
   const spacingClasses = spacingStyles();
@@ -68,7 +70,9 @@ const WorkOrderStatusPage = ({
   const [edit, setEdit] = useState(false);
   const [newDescription, setNewDescription] = useState('');
   const [topLocationState, setTopLocationState] = useState({});
-
+  useEffect(() => {
+    setRequesterLoading();
+  }, [setRequesterLoading]);
   useEffect(() => {
     setStudio(params.studioId, params.requesterEmail);
   }, [setStudio, params.studioId, params.requesterEmail]);
@@ -79,12 +83,20 @@ const WorkOrderStatusPage = ({
   useEffect(() => {
     if (
       !loading &&
+      authUser !== params.requesterEmail &&
       !requestCc.includes(authUser) &&
       authUser !== requestEmail
     ) {
       logout();
     }
-  }, [loading, authUser, requestCc, requestEmail, logout]);
+  }, [
+    loading,
+    authUser,
+    requestCc,
+    requestEmail,
+    logout,
+    params.requesterEmail,
+  ]);
 
   const handleClick = () => {
     if (edit) {
@@ -259,6 +271,7 @@ WorkOrderStatusPage.propTypes = {
   requestCc: PropTypes.array,
   logout: PropTypes.func.isRequired,
   authUser: PropTypes.string.isRequired,
+  setRequesterLoading: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -279,6 +292,7 @@ export default connect(mapStateToProps, {
   setStudio,
   updateWorkorder,
   logout,
+  setRequesterLoading,
 })(WorkOrderStatusPage);
 
 // #fdd835

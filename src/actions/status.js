@@ -109,6 +109,7 @@ export const updateWorkorder = (studioId, workorderId, updatedObj) => async (
 ) => {
   dispatch(setStatusPageLoading());
   try {
+    console.log(updatedObj);
     const res = await axios.patch(
       `/${studioId}/api/items/workorder/${workorderId}?fields=id,request_number,request_description,assigned_priority,status,status_modification_date,building.site,building.id,building.name,building.number,floor.id,floor.number, floor.name,space.id,space.name,space.number,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,administrator_to_technician_comment,administrator_comment,location_description,token`,
       updatedObj
