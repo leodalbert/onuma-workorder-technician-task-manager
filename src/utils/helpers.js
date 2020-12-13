@@ -401,27 +401,41 @@ export const sortFilesByType = (a, b) => {
 export const getVisibleWorkorders = (workorders, filter) => {
   return workorders.filter((workorder) => {
     if (filter === 'all') {
-      return workorder.status !== 'Archived';
-    }
-    if (filter === 'assigned') {
+      return (
+        workorder.status !== 'Archived' && workorder.status !== 'Cancelled'
+      );
+    } else if (filter === 'cancelled') {
+      return (
+        workorder.status === 'Archived' || workorder.status === 'Cancelled'
+      );
+    } else if (filter === 'assigned') {
       return workorder.status === 'Assigned';
-    }
-    if (filter === 'work in progress') {
+    } else if (filter === 'work in progress') {
       return workorder.status === 'Work In Progress';
-    }
-    if (filter === 'active') {
+    } else if (filter === 'active') {
       return (
         workorder.status === 'Work In Progress' ||
         workorder.status === 'Assigned'
       );
-    }
-    if (filter === 'completed') {
+    } else if (filter === 'completed') {
       return (
         workorder.status === 'Completed' ||
         workorder.status === 'Completion Confirmed' ||
         workorder.status === 'Completion Declined'
       );
+    } else if (filter === 'others') {
+      return (
+        workorder.status !== 'Archived' &&
+        workorder.status !== 'Assigned' &&
+        workorder.status !== 'Cancelled' &&
+        workorder.status !== 'Completed' &&
+        workorder.status !== 'Completion Confirmed' &&
+        workorder.status !== 'Completion Declined' &&
+        workorder.status !== 'New' &&
+        workorder.status !== 'Work In Progress'
+      );
     }
+
     return workorders;
   });
 };
