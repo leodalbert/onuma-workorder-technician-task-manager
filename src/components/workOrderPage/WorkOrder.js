@@ -110,22 +110,23 @@ const WorkOrder = ({
           </AccordionDetails>
         </Accordion>
       )}
-      {workOrderStatus !== 'Completed' && (
-        <Accordion square defaultExpanded>
-          <AccordionSummary
-            className={layoutClasses.accordionHeader}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='taskDetails-content'
-            id='taskDetails-header'>
-            <Typography className={layoutClasses.accordionHeading}>
-              Task Details
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TaskDetails studioId={params.studioId} />
-          </AccordionDetails>
-        </Accordion>
-      )}
+      {workOrderStatus !== 'Completed' &&
+        workOrderStatus !== 'Completion Confirmed' && (
+          <Accordion square defaultExpanded>
+            <AccordionSummary
+              className={layoutClasses.accordionHeader}
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='taskDetails-content'
+              id='taskDetails-header'>
+              <Typography className={layoutClasses.accordionHeading}>
+                Task Details
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <TaskDetails studioId={params.studioId} />
+            </AccordionDetails>
+          </Accordion>
+        )}
       <Accordion square defaultExpanded>
         <AccordionSummary
           className={layoutClasses.accordionHeader}
