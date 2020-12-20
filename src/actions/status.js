@@ -66,7 +66,7 @@ export const getWorkOrderStatusInfo = (workorderId, studioId) => async (
 ) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder/${workorderId}?fields=id,request_number,request_description,assigned_priority,status,status_modification_date,building.site,building.id,building.name,building.number,floor.id,floor.number, floor.name,space.id,space.name,space.number,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,administrator_to_technician_comment,administrator_comment,location_description,request_email,request_email_cc,token`
+      `/${studioId}/api/items/workorder/${workorderId}?fields=id,request_number,request_description,assigned_priority,status,status_modification_date,building.site,building.id,building.name,building.number,floor.id,floor.number,floor.name,space.id,space.name,space.number,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,administrator_to_technician_comment,administrator_comment,location_description,request_email,request_email_cc,token`
     );
 
     const workorder = res.data.data;
@@ -109,9 +109,8 @@ export const updateWorkorder = (studioId, workorderId, updatedObj) => async (
 ) => {
   dispatch(setStatusPageLoading());
   try {
-    console.log(updatedObj);
     const res = await axios.patch(
-      `/${studioId}/api/items/workorder/${workorderId}?fields=id,request_number,request_description,assigned_priority,status,status_modification_date,building.site,building.id,building.name,building.number,floor.id,floor.number, floor.name,space.id,space.name,space.number,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,administrator_to_technician_comment,administrator_comment,location_description,token`,
+      `/${studioId}/api/items/workorder/${workorderId}?fields=id,request_number,request_description,assigned_priority,status,status_modification_date,building.site,building.id,building.name,building.number,floor.id,floor.number,floor.name,space.id,space.name,space.number,assigned_technician.id,assigned_technician.first_name,assigned_technician.last_name,assigned_technician.email,administrator_to_technician_comment,administrator_comment,location_description,token`,
       updatedObj
     );
     const workorder = res.data.data;
@@ -175,7 +174,7 @@ export const getAllWorkOrderRequestsByRequesterCC = (
 ) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id, request_number,request_email,collaborators.collaborator, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status&filter[request_email_cc][contains]=${requestEmail}`
+      `/${studioId}/api/items/workorder?fields=id,request_number,request_email,collaborators.collaborator,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status&filter[request_email_cc][contains]=${requestEmail}`
     );
     dispatch({ type: GET_REQUESTER_CC_WORK_ORDERS, payload: res.data.data });
   } catch (err) {
@@ -196,7 +195,7 @@ export const getAllWorkOrderRequestsByRequester = (
   dispatch({ type: SET_STATUS_PAGE_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id, request_number,request_email,collaborators.collaborator, request_date, request_description, request_number, building, assigned_priority, space,assigned_technician, status&filter[request_email]=${requestEmail}`
+      `/${studioId}/api/items/workorder?fields=id,request_number,request_email,collaborators.collaborator,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status&filter[request_email]=${requestEmail}`
     );
     dispatch({ type: GET_REQUESTER_WORK_ORDERS, payload: res.data.data });
     dispatch(getAllWorkOrderRequestsByRequesterCC(requestEmail, studioId));

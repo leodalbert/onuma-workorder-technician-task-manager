@@ -27,7 +27,7 @@ const initialCostState = {
 const initialTaskState = {
   workorder: '',
   hours: 0,
-  is_overtime: 'F',
+  is_overtime: false,
   assigned_technician: '',
   description: '',
   date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
@@ -94,9 +94,9 @@ const TaskDetails = ({
 
   const handleFormChange = (e) => {
     if (e.target.name === 'is_overtime') {
-      taskForm.is_overtime === 'F'
-        ? setTaskForm({ ...taskForm, is_overtime: 'T' })
-        : setTaskForm({ ...taskForm, is_overtime: 'F' });
+      taskForm.is_overtime === false
+        ? setTaskForm({ ...taskForm, is_overtime: true })
+        : setTaskForm({ ...taskForm, is_overtime: false });
     } else {
       setTaskForm({ ...taskForm, [e.target.name]: e.target.value });
     }
