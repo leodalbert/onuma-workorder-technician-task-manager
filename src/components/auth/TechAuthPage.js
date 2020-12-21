@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCurrentTech } from '../../actions/tech';
 import { getWorkOrderTech } from '../../actions/workOrder';
-import { login, logout } from '../../actions/auth';
+import { login, logout, setToken } from '../../actions/auth';
 import { Redirect } from 'react-router-dom';
 
 const TechAuthPage = ({
@@ -19,7 +19,11 @@ const TechAuthPage = ({
   logout,
   isAuthenticated,
   authLoading,
+  setToken,
 }) => {
+  useEffect(() => {
+    setToken(params.token);
+  }, [setToken, params.token]);
   useEffect(() => {
     getCurrentTech(params.techEmail, params.studioId);
   }, [getCurrentTech, params.techEmail, params.studioId]);
@@ -92,4 +96,5 @@ export default connect(mapStateToProps, {
   getWorkOrderTech,
   login,
   logout,
+  setToken,
 })(TechAuthPage);

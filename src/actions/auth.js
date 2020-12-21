@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { LOGIN_SUCCESS, LOGOUT } from './types';
+import { LOGIN_SUCCESS, LOGOUT, TOKEN } from './types';
 
 // Login user and set cookie
 
@@ -12,4 +12,9 @@ export const login = (techEmail) => (dispatch) => {
 export const logout = () => (dispatch) => {
   Cookies.remove('tech');
   dispatch({ type: LOGOUT });
+};
+
+// set email token
+export const setToken = (token) => (dispatch) => {
+  dispatch({ type: TOKEN, payload: token });
 };

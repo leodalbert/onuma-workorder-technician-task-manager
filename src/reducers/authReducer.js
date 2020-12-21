@@ -1,9 +1,10 @@
-import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from '../actions/types';
+import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, TOKEN } from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
   authLoading: true,
   user: '',
+  token: null,
 };
 
 export default function (state = initialState, action) {
@@ -24,6 +25,11 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         user: '',
         authLoading: false,
+      };
+    case TOKEN:
+      return {
+        ...state,
+        token: payload,
       };
     default:
       return state;
