@@ -21,8 +21,8 @@ export const getTaskCosts = (studioId, tasks) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -39,8 +39,8 @@ export const updateWorkorderTask = (studioId, taskId) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -63,8 +63,8 @@ export const addNewTask = (taskForm, costs, studioId) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -80,8 +80,8 @@ export const addNewCost = (cost, taskId, studioId) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }

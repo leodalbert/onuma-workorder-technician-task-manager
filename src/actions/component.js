@@ -27,8 +27,8 @@ export const getSpaceComponents = (spaceId, studioId) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -66,8 +66,8 @@ export const getComponentFiles = (componentId, studioId) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -93,8 +93,8 @@ export const getWorkOrderComponentDetails = (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -135,8 +135,8 @@ export const addComponent = (componentId, workorderId, studioId) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -155,8 +155,8 @@ export const removeComponent = (componentWorkorderId, studioId) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -184,8 +184,8 @@ export const searchComponents = (searchParam, buildingId, studioId) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }

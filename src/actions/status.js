@@ -32,8 +32,8 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -53,8 +53,8 @@ export const getAllSpaces = (siteId, studioId) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -96,8 +96,8 @@ export const getWorkOrderStatusInfo = (workorderId, studioId) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -139,8 +139,8 @@ export const updateWorkorder = (studioId, workorderId, updatedObj) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -160,8 +160,8 @@ export const setStatus = (workorderId, statusObj, studioId) => async (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -181,8 +181,8 @@ export const getAllWorkOrderRequestsByRequesterCC = (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -203,8 +203,8 @@ export const getAllWorkOrderRequestsByRequester = (
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }

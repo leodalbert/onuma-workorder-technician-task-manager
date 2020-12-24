@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getCurrentTech, getTechs } from '../../actions/tech';
-import { logout } from '../../actions/auth';
+import { logout, setToken } from '../../actions/auth';
 
 const WorkOrder = ({
   getWorkOrder,
@@ -32,6 +32,7 @@ const WorkOrder = ({
   siteGroup,
   workOrderStatus,
   authUser,
+  setToken,
   logout,
   collaboratorEmails,
   workOrder: {
@@ -41,35 +42,40 @@ const WorkOrder = ({
   },
 }) => {
   useEffect(() => {
+    getCurrentTech(params.techEmail, params.studioId);
+  }, [getCurrentTech, params.techEmail, params.studioId]);
+  useEffect(() => {
+    if (params.token) {
+      setToken(params.token);
+    }
+  }, [setToken, params.token]);
+  useEffect(() => {
     getWorkOrder(params.id, params.studioId);
   }, [getWorkOrder, params.id, params.studioId]);
   useEffect(() => {
     spaceId && getSpaceComponents(spaceId, params.studioId);
   }, [getSpaceComponents, spaceId, params.studioId]);
   useEffect(() => {
-    getCurrentTech(params.techEmail, params.studioId);
-  }, [getCurrentTech, params.techEmail, params.studioId]);
-  useEffect(() => {
     siteGroup && getTechs(params.studioId, siteGroup);
   }, [siteGroup, getTechs, params.studioId]);
-  useEffect(() => {
-    if (
-      !loading &&
-      !collaboratorEmails.includes(authUser) &&
-      authUser !== current.assigned_technician.email
-    ) {
-      console.log(collaboratorEmails);
-      console.log(authUser);
-      console.log(current.assigned_technician.email);
-      // logout();
-    }
-  }, [
-    loading,
-    authUser,
-    collaboratorEmails,
-    current.assigned_technician.email,
-    logout,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     !loading &&
+  //     !collaboratorEmails.includes(authUser) &&
+  //     authUser !== current.assigned_technician.email
+  //   ) {
+  //     console.log(collaboratorEmails);
+  //     console.log(authUser);
+  //     console.log(current.assigned_technician.email);
+  //     // logout();
+  //   }
+  // }, [
+  //   loading,
+  //   authUser,
+  //   collaboratorEmails,
+  //   current.assigned_technician.email,
+  //   logout,
+  // ]);
 
   const layoutClasses = layoutStyles();
   return loading ? (
@@ -175,4 +181,5 @@ export default connect(mapStateToProps, {
   getSpaceComponents,
   getTechs,
   logout,
+  setToken,
 })(WorkOrder);

@@ -12,8 +12,8 @@ export const getTechs = (studioId, siteGroup) => async (dispatch) => {
     dispatch({
       type: ERROR,
       payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
       },
     });
   }
@@ -36,15 +36,16 @@ export const getCurrentTech = (techEmail, studioId) => async (dispatch) => {
     } else {
       let payload = res.data.data[0];
       payload.studioId = Number(studioId);
-      dispatch({ type: CURRENT_TECH, payload });
+      dispatch({ type: CURRENT_TECH, payload: payload });
     }
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.error.message,
-        status: err.response.data.error.code,
-      },
-    });
+    console.log(err);
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };

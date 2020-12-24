@@ -1,10 +1,18 @@
-import { LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, TOKEN } from '../actions/types';
+import {
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  TOKEN,
+  AUTH_LOADING,
+  REDIRECT_LOGIN,
+} from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
   authLoading: true,
   user: '',
   token: null,
+  redirect: '',
 };
 
 export default function (state = initialState, action) {
@@ -30,6 +38,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         token: payload,
+      };
+    case REDIRECT_LOGIN:
+      return {
+        ...state,
+        redirect: payload,
+      };
+    case AUTH_LOADING:
+      return {
+        ...state,
+        authLoading: true,
       };
     default:
       return state;

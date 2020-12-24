@@ -5,7 +5,7 @@ import Header from '../layout/Header';
 import StatusPageHeader from '../layout/StatusPageHeader';
 import Spinner from '../layout/Spinner';
 import PrivateRoute from './PrivateRoute';
-const TechAuthPage = lazy(() => import('../auth/TechAuthPage'));
+// const TechAuthPage = lazy(() => import('../auth/TechAuthPage'));
 const RequesterAuthPage = lazy(() => import('../auth/RequesterAuthPage'));
 const WorkOrder = lazy(() => import('../workOrderPage/WorkOrder'));
 const Dashboard = lazy(() => import('../layout/Dashboard'));
@@ -38,13 +38,8 @@ const Routes = () => {
             />
             <PrivateRoute
               exact
-              path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail`}
+              path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail/:token?`}
               component={WorkOrder}
-            />
-            <Route
-              exact
-              path={`${process.env.PUBLIC_URL}/:studioId/technicians/workorder/:id/:techEmail/:token`}
-              component={TechAuthPage}
             />
             <PrivateRoute
               exact
