@@ -27,7 +27,7 @@ export const setToken = (token) => (dispatch) => {
   dispatch({ type: TOKEN, payload: token });
 };
 
-// start session
+// start Tech session
 export const sessionLogin = (studioId, techEmail, token, pathname) => async (
   dispatch
 ) => {
@@ -48,6 +48,24 @@ export const sessionLogin = (studioId, techEmail, token, pathname) => async (
       Cookies.set('onumaLocal', btoa(JSON.stringify({ techEmail, token })));
       dispatch({ type: LOGIN_SUCCESS, payload: techEmail });
     }
+  } catch (err) {
+    dispatch({ type: LOGIN_FAIL });
+  }
+};
+// start Requester session
+export const sessionLoginRequester = (
+  studioId,
+  requesterEmail,
+  token
+) => async (dispatch) => {
+  dispatch({ type: AUTH_LOADING });
+  try {
+    await axios.get(
+      `/${studioId}/actions/start-requester-session?token=${token}&email=${requesterEmail}`
+    );
+
+    Cookies.set('onumaLocal', btoa(JSON.stringify({ requesterEmail, token })));
+    dispatch({ type: LOGIN_SUCCESS, payload: requesterEmail });
   } catch (err) {
     dispatch({ type: LOGIN_FAIL });
   }

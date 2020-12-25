@@ -3,7 +3,12 @@ import Cookies from 'js-cookie';
 import { Container, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { logout, sessionLogin, sessionResume } from '../../actions/auth';
+import {
+  logout,
+  sessionLogin,
+  sessionLoginRequester,
+  sessionResume,
+} from '../../actions/auth';
 import useInterval from '../../hooks/useInterval';
 import Spinner from '../layout/Spinner';
 import { inDev } from '../../utils/helpers';
@@ -20,20 +25,54 @@ export const PrivateRoute = ({
   login,
   logout,
   redirect,
+  sessionLoginRequester,
   component: Component,
   ...rest
 }) => {
   useEffect(() => {
-    if (Cookies.get('onumaLocal')) {
-      cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
-    }
-    if (!isAuthenticated) {
-      if (params.token) {
-        sessionLogin(params.studioId, params.techEmail, params.token, pathname);
-      } else if (cookie.techEmail === params.techEmail) {
-        sessionLogin(params.studioId, params.techEmail, cookie.token, pathname);
-      } else {
-        logout();
+    if (params.requesterEmail) {
+      if (Cookies.get('onumaLocal')) {
+        cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
+      }
+      if (!isAuthenticated) {
+        if (params.token) {
+          sessionLoginRequester(
+            params.studioId,
+            params.requesterEmail,
+            params.token
+          );
+        } else if (cookie.requesterEmail === params.requesterEmail) {
+          sessionLoginRequester(
+            params.studioId,
+            params.requesterEmail,
+            cookie.token
+          );
+        } else {
+          logout();
+        }
+      }
+    } else {
+      if (Cookies.get('onumaLocal')) {
+        cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
+      }
+      if (!isAuthenticated) {
+        if (params.token) {
+          sessionLogin(
+            params.studioId,
+            params.techEmail,
+            params.token,
+            pathname
+          );
+        } else if (cookie.techEmail === params.techEmail) {
+          sessionLogin(
+            params.studioId,
+            params.techEmail,
+            cookie.token,
+            pathname
+          );
+        } else {
+          logout();
+        }
       }
     }
   }, [
@@ -41,6 +80,8 @@ export const PrivateRoute = ({
     params.studioId,
     params.techEmail,
     params.token,
+    params.requesterEmail,
+    sessionLoginRequester,
     sessionLogin,
     pathname,
     logout,
@@ -100,4 +141,5 @@ export default connect(mapStateToProps, {
   logout,
   sessionLogin,
   sessionResume,
+  sessionLoginRequester,
 })(PrivateRoute);
