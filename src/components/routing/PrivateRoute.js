@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import { logout, sessionLogin, sessionResume } from '../../actions/auth';
 import useInterval from '../../hooks/useInterval';
 import Spinner from '../layout/Spinner';
+import { inDev } from '../../utils/helpers';
 
 let cookie;
 
@@ -52,7 +53,8 @@ export const PrivateRoute = ({
     sessionResume(params.studioId, params.techEmail, cookie.token);
   }, 1800000);
 
-  if (!isAuthenticated && redirect) {
+  // redirect to login page if tech requires login when not in development
+  if (!isAuthenticated && redirect && !inDev()) {
     return (
       <Route
         render={() => {

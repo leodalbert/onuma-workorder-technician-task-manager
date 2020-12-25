@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { inDev } from '../utils/helpers';
 import {
   LOGIN_SUCCESS,
   LOGOUT,
@@ -26,6 +27,7 @@ export const setToken = (token) => (dispatch) => {
   dispatch({ type: TOKEN, payload: token });
 };
 
+// start session
 export const sessionLogin = (studioId, techEmail, token, pathname) => async (
   dispatch
 ) => {
@@ -37,6 +39,11 @@ export const sessionLogin = (studioId, techEmail, token, pathname) => async (
 
     if (res.request.responseURL.includes('login')) {
       dispatch({ type: REDIRECT_LOGIN, payload: pathname });
+      // if in dev skip redirect auth flow
+      if (inDev()) {
+        Cookies.set('onumaLocal', btoa(JSON.stringify({ techEmail, token })));
+        dispatch({ type: LOGIN_SUCCESS, payload: techEmail });
+      }
     } else {
       Cookies.set('onumaLocal', btoa(JSON.stringify({ techEmail, token })));
       dispatch({ type: LOGIN_SUCCESS, payload: techEmail });

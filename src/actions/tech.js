@@ -39,13 +39,12 @@ export const getCurrentTech = (techEmail, studioId) => async (dispatch) => {
       dispatch({ type: CURRENT_TECH, payload: payload });
     }
   } catch (err) {
-    console.log(err);
-    // dispatch({
-    //   type: ERROR,
-    //   payload: {
-    //     msg: err.response.data.err.message,
-    //     status: err.response.data.err.code,
-    //   },
-    // });
+    dispatch({
+      type: ERROR,
+      payload: {
+        msg: err.response.data.err.message,
+        status: err.response.data.err.code,
+      },
+    });
   }
 };
