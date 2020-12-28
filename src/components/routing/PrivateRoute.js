@@ -122,10 +122,13 @@ export const PrivateRoute = ({
         ) : (
           <Container style={{ marginTop: '20px', textAlign: 'center' }}>
             <Typography variant='subtitle1'>
-              <i className='fas fa-exclamation'></i>
-              {'  '}
-              Sorry, you do not have permission to view this page, please use
-              the link in your email to navigate to work orders
+              <i className='fas fa-exclamation'></i> {``}
+              Oops - something didn't work correctly! Use the link in your email
+              to try accessing the work order again.
+            </Typography>
+            <Typography variant='body2'>
+              If all fails, use the button at the top right to get in touch with
+              us.
             </Typography>
           </Container>
         )

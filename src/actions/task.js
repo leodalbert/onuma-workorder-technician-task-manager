@@ -2,10 +2,11 @@ import axios from 'axios';
 
 import {
   GET_TASK_COSTS,
-  ERROR,
+  // ERROR,
   ADD_TASK,
   ADD_COST,
   UPDATE_WORKORDER_TASK,
+  LOGIN_FAIL,
 } from './types';
 
 // Get all task costs for workorder
@@ -18,13 +19,14 @@ export const getTaskCosts = (studioId, tasks) => async (dispatch) => {
     );
     dispatch({ type: GET_TASK_COSTS, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -36,13 +38,14 @@ export const updateWorkorderTask = (studioId, taskId) => async (dispatch) => {
     );
     dispatch({ type: UPDATE_WORKORDER_TASK, payload: res.data.data[0] });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -60,13 +63,14 @@ export const addNewTask = (taskForm, costs, studioId) => async (dispatch) => {
     }
     dispatch({ type: ADD_TASK, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -77,12 +81,13 @@ export const addNewCost = (cost, taskId, studioId) => async (dispatch) => {
     dispatch(updateWorkorderTask(studioId, taskId));
     dispatch({ type: ADD_COST, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };

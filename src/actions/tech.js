@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_TECHS, CURRENT_TECH, ERROR } from './types';
+import { GET_TECHS, CURRENT_TECH, ERROR, LOGIN_FAIL } from './types';
 
 // Get all techs
 export const getTechs = (studioId, siteGroup) => async (dispatch) => {
@@ -9,13 +9,14 @@ export const getTechs = (studioId, siteGroup) => async (dispatch) => {
     );
     dispatch({ type: GET_TECHS, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -39,12 +40,13 @@ export const getCurrentTech = (techEmail, studioId) => async (dispatch) => {
       dispatch({ type: CURRENT_TECH, payload: payload });
     }
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   GET_WORKORDER_STATUS_INFO,
   SET_SPACE_INFO_STATUS,
-  ERROR,
+  // ERROR,
   SET_STUDIO,
   GET_ALL_SPACES,
   SET_STATUS_PAGE_LOADING,
@@ -11,6 +11,7 @@ import {
   GET_REQUESTER_WORK_ORDERS,
   GET_REQUESTER_CC_WORK_ORDERS,
   CLEAR_REQUESTER_CURRENT,
+  LOGIN_FAIL,
 } from './types';
 
 // Set Loading
@@ -29,13 +30,14 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
       payload: { floorId: res.data.data[0].floors[0].id },
     });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -50,13 +52,14 @@ export const getAllSpaces = (siteId, studioId) => async (dispatch) => {
       payload: res.data.data,
     });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -93,13 +96,14 @@ export const getWorkOrderStatusInfo = (workorderId, studioId) => async (
 
     dispatch({ type: GET_WORKORDER_STATUS_INFO, payload: workorder });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -136,13 +140,14 @@ export const updateWorkorder = (studioId, workorderId, updatedObj) => async (
 
     dispatch({ type: GET_WORKORDER_STATUS_INFO, payload: workorder });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -157,13 +162,14 @@ export const setStatus = (workorderId, statusObj, studioId) => async (
       statusObj
     );
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -178,13 +184,14 @@ export const getAllWorkOrderRequestsByRequesterCC = (
     );
     dispatch({ type: GET_REQUESTER_CC_WORK_ORDERS, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 // Get all work orders by request_email
@@ -200,13 +207,14 @@ export const getAllWorkOrderRequestsByRequester = (
     dispatch({ type: GET_REQUESTER_WORK_ORDERS, payload: res.data.data });
     dispatch(getAllWorkOrderRequestsByRequesterCC(requestEmail, studioId));
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 

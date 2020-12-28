@@ -3,7 +3,7 @@ import {
   GET_TECHS_WORK_ORDERS,
   GET_WORK_ORDER,
   GET_WORK_ORDER_TECH,
-  ERROR,
+  // ERROR,
   SET_LOADING,
   CLEAR_CURRENT,
   CLEAR_COMPONENT_STATE,
@@ -15,6 +15,7 @@ import {
   ADD_WORKORDER_FILE,
   SEND_COMMENT_TO_REQUESTOR,
   DELETE_ATTACHMENT,
+  LOGIN_FAIL,
 } from './types';
 
 // Get all work orders by tech Id
@@ -27,13 +28,14 @@ export const getAllWorkOrders = (techId, studioId) => async (dispatch) => {
     dispatch({ type: GET_TECHS_WORK_ORDERS, payload: res.data.data });
     // console.log(res.data.data);
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -49,13 +51,14 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
       payload: { floorId: res.data.data[0].floors[0].id },
     });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -86,13 +89,14 @@ export const getWorkOrder = (workorderId, studioId) => async (dispatch) => {
     dispatch(getWorkorderFiles(workorderId, studioId));
     dispatch({ type: GET_WORK_ORDER, payload: workorder });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -104,13 +108,14 @@ export const getWorkOrderTech = (workorderId, studioId) => async (dispatch) => {
     );
     dispatch({ type: GET_WORK_ORDER_TECH, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -124,13 +129,14 @@ export const getWorkorderFiles = (workorderId, studioId) => async (
     );
     dispatch({ type: GET_WORKORDER_FILES, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -145,13 +151,14 @@ export const workOrderStatusChange = (workorderId, status, studioId) => async (
     );
     dispatch({ type: CHANGE_WORKORDER_STATUS, payload: res.data.data.status });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -177,13 +184,14 @@ export const addCollaborator = (workorderId, techId, studioId) => async (
 
     dispatch({ type: ADD_COLLABORATOR, payload });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -197,13 +205,14 @@ export const removeCollaborator = (collaboratorId, studioId) => async (
     );
     dispatch({ type: REMOVE_COLLABORATOR, payload: collaboratorId });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -215,13 +224,14 @@ export const getFileInfo = (studioId, fileWorkorderId) => async (dispatch) => {
     );
     dispatch({ type: ADD_WORKORDER_FILE, payload: res.data.data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -239,13 +249,14 @@ export const patchWorkorderWithFile = (id, studioId, workorderId) => async (
     );
     dispatch(getFileInfo(studioId, res.data.data.id));
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 // Delete workorder_directus_files record
@@ -254,13 +265,14 @@ export const deleteAttachment = (id, studioId) => async (dispatch) => {
     await axios.delete(`/${studioId}/api/items/workorder_directus_files/${id}`);
     dispatch({ type: DELETE_ATTACHMENT, payload: id });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 // Upload file Attachment
@@ -279,13 +291,14 @@ export const uploadFile = (data, studioId, workorderId, techId) => async (
     const res = await axios.post(`/${studioId}/api/files`, formData, config);
     dispatch(patchWorkorderWithFile(res.data.data.id, studioId, workorderId));
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -307,13 +320,14 @@ export const sendCommentToRequestor = (
       payload: res.data.data.administrator_comment,
     });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 // Clear Current Workorder and components

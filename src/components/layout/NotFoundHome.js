@@ -6,8 +6,10 @@ const NotFound = () => {
     <Fragment>
       <Container style={{ marginTop: 20 }}>
         <h1 className='x-large text-primary'>
-          <i className='fas fa-exclamation-triangle'></i> Please use email link
-          to access your workorders!
+          <i className='fas fa-exclamation-triangle'></i> Oops - something
+          didn't work correctly! Use the link in your email to try accessing the
+          work order again. If all fails, use the button at the top right to get
+          in touch with us.
         </h1>
       </Container>
     </Fragment>

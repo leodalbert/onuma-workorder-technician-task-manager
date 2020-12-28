@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   GET_SPACE_COMPONENTS,
   GET_WORK_ORDER_COMPONENTS,
-  ERROR,
+  // ERROR,
   FILL_DIALOG_COMPONENT,
   CLEAR_DIALOG_COMPONENT,
   ADD_COMPONENT,
@@ -13,6 +13,7 @@ import {
   SEARCH_LOADING,
   CLEAR_SEARCH_STATE,
   GET_COMPONENT_LINKS,
+  LOGIN_FAIL,
 } from './types';
 
 // Get all components by space id
@@ -24,13 +25,14 @@ export const getSpaceComponents = (spaceId, studioId) => async (dispatch) => {
 
     dispatch({ type: GET_SPACE_COMPONENTS, payload: res.data.data.components });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -63,13 +65,14 @@ export const getComponentFiles = (componentId, studioId) => async (
       });
     }
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -90,13 +93,14 @@ export const getWorkOrderComponentDetails = (
     dispatch({ type: GET_WORK_ORDER_COMPONENTS, payload: data });
     dispatch(getComponentFiles(componentId, studioId));
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -132,13 +136,14 @@ export const addComponent = (componentId, workorderId, studioId) => async (
       payload: componentIds,
     });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -152,13 +157,14 @@ export const removeComponent = (componentWorkorderId, studioId) => async (
       `/${studioId}/api/items/component_workorder/${componentWorkorderId}`
     );
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
@@ -181,13 +187,14 @@ export const searchComponents = (searchParam, buildingId, studioId) => async (
 
     dispatch({ type: SEARCH_COMPONENTS, payload: data });
   } catch (err) {
-    dispatch({
-      type: ERROR,
-      payload: {
-        msg: err.response.data.err.message,
-        status: err.response.data.err.code,
-      },
-    });
+    dispatch({ type: LOGIN_FAIL });
+    // dispatch({
+    //   type: ERROR,
+    //   payload: {
+    //     msg: err.response.data.err.message,
+    //     status: err.response.data.err.code,
+    //   },
+    // });
   }
 };
 
