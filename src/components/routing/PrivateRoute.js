@@ -39,13 +39,15 @@ export const PrivateRoute = ({
           sessionLoginRequester(
             params.studioId,
             params.requesterEmail,
-            params.token
+            params.token,
+            params.id
           );
-        } else if (cookie.requesterEmail === params.requesterEmail) {
+        } else if (cookie && cookie.requesterEmail === params.requesterEmail) {
           sessionLoginRequester(
             params.studioId,
             params.requesterEmail,
-            cookie.token
+            cookie.token,
+            params.id
           );
         } else {
           logout();
@@ -63,7 +65,7 @@ export const PrivateRoute = ({
             params.token,
             pathname
           );
-        } else if (cookie.techEmail === params.techEmail) {
+        } else if (cookie && cookie.techEmail === params.techEmail) {
           sessionLogin(
             params.studioId,
             params.techEmail,
@@ -81,6 +83,7 @@ export const PrivateRoute = ({
     params.techEmail,
     params.token,
     params.requesterEmail,
+    params.id,
     sessionLoginRequester,
     sessionLogin,
     pathname,

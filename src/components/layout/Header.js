@@ -25,6 +25,7 @@ const Header = ({
   handleClose,
   isMobile,
   token,
+  isAuth,
 }) => {
   const layoutClasses = layoutStyles();
   const isWorkorder = !(
@@ -46,7 +47,7 @@ const Header = ({
         <Toolbar classes={{ root: layoutClasses.navbarContainer }}>
           <div className={layoutClasses.navbarTitleContainer}>
             <img src={logo} alt='logo' className={layoutClasses.navbarLogo} />
-            {isWorkorder && !dialogHeader && (
+            {isWorkorder && !dialogHeader && isAuth && (
               <IconButton
                 color='inherit'
                 component={Link}
@@ -56,20 +57,22 @@ const Header = ({
                 <FormatListBulletedRoundedIcon style={{ fontSize: 40 }} />
               </IconButton>
             )}
-            <Typography
-              style={
-                dialogHeader
-                  ? { fontSize: '16px' }
-                  : { textDecoration: 'inherit' }
-              }
-              component={dialogHeader ? 'h6' : Link}
-              to={`${process.env.PUBLIC_URL}/${studio}/technicians/${
-                email && email
-              }`}
-              variant='h6'
-              className={layoutClasses.navbarTitle}>
-              {dialogHeader && text} {!dialogHeader && name && name}
-            </Typography>
+            {isAuth && (
+              <Typography
+                style={
+                  dialogHeader
+                    ? { fontSize: '16px' }
+                    : { textDecoration: 'inherit' }
+                }
+                component={dialogHeader ? 'h6' : Link}
+                to={`${process.env.PUBLIC_URL}/${studio}/technicians/${
+                  email && email
+                }`}
+                variant='h6'
+                className={layoutClasses.navbarTitle}>
+                {dialogHeader && text} {!dialogHeader && name && name}
+              </Typography>
+            )}
           </div>
           {dialogHeader &&
             (isMobile ? (
@@ -104,6 +107,7 @@ Header.propTypes = {
   dialogHeader: PropTypes.bool.isRequired,
   handleClose: PropTypes.func,
   token: PropTypes.string,
+  isAuth: PropTypes.bool.isRequired,
 };
 
 Header.defaultProps = {
@@ -117,6 +121,7 @@ const mapStateToProps = (state) => ({
   name: state.tech.name,
   studio: state.tech.studio,
   token: state.tech.token,
+  isAuth: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps)(Header);

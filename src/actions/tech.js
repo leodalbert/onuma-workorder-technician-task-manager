@@ -5,7 +5,7 @@ import { GET_TECHS, CURRENT_TECH, ERROR } from './types';
 export const getTechs = (studioId, siteGroup) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/technician?filter[site_group.id]=${siteGroup}&fields=id,first_name,last_name,email`
+      `/${studioId}/api/items/technician?filter[site_group.id]=${siteGroup}&fields=id,first_name,last_name,email&filter[active]=T`
     );
     dispatch({ type: GET_TECHS, payload: res.data.data });
   } catch (err) {
@@ -23,7 +23,7 @@ export const getTechs = (studioId, siteGroup) => async (dispatch) => {
 export const getCurrentTech = (techEmail, studioId) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/technician?fields=*,*.*&filter[email]=${techEmail}`
+      `/${studioId}/api/items/technician?fields=*,*.*&filter[email]=${techEmail}&filter[active]=T`
     );
     if (res.data.data.length === 0) {
       dispatch({

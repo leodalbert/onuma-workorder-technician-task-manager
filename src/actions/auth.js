@@ -56,12 +56,13 @@ export const sessionLogin = (studioId, techEmail, token, pathname) => async (
 export const sessionLoginRequester = (
   studioId,
   requesterEmail,
-  token
+  token,
+  id
 ) => async (dispatch) => {
   dispatch({ type: AUTH_LOADING });
   try {
     await axios.get(
-      `/${studioId}/actions/start-requester-session?token=${token}&email=${requesterEmail}`
+      `/${studioId}/actions/start-requester-session?token=${token}&email=${requesterEmail}&workorder_id=${id}`
     );
 
     Cookies.set('onumaLocal', btoa(JSON.stringify({ requesterEmail, token })));

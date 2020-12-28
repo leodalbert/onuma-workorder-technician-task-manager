@@ -9,7 +9,7 @@ import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulleted
 import logo from './BIM_GENIE_GREEN_100p.jpg';
 import HelpIcon from './HelpIcon';
 
-const StatusPageHeader = ({ text, email, studio, token }) => {
+const StatusPageHeader = ({ text, email, studio, token, isAuth }) => {
   const layoutClasses = layoutStyles();
   const isWorkorder = !(
     useLocation().pathname.split('/').slice(-2)[0] === 'requester'
@@ -30,7 +30,7 @@ const StatusPageHeader = ({ text, email, studio, token }) => {
         <Toolbar classes={{ root: layoutClasses.navbarContainer }}>
           <div className={layoutClasses.navbarTitleContainer}>
             <img src={logo} alt='logo' className={layoutClasses.navbarLogo} />
-            {isWorkorder && (
+            {isWorkorder && isAuth && (
               <IconButton
                 color='inherit'
                 component={Link}
@@ -40,16 +40,18 @@ const StatusPageHeader = ({ text, email, studio, token }) => {
                 <FormatListBulletedRoundedIcon style={{ fontSize: 40 }} />
               </IconButton>
             )}
-            <Typography
-              style={{ textDecoration: 'inherit' }}
-              component={Link}
-              to={`${process.env.PUBLIC_URL}/${studio}/requester/${
-                email && email
-              }`}
-              variant='h6'
-              className={layoutClasses.navbarTitle}>
-              {email}
-            </Typography>
+            {isAuth && (
+              <Typography
+                style={{ textDecoration: 'inherit' }}
+                component={Link}
+                to={`${process.env.PUBLIC_URL}/${studio}/requester/${
+                  email && email
+                }`}
+                variant='h6'
+                className={layoutClasses.navbarTitle}>
+                {email}
+              </Typography>
+            )}
           </div>
 
           <IconButton
@@ -70,6 +72,7 @@ StatusPageHeader.propTypes = {
   studio: PropTypes.number,
   email: PropTypes.string,
   token: PropTypes.string,
+  isAuth: PropTypes.bool.isRequired,
 };
 
 StatusPageHeader.defaultProps = {
@@ -80,6 +83,7 @@ const mapStateToProps = (state) => ({
   studio: Number(state.statusPage.studio),
   email: state.statusPage.email,
   token: state.statusPage.current.token,
+  isAuth: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps)(StatusPageHeader);
