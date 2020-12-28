@@ -25,7 +25,7 @@ const Routes = () => {
             component={Header}
           />
           <Route
-            // path={`${process.env.PUBLIC_URL}/:studioId/requester`}
+            path={`${process.env.PUBLIC_URL}/:studioId`}
             component={StatusPageHeader}
           />
         </Switch>

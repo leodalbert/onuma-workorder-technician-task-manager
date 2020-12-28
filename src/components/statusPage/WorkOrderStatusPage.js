@@ -23,7 +23,7 @@ import RequestDescription from './RequestDescription';
 import FloorplanDev from '../workOrderPage/FloorplanDev';
 import OnumaFloorplan from '../workOrderPage/OnumaFloorplan';
 import { inDev } from '../../utils/helpers';
-import { logout } from '../../actions/auth';
+import { logout, setToken } from '../../actions/auth';
 
 import {
   getWorkOrderStatusInfo,
@@ -61,6 +61,8 @@ const WorkOrderStatusPage = ({
   authUser,
   logout,
   setRequesterLoading,
+  setToken,
+  history,
 }) => {
   const layoutClasses = layoutStyles();
   const spacingClasses = spacingStyles();
@@ -73,6 +75,14 @@ const WorkOrderStatusPage = ({
   useEffect(() => {
     setRequesterLoading();
   }, [setRequesterLoading]);
+  useEffect(() => {
+    if (params.token) {
+      setToken(params.token);
+      const location = history.location.pathname.split('/');
+      location.pop();
+      history.replace(location.join('/'));
+    }
+  }, [setToken, params.token, history]);
   useEffect(() => {
     setStudio(params.studioId, params.requesterEmail);
   }, [setStudio, params.studioId, params.requesterEmail]);
@@ -293,6 +303,7 @@ export default connect(mapStateToProps, {
   updateWorkorder,
   logout,
   setRequesterLoading,
+  setToken,
 })(WorkOrderStatusPage);
 
 // #fdd835
