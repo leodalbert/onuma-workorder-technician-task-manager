@@ -16,6 +16,7 @@ import { inDev } from '../../utils/helpers';
 let cookie;
 
 export const PrivateRoute = ({
+  history,
   location: { pathname },
   computedMatch: { params },
   isAuthenticated,
@@ -34,7 +35,7 @@ export const PrivateRoute = ({
       if (Cookies.get('onumaLocal')) {
         cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
       }
-      if (!isAuthenticated) {
+      if (!isAuthenticated && authLoading) {
         if (params.token) {
           sessionLoginRequester(
             params.studioId,
@@ -57,7 +58,7 @@ export const PrivateRoute = ({
       if (Cookies.get('onumaLocal')) {
         cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
       }
-      if (!isAuthenticated) {
+      if (!isAuthenticated && authLoading) {
         if (params.token) {
           sessionLogin(
             params.studioId,
@@ -88,6 +89,7 @@ export const PrivateRoute = ({
     sessionLogin,
     pathname,
     logout,
+    authLoading,
   ]);
 
   // refresh token every 30 min

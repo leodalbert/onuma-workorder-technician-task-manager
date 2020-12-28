@@ -22,6 +22,7 @@ import { getCurrentTech, getTechs } from '../../actions/tech';
 import { logout, setToken } from '../../actions/auth';
 
 const WorkOrder = ({
+  history,
   getWorkOrder,
   match: { params },
   getCurrentTech,
@@ -47,8 +48,11 @@ const WorkOrder = ({
   useEffect(() => {
     if (params.token) {
       setToken(params.token);
+      const location = history.location.pathname.split('/');
+      location.pop();
+      history.replace(location.join('/'));
     }
-  }, [setToken, params.token]);
+  }, [setToken, params.token, history]);
   useEffect(() => {
     getWorkOrder(params.id, params.studioId);
   }, [getWorkOrder, params.id, params.studioId]);

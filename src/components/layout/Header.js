@@ -26,16 +26,20 @@ const Header = ({
   isMobile,
   token,
   isAuth,
+  match,
 }) => {
+  const location = useLocation();
   const layoutClasses = layoutStyles();
   const isWorkorder = !(
     useLocation().pathname.split('/').slice(-2)[0] === 'technicians'
   );
   const openInPopup = () => {
     const newWindow = window.open(
-      `https://system.onuma.com/${studio}/get-in-touch?url=${encodeURIComponent(
-        window.location.href
-      )}/${token}`,
+      `https://system.onuma.com/${
+        match.params.studioId
+      }/get-in-touch?url=${encodeURIComponent(
+        'https://system.onuma.com' + location.pathname
+      )}/${token ? token : ''}`,
       'window',
       'toolbar=no, menubar=no, resizable=no, width=400,height=500, top=300, left=300'
     );

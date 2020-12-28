@@ -33,7 +33,7 @@ const Dashboard = ({
     getCurrentTech(params.techEmail, params.studioId);
   }, [getCurrentTech, params.techEmail, params.studioId]);
   useEffect(() => {
-    getAllWorkOrders(techId, params.studioId);
+    techId && getAllWorkOrders(techId, params.studioId);
   }, [techId, params.studioId, getAllWorkOrders]);
   useEffect(() => {
     setFilteredWorkorders(getVisibleWorkorders(workOrders, filter));
