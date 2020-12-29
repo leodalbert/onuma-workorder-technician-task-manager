@@ -17,8 +17,8 @@ export const login = (techEmail) => (dispatch) => {
 };
 
 // log out user and destroy cookie
-export const logout = () => (dispatch) => {
-  Cookies.remove('onumaLocal');
+export const logout = () => async (dispatch) => {
+  await axios.get(`https://system.onuma.com/user/logout`);
   dispatch({ type: LOGOUT });
 };
 

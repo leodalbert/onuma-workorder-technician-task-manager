@@ -5,11 +5,21 @@ import { Link, useLocation } from 'react-router-dom';
 import { Typography, Toolbar, AppBar, IconButton } from '@material-ui/core';
 import { layoutStyles } from '../../styles/styles';
 import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulletedRounded';
+import { logout } from '../../actions/auth';
 
 import logo from './BIM_GENIE_GREEN_100p.jpg';
 import HelpIcon from './HelpIcon';
+import LogoutIcon from './LogoutIcon';
 
-const StatusPageHeader = ({ email, studio, token, isAuth, match }) => {
+const StatusPageHeader = ({
+  email,
+  studio,
+  token,
+  isAuth,
+  match,
+  history,
+  logout,
+}) => {
   const location = useLocation();
   const layoutClasses = layoutStyles();
   const isWorkorder = !(
@@ -27,6 +37,10 @@ const StatusPageHeader = ({ email, studio, token, isAuth, match }) => {
     );
     if (newWindow) newWindow.opener = null;
   };
+  const handleLogout = () => {
+    logout();
+    history.push(`${process.env.PUBLIC_URL}/${match.params.studioId}/logout`);
+  };
   return (
     <div>
       <AppBar position='static'>
@@ -41,6 +55,11 @@ const StatusPageHeader = ({ email, studio, token, isAuth, match }) => {
                   email && email
                 }`}>
                 <FormatListBulletedRoundedIcon style={{ fontSize: 40 }} />
+              </IconButton>
+            )}
+            {!isWorkorder && isAuth && (
+              <IconButton onClick={handleLogout} color='inherit'>
+                <LogoutIcon />
               </IconButton>
             )}
             {isAuth && (
@@ -76,6 +95,7 @@ StatusPageHeader.propTypes = {
   email: PropTypes.string,
   token: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 StatusPageHeader.defaultProps = {
@@ -89,4 +109,4 @@ const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(StatusPageHeader);
+export default connect(mapStateToProps, { logout })(StatusPageHeader);

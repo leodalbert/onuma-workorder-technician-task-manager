@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -28,6 +29,7 @@ export default function (state = initialState, action) {
       };
     case LOGIN_FAIL:
     case LOGOUT:
+      Cookies.remove('onumaLocal');
       return {
         ...state,
         isAuthenticated: false,

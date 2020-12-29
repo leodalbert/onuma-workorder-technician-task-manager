@@ -12,8 +12,10 @@ import {
 import { layoutStyles } from '../../styles/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulletedRounded';
+import { logout } from '../../actions/auth';
 
 import HelpIcon from './HelpIcon';
+import LogoutIcon from './LogoutIcon';
 import logo from './BIM_GENIE_GREEN_100p.jpg';
 
 const Header = ({
@@ -27,6 +29,8 @@ const Header = ({
   token,
   isAuth,
   match,
+  logout,
+  history,
 }) => {
   const location = useLocation();
   const layoutClasses = layoutStyles();
@@ -45,6 +49,12 @@ const Header = ({
     );
     if (newWindow) newWindow.opener = null;
   };
+
+  const handleLogout = () => {
+    logout();
+    history.push(`${process.env.PUBLIC_URL}/${match.params.studioId}/logout`);
+  };
+
   return (
     <div>
       <AppBar position='static'>
@@ -59,6 +69,11 @@ const Header = ({
                   email && email
                 }`}>
                 <FormatListBulletedRoundedIcon style={{ fontSize: 40 }} />
+              </IconButton>
+            )}
+            {!isWorkorder && isAuth && !dialogHeader && (
+              <IconButton onClick={handleLogout} color='inherit'>
+                <LogoutIcon />
               </IconButton>
             )}
             {isAuth && (
@@ -112,6 +127,7 @@ Header.propTypes = {
   handleClose: PropTypes.func,
   token: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
@@ -128,4 +144,4 @@ const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { logout })(Header);

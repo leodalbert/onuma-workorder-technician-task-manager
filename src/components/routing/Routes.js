@@ -5,6 +5,7 @@ import Header from '../layout/Header';
 import StatusPageHeader from '../layout/StatusPageHeader';
 import Spinner from '../layout/Spinner';
 import PrivateRoute from './PrivateRoute';
+import LogoutPage from '../layout/LogoutPage';
 // const TechAuthPage = lazy(() => import('../auth/TechAuthPage'));
 // const RequesterAuthPage = lazy(() => import('../auth/RequesterAuthPage'));
 const WorkOrder = lazy(() => import('../workOrderPage/WorkOrder'));
@@ -50,6 +51,11 @@ const Routes = () => {
               exact
               path={`${process.env.PUBLIC_URL}/:studioId/requester/:requesterEmail`}
               component={RequesterDashboard}
+            />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/:studioId/logout`}
+              component={LogoutPage}
             />
             <Route component={NotFound} />
           </Switch>
