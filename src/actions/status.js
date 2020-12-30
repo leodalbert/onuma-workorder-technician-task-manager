@@ -180,7 +180,7 @@ export const getAllWorkOrderRequestsByRequesterCC = (
 ) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id,request_number,request_email,collaborators.collaborator,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status&filter[request_email_cc][contains]=${requestEmail}`
+      `/${studioId}/api/items/workorder?limit=9999&fields=id,request_number,request_email,collaborators.collaborator,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status&filter[request_email_cc][contains]=${requestEmail}`
     );
     dispatch({ type: GET_REQUESTER_CC_WORK_ORDERS, payload: res.data.data });
   } catch (err) {
@@ -202,7 +202,7 @@ export const getAllWorkOrderRequestsByRequester = (
   dispatch({ type: SET_STATUS_PAGE_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id,request_number,request_email,collaborators.collaborator,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status&filter[request_email]=${requestEmail}`
+      `/${studioId}/api/items/workorder?limit=9999&fields=id,request_number,request_email,collaborators.collaborator,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status&filter[request_email]=${requestEmail}`
     );
     dispatch({ type: GET_REQUESTER_WORK_ORDERS, payload: res.data.data });
     dispatch(getAllWorkOrderRequestsByRequesterCC(requestEmail, studioId));
