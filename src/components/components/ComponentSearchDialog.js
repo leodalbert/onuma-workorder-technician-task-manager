@@ -106,9 +106,10 @@ const ComponentSearchDialog = ({
       building.name
     }`,
     <br key='1' />,
-    `${space && space.number && space.number} ${
-      space && space.number && space.name && '- '
-    }${space && space.name && space.name}`,
+    space && space.number && space.number,
+    ' ',
+    space && space.number && space.name && '- ',
+    space && space.name && space.name,
   ];
 
   return (

@@ -29,7 +29,7 @@ const WorkOrderStatus = ({
             layoutClasses.labelStyle,
             spacingClasses.paddingTopS
           )}>
-          Work Order Status:
+          Work order status:
         </Typography>
       </Grid>
       <Grid className={layoutClasses.detailCtr} item xs={12} sm={9}>

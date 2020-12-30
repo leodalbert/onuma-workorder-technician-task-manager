@@ -23,7 +23,7 @@ export const getAllWorkOrders = (techId, studioId) => async (dispatch) => {
   dispatch({ type: SET_LOADING });
   try {
     const res = await axios.get(
-      `/${studioId}/api/items/workorder?fields=id,request_number,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status,collaborators.collaborator&filter[collaborators.collaborator][in]=${techId}&filter[assigned_technician.id][in]=${techId}&filter[assigned_technician.id][logical]=or`
+      `/${studioId}/api/items/workorder?limit=9999&fields=id,request_number,request_date,request_description,request_number,building,assigned_priority,space,assigned_technician,status,collaborators.collaborator&filter[collaborators.collaborator][in]=${techId}&filter[assigned_technician.id][in]=${techId}&filter[assigned_technician.id][logical]=or`
     );
     dispatch({ type: GET_TECHS_WORK_ORDERS, payload: res.data.data });
     // console.log(res.data.data);
@@ -45,7 +45,6 @@ export const getFloorId = (buildingId, studioId) => async (dispatch) => {
     const res = await axios.get(
       `/${studioId}/api/items/building?filter[id]=${buildingId}&fields=floors.id`
     );
-    console.log(res);
     dispatch({
       type: SET_SPACE_INFO,
       payload: { floorId: res.data.data[0].floors[0].id },

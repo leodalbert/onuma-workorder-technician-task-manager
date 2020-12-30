@@ -36,7 +36,7 @@ const CostForm = ({
           variant='subtitle1'
           style={{ paddingTop: '15px' }}
           className={layoutClasses.labelStyle}>
-          Material Costs:
+          Material costs:
         </Typography>
       </Grid>
       <Grid className={layoutClasses.detailCtr} item xs={12} sm={9}>

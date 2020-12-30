@@ -52,6 +52,7 @@ const TaskDetails = ({
   addCollaborator,
   workOrderTech,
   visCollaborators,
+  workOrderTechName,
 }) => {
   const layoutClasses = layoutStyles();
   const componentClasses = componentStyles();
@@ -192,8 +193,10 @@ const TaskDetails = ({
         </Grid>
         <Grid className={componentClasses.saveTextBreak} item xs={12} lg={9}>
           <Typography style={{ marginBottom: '15px' }}>
-            You can keep on adding new tasks until you set the Work Order Status
-            as "Completed".
+            {workOrderTech.id === currentTechId
+              ? `You can keep on adding new tasks until you set the work order status
+            as "Completed".`
+              : `You can keep on adding new tasks until the assigned technician, ${workOrderTechName}, sets the work order as "Completed".`}
           </Typography>
         </Grid>
         <Grid className={componentClasses.btnBreak} item xs={12} lg={3}>
@@ -218,7 +221,7 @@ const TaskDetails = ({
         title='Are you sure you want to submit the task?'
         content='This will not be editable after subission'
         confirmBtn='Submit'
-        declineBtn='Cancle'
+        declineBtn='Cancel'
       />
       <ConfirmDialog
         openAlert={openCostAlert}
@@ -260,6 +263,10 @@ const mapStateToProps = (state) => ({
   status: state.workOrder.current.status,
   workOrderId: state.workOrder.current.id,
   workOrderTech: state.workOrder.current.assigned_technician,
+  workOrderTechName:
+    state.workOrder.current.assigned_technician.first_name +
+    ' ' +
+    state.workOrder.current.assigned_technician.last_name,
   collaborators: state.workOrder.current.collaborators,
   techs: state.tech.techs,
   visCollaborators: state.tech.techs.filter((tech) => {

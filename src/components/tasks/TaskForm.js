@@ -60,7 +60,7 @@ const TaskForm = ({
         <Typography
           variant='subtitle1'
           className={layoutClasses.lableStyleHourSelect}>
-          Actual Hours:
+          Actual hours:
         </Typography>
       </Grid>
       <Grid className={layoutClasses.detailCtr} item xs={4} sm={3}>
@@ -74,7 +74,7 @@ const TaskForm = ({
             onChange={(e) =>
               setTimeState({ ...timeState, hrs: e.target.value })
             }>
-            {_.range(1, 12 + 1).map((value) => (
+            {_.range(0, 12 + 1).map((value) => (
               <MenuItem key={value} value={value}>
                 {value} hrs
               </MenuItem>
@@ -125,7 +125,7 @@ const TaskForm = ({
       </Grid>
       <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
         <Typography variant='subtitle1' className={layoutClasses.labelStyle}>
-          Task Description:
+          Task description:
         </Typography>
       </Grid>
       <Grid className={layoutClasses.detailCtr} item xs={12} sm={9}>

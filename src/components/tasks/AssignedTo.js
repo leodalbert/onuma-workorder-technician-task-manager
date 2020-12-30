@@ -41,7 +41,7 @@ const AssignedTo = ({
     <Fragment>
       <Grid className={layoutClasses.labelCtr} item xs={12} sm={3}>
         <Typography variant='subtitle1' className={layoutClasses.labelStyle}>
-          Assigned To:
+          Assigned to:
         </Typography>
       </Grid>
       <Grid className={layoutClasses.detailCtr} item xs={12} sm={4}>
