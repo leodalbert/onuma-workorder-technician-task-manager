@@ -93,11 +93,11 @@ export const PrivateRoute = ({
   ]);
 
   // refresh token every 30 min
-  useInterval(() => {
-    cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
-    console.log('test');
-    sessionResume(params.studioId, params.techEmail, cookie.token);
-  }, 1800000);
+  // useInterval(() => {
+  //   cookie = JSON.parse(atob(Cookies.get('onumaLocal')));
+  //   console.log('test');
+  //   sessionResume(params.studioId, params.techEmail, cookie.token);
+  // }, 1800000);
 
   // redirect to login page if tech requires login when not in development
   if (!isAuthenticated && redirect && !inDev()) {

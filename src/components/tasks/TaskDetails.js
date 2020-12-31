@@ -64,7 +64,6 @@ const TaskDetails = ({
   const [workOrderStatus, setWorkOrderStatus] = useState(status);
   const [openSaveAlert, setOpenSaveAlert] = useState(false);
   const [openCostAlert, setOpenCostAlert] = useState(false);
-
   useEffect(() => {
     currentTechId &&
       setTaskForm({
@@ -142,6 +141,7 @@ const TaskDetails = ({
     }
     setTaskForm({
       ...initialTaskState,
+      is_overtime: taskForm.is_overtime,
       assigned_technician: currentTechId,
       workorder: workOrderId,
     });
@@ -219,7 +219,7 @@ const TaskDetails = ({
         setOpenAlert={setOpenSaveAlert}
         handleSave={handleSave}
         title='Are you sure you want to submit the task?'
-        content='This will not be editable after subission'
+        content='This will not be editable after submission'
         confirmBtn='Submit'
         declineBtn='Cancel'
       />
